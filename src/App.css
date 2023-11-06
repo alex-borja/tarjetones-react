@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
+
+.container {		
+	width: 100%;
+	min-height: 100vh;
+	align-items: center;
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	padding-top: 20px;
+}
+
+.tarjetonParams {
+	width: 80%;
+	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+	border-radius: 10px;
+	margin: auto 0;
+	padding: 20px;
+	padding-top: 0px;
+	height: 80vh;
+}
+
+.paramsForm {
+	width: 90%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	flex-wrap: wrap;
+	padding: 20px;
+}
+
+.paramComponent {
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+}
+
+.paramComponent input {
+	margin-top: 10px;
+	border-radius: 10px;
+	border: 1px solid black;
+	height: 50px;
+	text-indent: 10px;
+}
+
+.submit {
+	width: 100px;
+	height: 40px;
+	border: none;
+	color: white;
+	background: black;
+	cursor: pointer;
+	border-radius: 20px;
+	margin: 0 auto;
+	transition: 0.3s ease;
+}
+
+.submit:hover {
+	opacity: 0.8;
+	scale: 1.05;
+}
