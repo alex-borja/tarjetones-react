@@ -28,7 +28,11 @@ function App() {
 						setSharedParams={setSharedParams}>
 					</Tarjeton_Params>
 					:
-					<FileInput sharedParams={sharedParams}></FileInput>
+					<FileInput
+						sharedParams={sharedParams}
+						showParams={showParams}
+						setShowParams={setShowParams}>
+					</FileInput>
 			}
 
 		</div>

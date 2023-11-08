@@ -1,0 +1,33 @@
+.right {
+	width: 100%;
+	padding: 20px;
+}
+
+.displayResult {
+	display: flex;
+	flex-direction: column;
+}
+
+.numErrors {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+	padding: 5px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
+
+.resItem {
+	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+	padding: 5px;
+}
+
+.errors {
+	width: 100%;
+	margin-bottom: 50px;
+}
+
+.numRes {
+	box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px, rgb(51, 51, 51) 0px 0px 0px 3px;
+	padding: 5px;
+	border-radius: 5px;
+	margin-bottom: 10px;
+}
