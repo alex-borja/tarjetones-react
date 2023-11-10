@@ -1,11 +1,11 @@
 import { useState } from "react"
 import cheerio from "cheerio";
-import { SEDE_MAP } from "../db";
-import "../styles/fileInput.css";
+import { SEDE_MAP } from "../utils/db";
+import "../styles/views/FileInputView.css"
 import PropTypes from "prop-types";
-import ResultCard from "./resultCard";
+import ResultCard from "../components/resultCard"
 
-function FileInput({ sharedParams, showParams, setShowParams}) {
+function FileInputView({ sharedParams, showParams, setShowParams }) {
 	const [htmlFile, setHtmlFile] = useState('');
 	const [fileName, setFileName] = useState('');
 	const [showResult, setShowResult] = useState(false);
@@ -15,6 +15,7 @@ function FileInput({ sharedParams, showParams, setShowParams}) {
 	let handleFile = (e) => {
 		let file = e.target.files[0];
 		setFileName(file.name);
+
 		if (file) {
 			const reader = new FileReader();
 			reader.onload = (e) => {
@@ -29,6 +30,7 @@ function FileInput({ sharedParams, showParams, setShowParams}) {
 		const $ = cheerio.load(htmlFile);
 
 		const links = $('a');
+		const pixel = $('img')[0].attribs.src;
 		const title = $('title')[0].children[0].data;
 
 		let finalLink = links[0].attribs.href;
@@ -37,9 +39,21 @@ function FileInput({ sharedParams, showParams, setShowParams}) {
 		let urlLink = links[6].attribs.href;
 
 		checkSedeTitle(title);
-		checkFinalLink(finalLink)
+		checkPixel(pixel, sharedParams.pixel);
 		checkUrls(finalLink, bannerLink, buttonLink, urlLink);
 		setShowResult(!showResult);
+	}
+
+	let checkPixel = (pixel, correctPixel) => {
+		if (pixel === correctPixel) {
+			setResult((curr) => [...curr, "Sede del titulo correcto"])
+		} else {
+			setError((curr) => [...curr, {
+				title: "Pixel del seguimiento equivocado",
+				correctValue: correctPixel,
+				valueProvided: pixel,
+			}])
+		}
 	}
 
 	let checkSedeTitle = (title) => {
@@ -48,19 +62,35 @@ function FileInput({ sharedParams, showParams, setShowParams}) {
 		if (titleData === sharedParams.sede) {
 			setResult((curr) => [...curr, "Sede del titulo correcto"])
 		} else {
-			setError((curr) => [...curr, "Sede del titulo incorrecta"])
+			setError((curr) => [...curr, {
+				title: "Sede del titulo incorrecta",
+				correctValue: sharedParams.sede,
+				valueProvided: titleData,
+			}])
 		}
 	}
 
-	let checkFinalLink = (finalLink) => {
+	let checkFinalLink = (finalLink, correctFinalLink) => {
 		let indexOfQuestionMark = finalLink.indexOf("?");
 		let subUrl = finalLink.substring(0, indexOfQuestionMark);
-		let url = subUrl.slice(-7).slice(0, 2)
+		let fileSede = subUrl.slice(-7).slice(0, 2)
 
-		if (url === sharedParams.sede.toLowerCase()) {
-			setResult((curr) => [...curr, "Link final correcto"])
+		if (fileSede === sharedParams.sede.toLowerCase()) {
+			if (finalLink === correctFinalLink) {
+				setResult((curr) => [...curr, "Link final correcto"])
+			} else {
+				setError((curr) => [...curr, {
+					title: "El link final no es correcto",
+					correctValue: correctFinalLink,
+					valueProvided: finalLink,
+				}])
+			}
 		} else {
-			setError((curr) => [...curr, "El link final no es correcto"])
+			setError((curr) => [...curr, {
+				title: "El link final no es correcto",
+				correctValue: correctFinalLink,
+				valueProvided: finalLink,
+			}])
 		}
 	}
 
@@ -76,41 +106,41 @@ function FileInput({ sharedParams, showParams, setShowParams}) {
 			let correctButtonLink = sharedParams.bannerUrl + furriel + sharedParams.kw + sharedParams.matomo;
 			let correctUrlLink = url + furriel + sharedParams.kw + sharedParams.matomo;
 
-			if (correctFinalLink !== finalLink) {
-				let err = "Hay un error en el link final";
-				setError((curr) => [...curr, err]);
-			} else {
-				let res = "Link final sin problemas"
-				setResult((curr) => [...curr, res]);
-			}
-
-			if (correctBannerLink !== bannerLink) {
-				let err = "Hay un error en link del banner";
-				setError((curr) => [...curr, err]);
-			} else {
-				let res = "Link del banner y del botton sin problemas"
-				setResult((curr) => [...curr, res]);
-			}
-
-			if (correctButtonLink !== buttonLink) {
-				let err = "Hay un error en el link del botón";
-				setError((curr) => [...curr, err]);
-			} else {
-				let res = "Link del botón sin problemas"
-				setResult((curr) => [...curr, res]);
-			}
-
-			if (correctUrlLink !== urlLink) {
-				let err = "Hay un error en el link del botón";
-				setError((curr) => [...curr, err]);
-			} else {
-				let res = "Link del botón sin problemas"
-				setResult((curr) => [...curr, res]);
-			}
+			checkFinalLink(finalLink, correctFinalLink)
+			checkSingleUrl(correctBannerLink, bannerLink, "Link del banner y del botton sin problemas", "Hay un erro en el link del banner")
+			checkSingleUrl(correctButtonLink, buttonLink, "Link del botón sin problemas", "Hay un error en el link del botón")
+			checkSingleUrl(correctUrlLink, urlLink, "Link del la URL uneatlantico sin problemas", "Hay un error en el link de la URL de uneatlantico")
 		}
 	}
 
-	let handleClick = () => {
+	let checkSingleUrl = (correctValue, providedValue, res, err) => {
+		if(correctValue === providedValue) {
+			setResult((curr) => [...curr, res])
+		} else {
+			handleError(err, correctValue, providedValue)
+		}
+	}
+
+	let handleError = (title, correctValue, valueProvided) => {
+		setError((curr) => [...curr, {
+			title,
+			correctValue,
+			valueProvided
+		}])
+	}
+
+	let renderResults = () => {
+		return showResult ?
+			<ResultCard
+				results={result}
+				errors={error}>
+			</ResultCard>
+			:
+			<h3>Suba un archivo para analizar</h3>
+
+	}
+
+	let returnToParams = () => {
 		setShowParams(!showParams);
 	}
 
@@ -120,35 +150,27 @@ function FileInput({ sharedParams, showParams, setShowParams}) {
 				<form onSubmit={(e) => handleSubmit(e)}>
 					<label>Ingrese un archivo compilado:</label>
 					<input type="file" accept=".html" id="file" onChange={handleFile} />
-					<button type="submit">Subir</button>
+					<button type="submit" className="btn">Subir</button>
 				</form>
-
 				<div className="selectedFiles">
 					<h4>Archivo seleccionado:</h4>
 					<p>{fileName}</p>
 				</div>
 				<div className="returnToParams">
-					<button className="returnBtn" onClick={handleClick}>Regresar a los parametros</button>
+					<button className="returnBtn" onClick={returnToParams}>Regresar a los parametros</button>
 				</div>
 			</div>
 			<div className="right">
-				{
-					showResult ?
-						<ResultCard
-							results={result} errors={error}>
-						</ResultCard>
-						:
-						<h3>Suba un archivo para analizar</h3>
-				}
+				{renderResults()}
 			</div>
 		</div>
 	)
 }
 
-FileInput.propTypes = {
+FileInputView.propTypes = {
 	sharedParams: PropTypes.object,
 	showParams: PropTypes.bool,
 	setShowParams: PropTypes.func
 }
 
-export default FileInput
+export default FileInputView 

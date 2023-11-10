@@ -1,6 +1,7 @@
 .right {
 	width: 100%;
 	padding: 20px;
+	overflow: scroll;
 }
 
 .displayResult {
@@ -17,7 +18,29 @@
 
 .resItem {
 	box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-	padding: 5px;
+	padding: 15px;
+	margin: 20px;
+	display: flex;
+	flex-direction: column;
+}
+
+.vals {
+	margin-top: 10px;
+	display: flex;
+	flex-direction: column;
+}
+
+.correct {
+	background-color: rgb(116, 217, 113);
+	margin-bottom: 10px;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.incorrect {
+	background-color: rgb(235, 79, 52);
+	border-radius: 5px;
+	padding: 10px;
 }
 
 .errors {

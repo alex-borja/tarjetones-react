@@ -1,12 +1,16 @@
 import PropTypes from "prop-types";
-import "../styles/ResultCard.css"
+import "../styles/components/ResultCard.css"
 
 function ResultCard({ errors }) {
 
 	let displayResults = (data) => {
 		return data.map((val, idx) => (
 			<div key={idx} className="resItem">
-				{val}
+				<h4 className="resTitle">{val.title}</h4>
+				<div className="vals">
+					<p className="correct">Valor correcto: {val.correctValue}</p>
+					<p className="incorrect">Valor del archivo: {val.valueProvided}</p>
+				</div>
 			</div>
 		))
 	}
@@ -27,8 +31,3 @@ ResultCard.propTypes = {
 }
 
 export default ResultCard;
-
-/*<div className="results">
-	<h4 className="numRes">{results.length}</h4>
-	{displayResults(results)}
-	</div>*/

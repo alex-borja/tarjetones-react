@@ -1,7 +1,6 @@
 import { useState } from 'react'
-import './App.css'
-import Tarjeton_Params from './components/tarjetonParams'
-import FileInput from './components/fileInput';
+import TarjetonParamsView from './views/TarjetonParamsView';
+import FileInputView from './views/FileInputView';
 import PropTypes from "prop-types";
 
 function App() {
@@ -21,18 +20,18 @@ function App() {
 			</div>
 			{
 				showParams ?
-					<Tarjeton_Params
+					<TarjetonParamsView
 						showParams={showParams}
 						setShowParams={setShowParams}
 						sharedParams={sharedParams}
 						setSharedParams={setSharedParams}>
-					</Tarjeton_Params>
+					</TarjetonParamsView>
 					:
-					<FileInput
+					<FileInputView
 						sharedParams={sharedParams}
 						showParams={showParams}
 						setShowParams={setShowParams}>
-					</FileInput>
+					</FileInputView>
 			}
 
 		</div>
