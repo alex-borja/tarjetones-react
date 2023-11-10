@@ -1,6 +1,7 @@
 import { useState } from "react"
 import cheerio from "cheerio";
 import { SEDE_MAP } from "../utils/db";
+import { PARAMS_INFO } from "../utils/utils";
 import "../styles/views/FileInputView.css"
 import PropTypes from "prop-types";
 import ResultCard from "../components/resultCard"
@@ -11,6 +12,9 @@ function FileInputView({ sharedParams, showParams, setShowParams }) {
 	const [showResult, setShowResult] = useState(false);
 	const [error, setError] = useState([]);
 	const [result, setResult] = useState([]);
+
+	const furriel = SEDE_MAP[sharedParams.sede];
+	const uneatUrl = "https://www.uneatlantico.es/"
 
 	let handleFile = (e) => {
 		let file = e.target.files[0];
@@ -38,36 +42,28 @@ function FileInputView({ sharedParams, showParams, setShowParams }) {
 		let buttonLink = links[2].attribs.href;
 		let urlLink = links[6].attribs.href;
 
-		checkSedeTitle(title);
-		checkPixel(pixel, sharedParams.pixel);
-		checkUrls(finalLink, bannerLink, buttonLink, urlLink);
+		checkParams(title, pixel, finalLink, bannerLink, buttonLink, urlLink);
 		setShowResult(!showResult);
 	}
 
-	let checkPixel = (pixel, correctPixel) => {
-		if (pixel === correctPixel) {
-			setResult((curr) => [...curr, "Sede del titulo correcto"])
-		} else {
-			setError((curr) => [...curr, {
-				title: "Pixel del seguimiento equivocado",
-				correctValue: correctPixel,
-				valueProvided: pixel,
-			}])
-		}
-	}
+	let checkParams = (sede, pixel, finalLink, bannerLink, buttonLink, urlLink) => {
+		sede = sede.slice(0, 2)
 
-	let checkSedeTitle = (title) => {
-		let titleData = title.slice(0, 2)
+		const correctSede = sharedParams.sede;
+		const correctFinalLink = sharedParams.linkFinal + furriel + sharedParams.kw + sharedParams.matomo;
+		const correctPixel = sharedParams.pixel;
+		const correctBannerLink = sharedParams.bannerUrl + furriel + sharedParams.kw + sharedParams.matomo;
+		const correctButtonLink = sharedParams.bannerUrl + furriel + sharedParams.kw + sharedParams.matomo;
+		const correctUrlLink = uneatUrl + furriel + sharedParams.kw + sharedParams.matomo;
 
-		if (titleData === sharedParams.sede) {
-			setResult((curr) => [...curr, "Sede del titulo correcto"])
-		} else {
-			setError((curr) => [...curr, {
-				title: "Sede del titulo incorrecta",
-				correctValue: sharedParams.sede,
-				valueProvided: titleData,
-			}])
-		}
+		checkSingleParam(correctSede, sede, PARAMS_INFO.sede.result, PARAMS_INFO.sede.error)
+		checkSingleParam(correctPixel, pixel, PARAMS_INFO.pixel.result, PARAMS_INFO.pixel.error)
+
+		checkFinalLink(finalLink, correctFinalLink)
+
+		checkSingleParam(correctBannerLink, bannerLink, PARAMS_INFO.banner.result, PARAMS_INFO.banner.error)
+		checkSingleParam(correctButtonLink, buttonLink, PARAMS_INFO.button.result, PARAMS_INFO.button.error)
+		checkSingleParam(correctUrlLink, urlLink, PARAMS_INFO.url.result, PARAMS_INFO.url.error)
 	}
 
 	let checkFinalLink = (finalLink, correctFinalLink) => {
@@ -76,45 +72,18 @@ function FileInputView({ sharedParams, showParams, setShowParams }) {
 		let fileSede = subUrl.slice(-7).slice(0, 2)
 
 		if (fileSede === sharedParams.sede.toLowerCase()) {
-			if (finalLink === correctFinalLink) {
-				setResult((curr) => [...curr, "Link final correcto"])
-			} else {
-				setError((curr) => [...curr, {
-					title: "El link final no es correcto",
-					correctValue: correctFinalLink,
-					valueProvided: finalLink,
-				}])
-			}
+			checkSingleParam(correctFinalLink, finalLink, PARAMS_INFO.linkFinal.result, PARAMS_INFO.linkFinal.error)
 		} else {
 			setError((curr) => [...curr, {
-				title: "El link final no es correcto",
+				title: PARAMS_INFO.linkFinal.error,
 				correctValue: correctFinalLink,
 				valueProvided: finalLink,
 			}])
 		}
 	}
 
-	let checkUrls = (finalLink, bannerLink, buttonLink, urlLink) => {
-		if (!SEDE_MAP[sharedParams.sede]) {
-			setError("No existe esa sede");
-		} else {
-			let furriel = SEDE_MAP[sharedParams.sede];
-			let url = "https://www.uneatlantico.es/"
-
-			let correctFinalLink = sharedParams.linkFinal + furriel + sharedParams.kw + sharedParams.matomo;
-			let correctBannerLink = sharedParams.bannerUrl + furriel + sharedParams.kw + sharedParams.matomo;
-			let correctButtonLink = sharedParams.bannerUrl + furriel + sharedParams.kw + sharedParams.matomo;
-			let correctUrlLink = url + furriel + sharedParams.kw + sharedParams.matomo;
-
-			checkFinalLink(finalLink, correctFinalLink)
-			checkSingleUrl(correctBannerLink, bannerLink, "Link del banner y del botton sin problemas", "Hay un erro en el link del banner")
-			checkSingleUrl(correctButtonLink, buttonLink, "Link del botón sin problemas", "Hay un error en el link del botón")
-			checkSingleUrl(correctUrlLink, urlLink, "Link del la URL uneatlantico sin problemas", "Hay un error en el link de la URL de uneatlantico")
-		}
-	}
-
-	let checkSingleUrl = (correctValue, providedValue, res, err) => {
-		if(correctValue === providedValue) {
+	let checkSingleParam = (correctValue, providedValue, res, err) => {
+		if (correctValue === providedValue) {
 			setResult((curr) => [...curr, res])
 		} else {
 			handleError(err, correctValue, providedValue)

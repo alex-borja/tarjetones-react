@@ -2,7 +2,7 @@ import "../App.css"
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { SEDE_MAP } from "../utils/db";
-import inputFields from "../utils/inputParam";
+import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
 
 function TarjetonParamsView({ showParams, setShowParams, sharedParams, setSharedParams }) {
@@ -56,7 +56,7 @@ function TarjetonParamsView({ showParams, setShowParams, sharedParams, setShared
 	}
 
 	let renderInputFields = () => {
-		return inputFields.map((field) => (
+		return INPUT_FIELDS.map((field) => (
 			<ParamInput
 				key={field.id}
 				name={field.name}
