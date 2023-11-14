@@ -1,9 +1,17 @@
+import { SEDE_MAP } from "./db";
+
 export const INPUT_FIELDS = [
 	{
-		label: 'Sede',
+		label: 'Sede:',
 		name: 'sede',
 		id: 'sede',
 		placeholder: 'Introduzca la sede',
+	},
+	{
+		label: "Pixel:",
+		name: "pixel",
+		id: "pixel",
+		placeholder: "Introduzca el pixel de seguimiento",
 	},
 	{
 		label: "Link Final:",
@@ -58,3 +66,26 @@ export const PARAMS_INFO = {
 		result: "Link de la URL de uneatlantico sin problemas",
 	},
 }
+
+// SOLO PARA TARJETONES GENERICOS DE UNEATLANTICO
+export function getSedeFromFile(finalLink) {
+	let indexOfQuestionMark = finalLink.indexOf("?");
+	let subUrl = finalLink.substring(0, indexOfQuestionMark);
+	let fileSede = subUrl.slice(-7).slice(0, 2)
+
+	return fileSede;
+}
+
+export function checkValidParams(sharedParams) {
+	for (const property in sharedParams) {
+		if (sharedParams[property] === "") {
+			return false
+		}
+	}
+
+	if (!SEDE_MAP[sharedParams.sede]) {
+		return false
+	}
+	return true
+}
+

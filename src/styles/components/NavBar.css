@@ -1,0 +1,32 @@
+.navbar {
+	width: 100%;
+	color: #DFD5D5;
+	margin-bottom: 20px;
+}
+
+.navList {
+	width: 320px;
+	display: flex;
+	justify-content: space-between;
+	list-style: none;
+	padding-bottom: 10px;
+	border-bottom: 0.01rem solid #383838;
+	margin: 0 auto;
+}
+
+.navList li {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	cursor: pointer;
+	transition: 0.2s ease-in all;
+}
+
+.navBtn {
+	border: none;
+	font-size: 15px;
+}
+
+.navList li:hover {
+	color: white;
+}

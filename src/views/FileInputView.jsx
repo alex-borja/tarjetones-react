@@ -1,12 +1,12 @@
-import { useState } from "react"
 import cheerio from "cheerio";
-import { SEDE_MAP } from "../utils/db";
-import { PARAMS_INFO } from "../utils/utils";
-import "../styles/views/FileInputView.css"
+import { useState } from "react"
 import PropTypes from "prop-types";
+import { SEDE_MAP } from "../utils/db";
+import "../styles/views/FileInputView.css"
 import ResultCard from "../components/resultCard"
+import { PARAMS_INFO, getSedeFromFile } from "../utils/utils";
 
-function FileInputView({ sharedParams, showParams, setShowParams }) {
+function FileInputView({ sharedParams }) {
 	const [htmlFile, setHtmlFile] = useState('');
 	const [fileName, setFileName] = useState('');
 	const [showResult, setShowResult] = useState(false);
@@ -37,6 +37,7 @@ function FileInputView({ sharedParams, showParams, setShowParams }) {
 		const pixel = $('img')[0].attribs.src;
 		const title = $('title')[0].children[0].data;
 
+
 		let finalLink = links[0].attribs.href;
 		let bannerLink = links[1].attribs.href;
 		let buttonLink = links[2].attribs.href;
@@ -59,17 +60,15 @@ function FileInputView({ sharedParams, showParams, setShowParams }) {
 		checkSingleParam(correctSede, sede, PARAMS_INFO.sede.result, PARAMS_INFO.sede.error)
 		checkSingleParam(correctPixel, pixel, PARAMS_INFO.pixel.result, PARAMS_INFO.pixel.error)
 
-		checkFinalLink(finalLink, correctFinalLink)
+		checkFinalLink(correctFinalLink, finalLink)
 
 		checkSingleParam(correctBannerLink, bannerLink, PARAMS_INFO.banner.result, PARAMS_INFO.banner.error)
 		checkSingleParam(correctButtonLink, buttonLink, PARAMS_INFO.button.result, PARAMS_INFO.button.error)
 		checkSingleParam(correctUrlLink, urlLink, PARAMS_INFO.url.result, PARAMS_INFO.url.error)
 	}
 
-	let checkFinalLink = (finalLink, correctFinalLink) => {
-		let indexOfQuestionMark = finalLink.indexOf("?");
-		let subUrl = finalLink.substring(0, indexOfQuestionMark);
-		let fileSede = subUrl.slice(-7).slice(0, 2)
+	let checkFinalLink = (correctFinalLink, finalLink) => {
+		let fileSede = getSedeFromFile(finalLink);
 
 		if (fileSede === sharedParams.sede.toLowerCase()) {
 			checkSingleParam(correctFinalLink, finalLink, PARAMS_INFO.linkFinal.result, PARAMS_INFO.linkFinal.error)
@@ -109,25 +108,18 @@ function FileInputView({ sharedParams, showParams, setShowParams }) {
 
 	}
 
-	let returnToParams = () => {
-		setShowParams(!showParams);
-	}
-
 	return (
 		<div className="fileInput">
 			<div className="left">
 				<form onSubmit={(e) => handleSubmit(e)}>
-					<label>Ingrese un archivo compilado:</label>
+					<label className="uploadFile" htmlFor="file">Ingrese un archivo compilado</label>
 					<input type="file" accept=".html" id="file" onChange={handleFile} />
-					<button type="submit" className="btn">Subir</button>
+					<div className="selectedFiles">
+						<h4>Archivo seleccionado:</h4>
+						<p>{fileName}</p>
+					</div>
+					<button type="submit" className="uploadBtn">Subir</button>
 				</form>
-				<div className="selectedFiles">
-					<h4>Archivo seleccionado:</h4>
-					<p>{fileName}</p>
-				</div>
-				<div className="returnToParams">
-					<button className="returnBtn" onClick={returnToParams}>Regresar a los parametros</button>
-				</div>
 			</div>
 			<div className="right">
 				{renderResults()}
@@ -135,6 +127,11 @@ function FileInputView({ sharedParams, showParams, setShowParams }) {
 		</div>
 	)
 }
+/*
+	<div className="returnToParams">
+	<button className="returnBtn" onClick={returnToParams}>Regresar a los parametros</button>
+	</div>
+*/
 
 FileInputView.propTypes = {
 	sharedParams: PropTypes.object,

@@ -2,6 +2,7 @@ import "../App.css"
 import { useState } from "react";
 import PropTypes from "prop-types";
 import { SEDE_MAP } from "../utils/db";
+import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
 
@@ -71,18 +72,16 @@ function TarjetonParamsView({ showParams, setShowParams, sharedParams, setShared
 	}
 
 	let renderWarnings = () => {
-		return validParams.length ? <div className="validParams">{validParams}</div> : <></>
+		return validParams.length ? <Warning validParams={validParams} setValidParams={setValidParams}></Warning> : <></>
 	}
 
 	return (
 		<div className="tarjetonParams">
 			<form className="paramsForm" onSubmit={(e) => submitParams(e)}>
 				{renderInputFields()}
-				<div className="paramComponent">
-					<div className="btns">
-						<button type="submit" className="btn submit">Seguir</button>
-						<button type="button" className="btn clearBtn" onClick={clearInputs}>Limpiar</button>
-					</div>
+				<div className="btns">
+					<button type="submit" className="btn submit">Seguir</button>
+					<button type="button" className="btn clearBtn" onClick={clearInputs}>Limpiar</button>
 				</div>
 			</form>
 			{renderWarnings()}

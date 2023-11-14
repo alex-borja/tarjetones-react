@@ -5,7 +5,11 @@ function ParamInput({ label, id, placeholder, name, onChange, value }) {
 	return (
 		<div className="paramComponent">
 			<label>{label}</label>
-			<input type="text" id={id} placeholder={placeholder}
+			<input
+				autoComplete="off"
+				type="text"
+				id={id}
+				placeholder={placeholder}
 				name={name}
 				onChange={onChange}
 				value={value}

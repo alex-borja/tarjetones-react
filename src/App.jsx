@@ -2,11 +2,13 @@ import { useState } from 'react'
 import TarjetonParamsView from './views/TarjetonParamsView';
 import FileInputView from './views/FileInputView';
 import PropTypes from "prop-types";
+import NavBar from './components/NavBar';
 
 function App() {
-	const [showParams, setShowParams] = useState(true);
+	const [showResults, setShowResults] = useState(false);
 	const [sharedParams, setSharedParams] = useState({
 		sede: "",
+		pixel: "",
 		linkFinal: "",
 		bannerUrl: "",
 		kw: "",
@@ -16,23 +18,28 @@ function App() {
 	return (
 		<div className='container'>
 			<div className='header'>
-				<h1>Validador de Tarjetones Genericos para Uneatlantico</h1>
+				<h2>Validador de Tarjetones Genericos para Uneatlantico</h2>
 			</div>
-			{
-				showParams ?
-					<TarjetonParamsView
-						showParams={showParams}
-						setShowParams={setShowParams}
-						sharedParams={sharedParams}
-						setSharedParams={setSharedParams}>
-					</TarjetonParamsView>
-					:
-					<FileInputView
-						sharedParams={sharedParams}
-						showParams={showParams}
-						setShowParams={setShowParams}>
-					</FileInputView>
-			}
+			<div className='center'>
+				<NavBar
+					showResults={showResults}
+					setShowResults={setShowResults}
+					sharedParams={sharedParams}>
+				</NavBar>
+				{
+					!showResults ?
+						<TarjetonParamsView
+							showParams={showResults}
+							setShowParams={setShowResults}
+							sharedParams={sharedParams}
+							setSharedParams={setSharedParams}>
+						</TarjetonParamsView>
+						:
+						<FileInputView
+							sharedParams={sharedParams}>
+						</FileInputView>
+				}
+			</div>
 
 		</div>
 	)

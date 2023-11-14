@@ -1,69 +1,128 @@
-@import url('https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap');
-
 .container {		
 	width: 100%;
 	min-height: 100vh;
 	align-items: center;
 	display: flex;
 	flex-direction: column;
+	background-color: #161616;
+	color: white;
 }
 
 .header {
 	padding-top: 20px;
+	text-align: center;
+	padding: 20px;
+}
+
+.center {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-top: 30px;
+	width: 80%;
 }
 
 .tarjetonParams {
-	width: 80%;
-	box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+	width: 100%;
 	border-radius: 10px;
-	margin: auto 0;
-	padding: 20px;
 	padding-top: 0px;
 	padding-bottom: 0px;
 	height: 85vh;
+	position: relative;
 }
 
 .paramsForm {
-	width: 90%;
 	height: 100%;
 	display: flex;
-	justify-content: center;
+	justify-content: space-evenly;
 	flex-wrap: wrap;
-	padding: 20px;
+	gap: 35px;
 }
 
 .paramComponent {
-	width: 60%;
+	width: 40%;
+	height: 85px;
 	display: flex;
 	flex-direction: column;
 }
 
 .paramComponent input {
+	background-color: #141414;
+	color: lightgray;
 	margin-top: 10px;
 	border-radius: 10px;
-	border: 1px solid black;
+	border: 1px solid darkgrey;
 	height: 50px;
 	text-indent: 10px;
 }
 
-.submit {
-	width: 100px;
-	height: 40px;
-	border: none;
-	color: white;
-	background: black;
-	cursor: pointer;
-	border-radius: 20px;
-	margin: 0 auto;
-	transition: 0.3s ease;
+.paramComponent label {
+	font-size: 14px;
 }
 
-.submit:hover {
+.btns {
+	display: flex;
+	gap: 20px;
+	margin: 0 auto;
+	margin-top: -50px;
+}
+
+.btn {
+	width: 120px;
+	height: 40px;
+	border: none;
+	border-radius: 10px;
+	background-color: #313131;
+	color: white;
+	cursor: pointer;
+}
+
+.btn:hover {
 	opacity: 0.8;
 	scale: 1.05;
 }
 
-.validParams {
-	color: red;
-	padding-left: 10px;
+@media screen and (max-width: 769px) {
+	.center {
+		width: 85%;
+	}
+
+	.paramsForm {
+		width: 100%;
+		gap: 0px;
+		justify-content: space-between;
+	}
+
+	.paramComponent {
+		width: 45%;
+	}
+}
+
+@media screen and (max-width: 426px) {
+	.center {
+		width: 90%;
+	}
+
+	.tarjetonParams {
+		height: auto;
+		padding-top: 10px;
+		padding-bottom: 20px;
+	}
+
+	.btn {
+		margin-top: 70px;
+	}
+
+	.paramComponent {
+		width: 100%;
+		height: 85px;
+	}
+
+	.paramsForm {
+		flex-direction: column;
+		flex-wrap: nowrap;
+		justify-content: center;
+		gap: 20px;
+	}
 }
