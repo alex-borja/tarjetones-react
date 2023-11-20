@@ -13,7 +13,7 @@ function FileInputView({ sharedParams }) {
 	const [error, setError] = useState([]);
 	const [result, setResult] = useState([]);
 
-	const furriel = SEDE_MAP[sharedParams.sede];
+	const furriel = SEDE_MAP_UNEATLANTICO[sharedParams.sede];
 	const uneatUrl = "https://www.uneatlantico.es/"
 
 	let handleFile = (e) => {
