@@ -1,4 +1,4 @@
-import { SEDE_MAP } from "./db";
+import { SEDE_MAP_UNEATLANTICO } from "./db";
 
 export const INPUT_FIELDS = [
 	{

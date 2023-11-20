@@ -1,5 +1,5 @@
 export const TARJETON_TYPE = {
-	ggu: {
+	GGU: {
 		sede: "",
 		pixel: "",
 		linkFinal: "",
@@ -7,7 +7,7 @@ export const TARJETON_TYPE = {
 		kw: "",
 		matomo: ""
 	},
-	EU: {
+	GAF: {
 		subject: "",
 		pixel: "",
 		linkFinal: "",
