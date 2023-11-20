@@ -17,15 +17,16 @@ function App() {
 
 	return (
 		<div className='container'>
+			<NavBar
+				showResults={showResults}
+				setShowResults={setShowResults}
+				sharedParams={sharedParams}>
+			</NavBar>
+
+		<div className='center'>			
 			<div className='header'>
 				<h2>Validador de Tarjetones Genericos para Uneatlantico</h2>
 			</div>
-			<div className='center'>
-				<NavBar
-					showResults={showResults}
-					setShowResults={setShowResults}
-					sharedParams={sharedParams}>
-				</NavBar>
 				{
 					!showResults ?
 						<TarjetonParamsView
@@ -40,7 +41,6 @@ function App() {
 						</FileInputView>
 				}
 			</div>
-
 		</div>
 	)
 }

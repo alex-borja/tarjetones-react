@@ -1,4 +1,5 @@
-export const SEDE_MAP = {
+// uneatlantico furrieles
+export const SEDE_MAP_UNEATLANTICO = {
 	AR: "?furriel=129116aad2f98e57409796e77d6fb7c0929f5090",
 	AO: "?furriel=7da332c829c7d68420a6cd3d2c3094be3e3a1f2c",
 	BO: "?furriel=9c34e39a6159266ff8fc39b08a7e285ab52ccfce",
@@ -29,4 +30,9 @@ export const SEDE_MAP = {
 	US:	"?furriel=3d99722d6ae5ccc680908420da56fa086b924879",
 	UY:	"?furriel=97717382a0ddf38a62df95e17ab0c7fd77ca30a6",
 	VE:	"?furriel=1c68a73a936cc63727731857243fd3040bccf45c",
+}
+
+// funiber furrieles
+export const SEDE_MAP_FUNIBER = {
+	A: "A,"
 }

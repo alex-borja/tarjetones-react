@@ -1,7 +1,7 @@
 import cheerio from "cheerio";
 import { useState } from "react"
 import PropTypes from "prop-types";
-import { SEDE_MAP } from "../utils/db";
+import { SEDE_MAP_UNEATLANTICO } from "../utils/db";
 import "../styles/views/FileInputView.css"
 import ResultCard from "../components/resultCard"
 import { PARAMS_INFO, getSedeFromFile } from "../utils/utils";
