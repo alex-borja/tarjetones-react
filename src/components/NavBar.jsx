@@ -7,17 +7,25 @@ import TarjetonType from "./TarjetonType";
 
 function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
 
+
+
 	let handleClick = (param) => {
 		switch (param) {
 			case "type":
 				if(tarjetonType) {
-					setShowParmas((prev) => !prev);
+					setShowParmas(false);
 				}
 				break;
 			case "params":
+				if(tarjetonType) {
+					setShowParmas(true)
+				}
 				setShowResults(false);
 				break;
 			case "results":
+				if(tarjetonType) {
+					setShowParmas(true)
+				}
 				if(checkValidParams(sharedParams)) {
 					setShowResults(true);
 				}
