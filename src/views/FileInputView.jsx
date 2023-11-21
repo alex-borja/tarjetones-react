@@ -1,7 +1,6 @@
 import cheerio from "cheerio";
 import { useState } from "react"
 import PropTypes from "prop-types";
-import { SEDE_MAP_UNEATLANTICO } from "../utils/db";
 import "../styles/views/FileInputView.css"
 import ResultCard from "../components/resultCard"
 import { PARAMS_INFO, getSedeFromFile } from "../utils/utils";
@@ -127,11 +126,6 @@ function FileInputView({ sharedParams, tarjetonType }) {
 		</div>
 	)
 }
-/*
-	<div className="returnToParams">
-	<button className="returnBtn" onClick={returnToParams}>Regresar a los parametros</button>
-	</div>
-*/
 
 FileInputView.propTypes = {
 	sharedParams: PropTypes.object,
