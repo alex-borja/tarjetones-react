@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import TarjetonParamsView from './views/TarjetonParamsView';
 import FileInputView from './views/FileInputView';
 import PropTypes from "prop-types";
@@ -8,7 +8,16 @@ import TarjetonType from './components/TarjetonType';
 
 function App() {
 	const [showResults, setShowResults] = useState(false);
-	const [sharedParams, setSharedParams] = useState({})
+	const [tarjetonType, setTarjetonType] = useState("");
+	const [sharedParams, setSharedParams] = useState({
+		sede: "",
+		pixel: "",
+		linkFinal: "",
+		furriel: "",
+		bannerUrl: "",
+		kw: "",
+		matomo: ""
+	})
 
 	return (
 		<div className='container'>
@@ -17,23 +26,34 @@ function App() {
 				setShowResults={setShowResults}
 				sharedParams={sharedParams}>
 			</NavBar>
-			<div className='center'>			
+			<div className='center'>
 				<div className='header'>
-					<h2>Validador de Tarjetones Genericos para Uneatlantico</h2>
+					<h2>Validador de Tarjetones</h2>
 				</div>
-				<TarjetonType></TarjetonType>
 				{
-					!showResults ?
-						<TarjetonParamsView
-							showParams={showResults}
-							setShowParams={setShowResults}
-							sharedParams={sharedParams}
-							setSharedParams={setSharedParams}>
-						</TarjetonParamsView>
+					tarjetonType ?
+						<>{
+							!showResults ?
+								<TarjetonParamsView
+									showParams={showResults}
+									setShowParams={setShowResults}
+									sharedParams={sharedParams}
+									setSharedParams={setSharedParams}>
+								</TarjetonParamsView>
+								:
+								<FileInputView
+									sharedParams={sharedParams}
+									tarjetonType={tarjetonType}>
+								</FileInputView>
+						}
+						</>
 						:
-						<FileInputView
-							sharedParams={sharedParams}>
-						</FileInputView>
+						<TarjetonType
+							tarjetonType={tarjetonType}
+							setTarjetonType={setTarjetonType}
+							sharedParams={sharedParams}
+							setSharedParams={setSharedParams}
+						></TarjetonType>
 				}
 			</div>
 		</div>

@@ -20,6 +20,12 @@ export const INPUT_FIELDS = [
 		placeholder: "Introduzca el Link Final",
 	},
 	{
+		label: "Furriel",
+		name: "furriel",
+		id: "furriel",
+		placeholder: "Introduce el furriel de la sede",
+	},
+	{
 
 		label: "KW:",
 		name: "kw",

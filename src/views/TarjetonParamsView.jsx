@@ -5,8 +5,9 @@ import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
 import { SEDE_MAP_UNEATLANTICO } from "../utils/db";
+import { TARJETON_TYPE } from "../utils/tarjetonType";
 
-function TarjetonParamsView({ showParams, setShowParams, sharedParams, setSharedParams }) {
+function TarjetonParamsView({ showParams, setShowParams, sharedParams, setSharedParams}) {
 	let [validParams, setValidParams] = useState("");
 
 	let submitParams = (e) => {

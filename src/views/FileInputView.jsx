@@ -5,16 +5,17 @@ import { SEDE_MAP_UNEATLANTICO } from "../utils/db";
 import "../styles/views/FileInputView.css"
 import ResultCard from "../components/resultCard"
 import { PARAMS_INFO, getSedeFromFile } from "../utils/utils";
+import { TARJETON_TYPE } from "../utils/tarjetonType";
 
-function FileInputView({ sharedParams }) {
+function FileInputView({ sharedParams, tarjetonType }) {
 	const [htmlFile, setHtmlFile] = useState('');
 	const [fileName, setFileName] = useState('');
 	const [showResult, setShowResult] = useState(false);
 	const [error, setError] = useState([]);
 	const [result, setResult] = useState([]);
 
-	const furriel = SEDE_MAP_UNEATLANTICO[sharedParams.sede];
-	const uneatUrl = "https://www.uneatlantico.es/"
+	const urlToFile = TARJETON_TYPE[tarjetonType].urlLink;
+	const indexes = TARJETON_TYPE[tarjetonType].toCheck
 
 	let handleFile = (e) => {
 		let file = e.target.files[0];
@@ -37,11 +38,10 @@ function FileInputView({ sharedParams }) {
 		const pixel = $('img')[0].attribs.src;
 		const title = $('title')[0].children[0].data;
 
-
-		let finalLink = links[0].attribs.href;
-		let bannerLink = links[1].attribs.href;
-		let buttonLink = links[2].attribs.href;
-		let urlLink = links[6].attribs.href;
+		let finalLink = links[indexes.finalLinkIndex].attribs.href;
+		let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
+		let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
+		let urlLink = links[indexes.urlLinkIndex].attribs.href;
 
 		checkParams(title, pixel, finalLink, bannerLink, buttonLink, urlLink);
 		setShowResult(!showResult);
@@ -51,11 +51,11 @@ function FileInputView({ sharedParams }) {
 		sede = sede.slice(0, 2)
 
 		const correctSede = sharedParams.sede;
-		const correctFinalLink = sharedParams.linkFinal + furriel + sharedParams.kw + sharedParams.matomo;
+		const correctFinalLink = sharedParams.linkFinal + sharedParams.furriel + sharedParams.kw + sharedParams.matomo;
 		const correctPixel = sharedParams.pixel;
-		const correctBannerLink = sharedParams.bannerUrl + furriel + sharedParams.kw + sharedParams.matomo;
-		const correctButtonLink = sharedParams.bannerUrl + furriel + sharedParams.kw + sharedParams.matomo;
-		const correctUrlLink = uneatUrl + furriel + sharedParams.kw + sharedParams.matomo;
+		const correctBannerLink = sharedParams.bannerUrl + sharedParams.furriel + sharedParams.kw + sharedParams.matomo;
+		const correctButtonLink = sharedParams.bannerUrl + sharedParams.furriel + sharedParams.kw + sharedParams.matomo;
+		const correctUrlLink = urlToFile + sharedParams.furriel + sharedParams.kw + sharedParams.matomo;
 
 		checkSingleParam(correctSede, sede, PARAMS_INFO.sede.result, PARAMS_INFO.sede.error)
 		checkSingleParam(correctPixel, pixel, PARAMS_INFO.pixel.result, PARAMS_INFO.pixel.error)
@@ -136,7 +136,8 @@ function FileInputView({ sharedParams }) {
 FileInputView.propTypes = {
 	sharedParams: PropTypes.object,
 	showParams: PropTypes.bool,
-	setShowParams: PropTypes.func
+	setShowParams: PropTypes.func,
+	tarjetonType: PropTypes.string
 }
 
 export default FileInputView 
