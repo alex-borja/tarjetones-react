@@ -73,7 +73,6 @@ export const PARAMS_INFO = {
 	},
 }
 
-// SOLO PARA TARJETONES GENERICOS DE UNEATLANTICO
 export function getSedeFromFile(finalLink) {
 	let indexOfQuestionMark = finalLink.indexOf("?");
 	let subUrl = finalLink.substring(0, indexOfQuestionMark);
