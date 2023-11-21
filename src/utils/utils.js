@@ -88,7 +88,7 @@ export function checkValidParams(sharedParams) {
 		}
 	}
 
-	if (!SEDE_MAP[sharedParams.sede]) {
+	if (!SEDE_MAP_UNEATLANTICO[sharedParams.sede]) {
 		return false
 	}
 	return true
