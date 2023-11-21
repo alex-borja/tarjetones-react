@@ -1,23 +1,25 @@
 import PropTypes from "prop-types";
 import { TARJETON_TYPE } from "../utils/tarjetonType";
+import "../styles/components/TarjetonTypes.css";
 
-function TarjetonType({ tarjetonType, setTarjetonType, sharedParams, setSharedParams  }) {
+function TarjetonType({ tarjetonType, setTarjetonType, setSharedParams, setShowParmas  }) {
 
 	let handleSelect = (e) => {
 		setTarjetonType(e.target.value);
 
 		setSharedParams((prev) => ({ ...prev, ...TARJETON_TYPE[tarjetonType] }))
+		
+		setShowParmas(true);
 	}
 
     return (
-	    <form>
+	    <form className="tarjetonType">
 			<label>Elije el tipo de Tarjeton:</label>
 			<select onChange={(e) => handleSelect(e)} >
 			    <option value="none">Selecciona un tarjeton</option>
 			    <option value="GGU">Generico de Grado Uneatlantico</option>
 				<option value="GAF">Generico de área Funiber</option>
 			</select>
-			<input type="submit" />
 		</form>
     )
 }
@@ -25,8 +27,8 @@ function TarjetonType({ tarjetonType, setTarjetonType, sharedParams, setSharedPa
 TarjetonType.propTypes = {
 	tarjetonType: PropTypes.string,
 	setTarjetonType: PropTypes.func,
-	sharedParams: PropTypes.object,
 	setSharedParams: PropTypes.func,
+	setShowParmas:  PropTypes.func
 }
 
 

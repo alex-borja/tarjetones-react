@@ -80,6 +80,7 @@ function TarjetonParamsView({ showParams, setShowParams, sharedParams, setShared
 		<div className="tarjetonParams">
 			<form className="paramsForm" onSubmit={(e) => submitParams(e)}>
 				<div className="inputFields">
+
 					{renderInputFields()}
 				</div>
 				<div className="btns">

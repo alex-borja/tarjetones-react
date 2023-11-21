@@ -1,17 +1,23 @@
 import "../styles/components/NavBar.css"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faSquarePollVertical } from "@fortawesome/free-solid-svg-icons";
+import { faPencil, faSquarePollVertical, faClipboard } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { checkValidParams } from "../utils/utils";
+import TarjetonType from "./TarjetonType";
 
-function NavBar({ setShowResults, sharedParams }) {
+function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
 
 	let handleClick = (param) => {
 		switch (param) {
-			case "1":
+			case "type":
+				if(tarjetonType) {
+					setShowParmas((prev) => !prev);
+				}
+				break;
+			case "params":
 				setShowResults(false);
 				break;
-			case "2":
+			case "results":
 				if(checkValidParams(sharedParams)) {
 					setShowResults(true);
 				}
@@ -25,11 +31,15 @@ function NavBar({ setShowResults, sharedParams }) {
 		<div className="navbar">
 			<nav>
 				<ul className="navList">
-					<li onClick={() => handleClick("1")}>
+					<li onClick={() => handleClick("type")}>
+						<FontAwesomeIcon icon={faClipboard} style={{ color: "#fcfcfc", }} />
+						<p>Tipo de Tarjetón</p>
+					</li>
+					<li onClick={() => handleClick("params")}>
 						<FontAwesomeIcon icon={faPencil} style={{ color: "#f5f5f5", }} />
 						<p>Set paramters</p>
 					</li>
-					<li onClick={() => handleClick("2")}>
+					<li onClick={() => handleClick("results")}>
 						<FontAwesomeIcon icon={faSquarePollVertical} style={{ color: "#fcfcfc", }} />
 						<p>See results</p>
 					</li>
@@ -43,6 +53,8 @@ NavBar.propTypes = {
 	showResults: PropTypes.bool,
 	setShowResults: PropTypes.func,
 	sharedParams: PropTypes.object,
+	tarjetonType: PropTypes.string,
+	setShowParmas: PropTypes.func,
 }
 
 export default NavBar;

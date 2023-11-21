@@ -8,6 +8,7 @@ import TarjetonType from './components/TarjetonType';
 
 function App() {
 	const [showResults, setShowResults] = useState(false);
+	const [showParams, setShowParmas] = useState(false);
 	const [tarjetonType, setTarjetonType] = useState("");
 	const [sharedParams, setSharedParams] = useState({
 		sede: "",
@@ -24,14 +25,16 @@ function App() {
 			<NavBar
 				showResults={showResults}
 				setShowResults={setShowResults}
-				sharedParams={sharedParams}>
+				sharedParams={sharedParams}
+				tarjetonType={tarjetonType}
+				setShowParmas={setShowParmas}>
 			</NavBar>
 			<div className='center'>
 				<div className='header'>
 					<h2>Validador de Tarjetones</h2>
 				</div>
 				{
-					tarjetonType ?
+					showParams ?
 						<>{
 							!showResults ?
 								<TarjetonParamsView
@@ -51,8 +54,8 @@ function App() {
 						<TarjetonType
 							tarjetonType={tarjetonType}
 							setTarjetonType={setTarjetonType}
-							sharedParams={sharedParams}
 							setSharedParams={setSharedParams}
+							setShowParmas={setShowParmas}
 						></TarjetonType>
 				}
 			</div>
