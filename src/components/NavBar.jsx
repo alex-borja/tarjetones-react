@@ -45,11 +45,11 @@ function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
 					</li>
 					<li onClick={() => handleClick("params")}>
 						<FontAwesomeIcon icon={faPencil} style={{ color: "#f5f5f5", }} />
-						<p>Set paramters</p>
+						<p>Páramtros</p>
 					</li>
 					<li onClick={() => handleClick("results")}>
 						<FontAwesomeIcon icon={faSquarePollVertical} style={{ color: "#fcfcfc", }} />
-						<p>See results</p>
+						<p>Ver resultados</p>
 					</li>
 				</ul>
 			</nav>

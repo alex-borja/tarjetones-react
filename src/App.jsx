@@ -3,7 +3,6 @@ import TarjetonParamsView from './views/TarjetonParamsView';
 import FileInputView from './views/FileInputView';
 import PropTypes from "prop-types";
 import NavBar from './components/NavBar';
-import { TARJETON_TYPE } from './utils/tarjetonType';
 import TarjetonType from './components/TarjetonType';
 
 function App() {
