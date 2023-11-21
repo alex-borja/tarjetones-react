@@ -20,6 +20,12 @@ export const INPUT_FIELDS = [
 		placeholder: "Introduzca el Link Final",
 	},
 	{
+		label: "Furriel",
+		name: "furriel",
+		id: "furriel",
+		placeholder: "Introduce el furriel de la sede",
+	},
+	{
 
 		label: "KW:",
 		name: "kw",
@@ -67,7 +73,6 @@ export const PARAMS_INFO = {
 	},
 }
 
-// SOLO PARA TARJETONES GENERICOS DE UNEATLANTICO
 export function getSedeFromFile(finalLink) {
 	let indexOfQuestionMark = finalLink.indexOf("?");
 	let subUrl = finalLink.substring(0, indexOfQuestionMark);
@@ -83,7 +88,7 @@ export function checkValidParams(sharedParams) {
 		}
 	}
 
-	if (!SEDE_MAP[sharedParams.sede]) {
+	if (!SEDE_MAP_UNEATLANTICO[sharedParams.sede]) {
 		return false
 	}
 	return true

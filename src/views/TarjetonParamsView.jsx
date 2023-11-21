@@ -4,8 +4,10 @@ import PropTypes from "prop-types";
 import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
+import { SEDE_MAP_UNEATLANTICO } from "../utils/db";
+import { TARJETON_TYPE } from "../utils/tarjetonType";
 
-function TarjetonParamsView({ showParams, setShowParams, sharedParams, setSharedParams }) {
+function TarjetonParamsView({ showParams, setShowParams, sharedParams, setSharedParams}) {
 	let [validParams, setValidParams] = useState("");
 
 	let submitParams = (e) => {
@@ -14,7 +16,7 @@ function TarjetonParamsView({ showParams, setShowParams, sharedParams, setShared
 	}
 
 	let validateParams = () => {
-		if (!(sharedParams.sede in SEDE_MAP)) {
+		if (!(sharedParams.sede in SEDE_MAP_UNEATLANTICO)) {
 			console.log("No existe una sede con esas siglas");
 		}
 
@@ -37,7 +39,7 @@ function TarjetonParamsView({ showParams, setShowParams, sharedParams, setShared
 			}
 		}
 
-		if (!SEDE_MAP[sharedParams.sede]) {
+		if (!SEDE_MAP_UNEATLANTICO[sharedParams.sede]) {
 			setValidParams("La sede que indicastes no existe.");
 			return false
 		}
@@ -77,10 +79,15 @@ function TarjetonParamsView({ showParams, setShowParams, sharedParams, setShared
 	return (
 		<div className="tarjetonParams">
 			<form className="paramsForm" onSubmit={(e) => submitParams(e)}>
-				{renderInputFields()}
+				<div className="inputFields">
+
+					{renderInputFields()}
+				</div>
 				<div className="btns">
-					<button type="submit" className="btn submit">Seguir</button>
-					<button type="button" className="btn clearBtn" onClick={clearInputs}>Limpiar</button>
+					<div className="btnContainer">
+						<button type="submit" className="btn submit">Seguir</button>
+						<button type="button" className="btn clearBtn" onClick={clearInputs}>Limpiar</button>
+					</div>
 				</div>
 			</form>
 			{renderWarnings()}
