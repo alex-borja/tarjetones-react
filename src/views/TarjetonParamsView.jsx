@@ -5,14 +5,13 @@ import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
 import { SEDE_MAP_UNEATLANTICO } from "../utils/db";
+import { hasSede  } from "../utils/utils";
 
 function TarjetonParamsView({
   showParams,
   setShowParams,
   sharedParams,
   setSharedParams,
-  tarjetonType,
-  ptest,
 }) {
   let [validParams, setValidParams] = useState("");
 
@@ -22,10 +21,6 @@ function TarjetonParamsView({
   };
 
   let validateParams = () => {
-    if (!(sharedParams.sede in SEDE_MAP_UNEATLANTICO)) {
-      console.log("No existe una sede con esas siglas");
-    }
-
     if (checkValidParams()) {
       setShowParams(!showParams);
     }
@@ -33,7 +28,7 @@ function TarjetonParamsView({
 
   let handleInput = (e) => {
     let { name, value } = e.target;
-    setSharedParams((prevParams) => ({ ...prevParams, [name]: value.trim() }));
+	setSharedParams((prev) => ({...prev, [name]: value.trim()}));
   };
 
   let checkValidParams = () => {
@@ -44,7 +39,7 @@ function TarjetonParamsView({
       }
     }
 
-    if (!SEDE_MAP_UNEATLANTICO[sharedParams.sede]) {
+    if (!SEDE_MAP_UNEATLANTICO[sharedParams.sede] && hasSede(sharedParams.type)) {
       setValidParams("La sede que indicastes no existe.");
       return false;
     }
@@ -62,13 +57,10 @@ function TarjetonParamsView({
     });
   };
 
-  let renderInputFieldsTest = () => {
-    let newParams = INPUT_FIELDS.filter((param) => ptest[param.name]);
-    console.log;
-  };
-
   let renderInputFields = () => {
-    return INPUT_FIELDS.map((field) => (
+    let tarjetonParams = INPUT_FIELDS.filter((param) => param.name in sharedParams);
+
+	return tarjetonParams.map((field) => (
       <ParamInput
         key={field.id}
         name={field.name}
@@ -79,6 +71,7 @@ function TarjetonParamsView({
         value={sharedParams[field.name]}
       ></ParamInput>
     ));
+	
   };
 
   let renderWarnings = () => {
@@ -95,7 +88,7 @@ function TarjetonParamsView({
   return (
     <div className="tarjetonParams">
       <form className="paramsForm" onSubmit={(e) => submitParams(e)}>
-        <div className="inputFields">{renderInputFieldsTest()}</div>
+        <div className="inputFields">{renderInputFields()}</div>
         <div className="btns">
           <div className="btnContainer">
             <button type="submit" className="btn submit">
@@ -121,7 +114,6 @@ TarjetonParamsView.propTypes = {
   setShowParams: PropTypes.func,
   sharedParams: PropTypes.object,
   setSharedParams: PropTypes.func,
-  ptest: PropTypes.object,
 };
 
 export default TarjetonParamsView;

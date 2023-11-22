@@ -40,8 +40,9 @@ export const TARJETON_TYPE = {
   TEF: {
     params: {
       type: "TEF",
-      pixel: "vvvvv",
+      pixel: "",
       linkFinal: "",
+	  furriel: "",
       bannerUrl: "",
       kw: "",
       matomo: "",
@@ -54,5 +55,46 @@ export const TARJETON_TYPE = {
       urlLinkIndex: 3,
     },
     urlLink: "https://www.funiber.org.pe/",
+  },
+  WBNRS_ENV_1: {
+    params: {
+      type: "WBNRS_ENV_1",
+	  pixel: "",
+	  linkFinal: "",
+	  furriel: "",
+	  kw: "",
+	  matomo: "",
+	  matomo_medium: "",
+	  matomo_cid: "",
+      bannerUrl: "",
+    },
+    toCheck: {
+      finalLinkIndex: 0,
+      bannerLinkIndex: 1,
+      buttonLinkIndex: 2,
+	  catedraLink: 3,
+      urlLinkIndex: 4,
+    },
+    urlLink: "https://www.funiber.es/",
+  },
+  WBNRS_ENV_2: {
+    params: {
+      type: "WBNRS_ENV_2",
+	  pixel: "",
+	  linkFinal: "",
+	  furriel: "",
+	  kw: "",
+	  matomo: "",
+	  matomo_medium: "",
+	  matomo_cid: "",
+      bannerUrl: "",
+    },
+    toCheck: {
+      finalLinkIndex: 0,
+      bannerLinkIndex: 1,
+      buttonLinkIndex: 2,
+      urlLinkIndex: 3,
+    },
+    urlLink: "https://www.funiber.es/",
   },
 };

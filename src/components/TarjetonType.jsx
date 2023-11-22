@@ -7,13 +7,11 @@ function TarjetonType({
   setTarjetonType,
   setSharedParams,
   setShowParmas,
-  setPTests,
 }) {
   let handleSelect = (e) => {
     setTarjetonType(e.target.value);
-    setSharedParams((prev) => ({ ...prev, ...TARJETON_TYPE[tarjetonType] }));
+    setSharedParams(() => ({ ...TARJETON_TYPE[e.target.value].params }));
 
-    setPTests((prev) => ({ ...prev, ...TARJETON_TYPE[e.target.value].params }));
     setShowParmas(true);
   };
 
@@ -25,6 +23,8 @@ function TarjetonType({
         <option value="GGU">Generico de Grado Uneatlantico</option>
         <option value="GAF">Generico de área Funiber</option>
         <option value="TEF">Tarjeton Evento Funiber</option>
+        <option value="WBNRS_ENV_1">Tarjeton Webinar Env 1</option>
+        <option value="WBNRS_ENV_2">Tarjeton Webinar Env 2</option>
       </select>
     </form>
   );

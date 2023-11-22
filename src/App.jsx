@@ -4,22 +4,12 @@ import FileInputView from "./views/FileInputView";
 import PropTypes from "prop-types";
 import NavBar from "./components/NavBar";
 import TarjetonType from "./components/TarjetonType";
-import { TARJETON_TYPE } from "./utils/tarjetonType";
 
 function App() {
   const [showResults, setShowResults] = useState(false);
   const [showParams, setShowParmas] = useState(false);
   const [tarjetonType, setTarjetonType] = useState("");
-  const [sharedParams, setSharedParams] = useState({
-    sede: "",
-    pixel: "",
-    linkFinal: "",
-    furriel: "",
-    bannerUrl: "",
-    kw: "",
-    matomo: "",
-  });
-  const [ptest, setPTests] = useState({});
+  const [sharedParams, setSharedParams] = useState({});
 
   return (
     <div className="container">
@@ -42,8 +32,6 @@ function App() {
                 setShowParams={setShowResults}
                 sharedParams={sharedParams}
                 setSharedParams={setSharedParams}
-                tarjetonType={tarjetonType}
-                ptest={ptest}
               ></TarjetonParamsView>
             ) : (
               <FileInputView
@@ -58,7 +46,6 @@ function App() {
             setTarjetonType={setTarjetonType}
             setSharedParams={setSharedParams}
             setShowParmas={setShowParmas}
-            setPTests={setPTests}
           ></TarjetonType>
         )}
       </div>

@@ -27,7 +27,7 @@ function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
         if (tarjetonType) {
           setShowParmas(true);
         }
-        if (checkValidParams(sharedParams)) {
+        if (checkValidParams(sharedParams, sharedParams.type)) {
           setShowResults(true);
         }
         break;
