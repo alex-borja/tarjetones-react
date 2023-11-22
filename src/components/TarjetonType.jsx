@@ -13,7 +13,7 @@ function TarjetonType({
     setTarjetonType(e.target.value);
     setSharedParams((prev) => ({ ...prev, ...TARJETON_TYPE[tarjetonType] }));
 
-    //setPTests((prev) => ({...prev, ...}))
+    setPTests((prev) => ({ ...prev, ...TARJETON_TYPE[e.target.value].params }));
     setShowParmas(true);
   };
 

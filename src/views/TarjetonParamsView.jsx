@@ -63,17 +63,8 @@ function TarjetonParamsView({
   };
 
   let renderInputFieldsTest = () => {
-    return INPUT_FIELDS.map((field) => {
-      console.log(ptest[field.name]);
-      //return <p key={idx}>{ptest[1]}</p>;
-      /*
-      if (ptest[field.name]) {
-        console.log(ptest[field.name]);
-      } else {
-        console.log(field.name + " no se encuentra en params");
-      }
-      */
-    });
+    let newParams = INPUT_FIELDS.filter((param) => ptest[param.name]);
+    console.log;
   };
 
   let renderInputFields = () => {

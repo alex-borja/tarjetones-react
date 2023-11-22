@@ -21,17 +21,6 @@ function App() {
   });
   const [ptest, setPTests] = useState({});
 
-  useEffect(() => {
-    if (tarjetonType) {
-      return () => {
-        setPTests((prev) => ({
-          ...prev,
-          ...TARJETON_TYPE[tarjetonType].params,
-        }));
-      };
-    }
-  }, [tarjetonType]);
-
   return (
     <div className="container">
       <NavBar
