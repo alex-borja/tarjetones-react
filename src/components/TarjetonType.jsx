@@ -21,7 +21,7 @@ function TarjetonType({
       <select onChange={(e) => handleSelect(e)} value={tarjetonType}>
         <option value="none">Selecciona un tarjeton</option>
         <option value="GGU">Generico de Grado Uneatlantico</option>
-        <option value="GAF">Generico de área Funiber</option>
+        <option value="GAF">Generico de Area Funiber</option>
         <option value="TEF">Tarjeton Evento Funiber</option>
         <option value="WBNRS_ENV_1">Tarjeton Webinar Env 1</option>
         <option value="WBNRS_ENV_2">Tarjeton Webinar Env 2</option>
