@@ -1,6 +1,5 @@
 .container {
   width: 100%;
-  /* min-height: 100vh; */
   height: auto;
   display: flex;
   flex-direction: row;
@@ -99,6 +98,10 @@
   .center {
     width: 85%;
   }
+  
+  .container {
+	  flex-direction: column;
+  }
 
   .paramsForm {
     width: 100%;
@@ -116,14 +119,15 @@
     width: 90%;
   }
 
+  .container {
+	  flex-direction: column;
+	  align-items: center;
+  }
+
   .tarjetonParams {
     height: auto;
     padding-top: 10px;
     padding-bottom: 20px;
-  }
-
-  .btn {
-    margin-top: 70px;
   }
 
   .paramComponent {
