@@ -18,7 +18,11 @@ function TarjetonType({
   return (
     <form className="tarjetonType">
       <label>Elije el tipo de Tarjeton:</label>
-      <select onChange={(e) => handleSelect(e)} value={tarjetonType}>
+      <select
+        className="selectTargeton"
+        onChange={(e) => handleSelect(e)}
+        value={tarjetonType}
+      >
         <option value="none">Selecciona un tarjeton</option>
         <option value="GGU">Generico de Grado Uneatlantico</option>
         <option value="GAF">Generico de Area Funiber</option>

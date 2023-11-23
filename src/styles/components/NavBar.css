@@ -43,32 +43,39 @@
   color: white;
 }
 
-
 @media screen and (max-width: 769px) {
-	.navbar {
-		width: 200px;
-	}
+  .navbar {
+    width: 200px;
+  }
 
-	.nanvList {
-		width: 100%;
-	}
+  .navList {
+    width: 98%;
+  }
+
+  .navList li {
+    width: 170px;
+    display: flex;
+    justify-content: space-evenly;
+  }
+
+  .navList li p {
+    width: 130px;
+  }
 }
 
 @media screen and (max-width: 426px) {
-	.navbar {
-		width: 100%;
-		min-height: 100px;
-	}
+  .navbar {
+    width: 100%;
+    min-height: 100px;
+  }
 
-	.navbar nav {
-		width: 100%;
-		margin: 0px;
-	}
+  .navbar nav {
+    width: 100%;
+    margin: 0px;
+  }
 
-	.navList {
-		margin: 0 auto;
-		padding: 10px 0px;
-	}
+  .navList {
+    margin: 0 auto;
+    padding: 10px 0px;
+  }
 }
-
-
