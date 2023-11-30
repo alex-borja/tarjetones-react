@@ -19,10 +19,9 @@ function FileInputView({ sharedParams, tarjetonType }) {
 	const [error, setError] = useState([]);
 	const [result, setResult] = useState([]);
 
-	let urlToFile;
-	urlToFile =
+	let urlToFile =
 		sharedParams.appliedUrl
-			? sharedParams.funiberUrl
+			? FUNIBER_URL_LINKS[sharedParams.sede]
 			: TARJETON_TYPE[tarjetonType].urlLink;
 
 	const indexes = TARJETON_TYPE[tarjetonType].toCheck;
@@ -77,7 +76,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
 	) => {
 		sede = sede.slice(0, 2);
 
-		urlToFile = repairUlr(urlToFile);
+		urlToFile = repairUrl(urlToFile);
 
 		let [
 			correctSede,
@@ -87,8 +86,6 @@ function FileInputView({ sharedParams, tarjetonType }) {
 			correctButtonLink,
 			correctUrlLink,
 		] = buildLinks(sharedParams, urlToFile);
-
-		console.log(correctUrlLink);
 
 		if (hasSede(tarjetonType)) {
 			checkSingleParam(
@@ -123,7 +120,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
 		checkSiteUrl(correctUrlLink, urlLink);
 	};
 
-	let resolveUrl = (url) => {
+	let repairUrl = (url) => {
 		let finalChar = url.length - 1;
 		if (url[finalChar] === "/") {
 			return url;
@@ -137,7 +134,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
 		let leftSide = urlLink.substring(0, indexOfQuestionMark);
 		let rightSide = urlLink.substring(indexOfQuestionMark, urlLink.length);
 
-		let link = resolveUrl(leftSide);
+		let link = repairUrl(leftSide);
 		link += rightSide;
 
 		checkSingleParam(

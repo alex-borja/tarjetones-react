@@ -7,7 +7,6 @@ export const TARJETON_TYPE = {
 			sede: "",
 			pixel: "",
 			linkFinal: "",
-			furriel: "",
 			bannerUrl: "",
 			kw: "",
 			matomo: "",
@@ -28,11 +27,9 @@ export const TARJETON_TYPE = {
 			sede: "",
 			pixel: "",
 			linkFinal: "",
-			furriel: "",
 			bannerUrl: "",
 			kw: "",
 			matomo: "",
-			funiberUrl: "",
 		},
 		toCheck: {
 			finalLinkIndex: 0,
@@ -40,7 +37,6 @@ export const TARJETON_TYPE = {
 			buttonLinkIndex: 2,
 			urlLinkIndex: 3,
 		},
-		//urlLink: "https://www.funiber.es/",
 	},
 	TEF: {
 		params: {

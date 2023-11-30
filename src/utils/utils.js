@@ -1,4 +1,4 @@
-import { SEDE_MAP_UNEATLANTICO } from "./db";
+import { SEDE_MAP_FUNIBER, SEDE_MAP_UNEATLANTICO } from "./db";
 import { FUNIBER_URL_LINKS } from "./funiberUrlLinks";
 
 export const INPUT_FIELDS = [
@@ -105,6 +105,17 @@ export function getSedeFromFile(link) {
 	return fileSede;
 }
 
+
+export function buildCorrectFinalLink(link, sede) {
+	let indexOfFileType = link.indexOf(".html");
+	let arr = link.split("");
+
+	arr[indexOfFileType - 2] = sede[0];
+	arr[indexOfFileType - 1] = sede[1];
+
+	return arr.join("");
+}
+
 // may be good to remove this function
 export function hasSede(type) {
 	if (type !== "TEF" && type !== "WBNRS_ENV_1" && type !== "WBNRS_ENV_2") {
@@ -155,29 +166,41 @@ export function buildLinks(sharedParams, urlToFile) {
 		];
 	} else {
 		let urlFromSede = FUNIBER_URL_LINKS[sharedParams.sede];
-
 		urlToFile = (sharedParams.hasSede && sharedParams.appliedUrl) ? urlFromSede : urlToFile;
 
+		let furriel;
+		if(sharedParams.hasSede) {
+			if(sharedParams.type === "GAF") {
+				furriel = SEDE_MAP_FUNIBER[sharedParams.sede];
+			} else {
+				furriel = SEDE_MAP_UNEATLANTICO[sharedParams.sede];
+			}
+		} else {
+			furriel = sharedParams.furriel;
+		}
+
 		const correctSede = sharedParams.sede;
+		const correctLinkFinal = buildCorrectFinalLink(sharedParams.linkFinal, sharedParams.sede.toLowerCase());
+		//console.log(correctLinkFinal);
 
 		const correctFinalLink =
-			sharedParams.linkFinal +
-			sharedParams.furriel +
+			correctLinkFinal + 
+			furriel +
 			sharedParams.kw +
 			sharedParams.matomo;
 		const correctPixel = sharedParams.pixel;
 		const correctBannerLink =
 			sharedParams.bannerUrl +
-			sharedParams.furriel +
+			furriel +
 			sharedParams.kw +
 			sharedParams.matomo;
 		const correctButtonLink =
 			sharedParams.bannerUrl +
-			sharedParams.furriel +
+			furriel +
 			sharedParams.kw +
 			sharedParams.matomo;
 		const correctUrlLink =
-			urlToFile + sharedParams.furriel + sharedParams.kw + sharedParams.matomo;
+			urlToFile + furriel + sharedParams.kw + sharedParams.matomo;
 
 		return [
 			correctSede,
