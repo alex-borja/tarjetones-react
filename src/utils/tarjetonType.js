@@ -2,12 +2,14 @@ export const TARJETON_TYPE = {
 	GGU: {
 		params: {
 			type: "GGU",
+			appliedUrl: false,
+			hasSede: true,
 			sede: "",
 			pixel: "",
 			linkFinal: "",
 			bannerUrl: "",
 			kw: "",
-			matomo: ""
+			matomo: "",
 		},
 		toCheck: {
 			finalLinkIndex: 0,
@@ -15,17 +17,19 @@ export const TARJETON_TYPE = {
 			buttonLinkIndex: 2,
 			urlLinkIndex: 6,
 		},
-		urlLink: "https://www.uneatlantico.es/"
+		urlLink: "https://www.uneatlantico.es/",
 	},
 	GAF: {
 		params: {
 			type: "GAF",
+			appliedUrl: true,
+			hasSede: true,
 			sede: "",
 			pixel: "",
 			linkFinal: "",
 			bannerUrl: "",
 			kw: "",
-			matomo: ""
+			matomo: "",
 		},
 		toCheck: {
 			finalLinkIndex: 0,
@@ -33,6 +37,71 @@ export const TARJETON_TYPE = {
 			buttonLinkIndex: 2,
 			urlLinkIndex: 3,
 		},
-		urlLink: "https://www.funiber.es/"
-	}
-}
+	},
+	TEF: {
+		params: {
+			type: "TEF",
+			appliedUrl: true,
+			hasSede: false,
+			pixel: "",
+			linkFinal: "",
+			furriel: "",
+			bannerUrl: "",
+			kw: "",
+			matomo: "",
+			urlFuniber: "",
+		},
+		toCheck: {
+			finalLinkIndex: 0,
+			bannerLinkIndex: 1,
+			buttonLinkIndex: 2,
+			urlLinkIndex: 3,
+		},
+		urlLink: "",
+	},
+	WBNRS_ENV_1: {
+		params: {
+			type: "WBNRS_ENV_1",
+			appliedUrl: false,
+			hasSede: false,
+			pixel: "",
+			linkFinal: "",
+			furriel: "",
+			kw: "",
+			matomo: "",
+			matomo_medium: "",
+			matomo_cid: "",
+			bannerUrl: "",
+		},
+		toCheck: {
+			finalLinkIndex: 0,
+			bannerLinkIndex: 1,
+			buttonLinkIndex: 2,
+			catedraLink: 3,
+			urlLinkIndex: 4,
+		},
+		urlLink: "https://www.funiber.es/",
+	},
+	WBNRS_ENV_2: {
+		params: {
+			type: "WBNRS_ENV_2",
+			appliedUrl: false,
+			hasSede: false,
+			pixel: "",
+			linkFinal: "",
+			furriel: "",
+			kw: "",
+			matomo: "",
+			matomo_medium: "",
+			matomo_cid: "",
+			bannerUrl: "",
+		},
+		toCheck: {
+			finalLinkIndex: 0,
+			bannerLinkIndex: 1,
+			buttonLinkIndex: 2,
+			urlLinkIndex: 3,
+		},
+		urlLink: "https://www.funiber.es/",
+	},
+};

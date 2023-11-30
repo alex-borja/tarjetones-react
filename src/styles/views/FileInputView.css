@@ -1,160 +1,181 @@
 .fileInput {
-	width: 100%;
-	display: flex;
-	flex-direction: row;
-	margin-top: 20px;
-	height: 70vh;
-	border-radius: 5px;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  flex: 1;
+  margin-top: 20px;
+}
+
+.leftContent {
+  width: 95%;
+  display: flex;
+  flex-direction: row;
+  margin-top: 20px;
+  height: 70vh;
+  border-radius: 5px;
+  margin: 0 auto;
 }
 
 .left {
-	display: flex;
-	width: 30%;
-	flex-direction: column;
-	padding: 20px;
-	border-radius: 5px 0px 0px 5px;
-	background-color: #313131;
+  display: flex;
+  width: 30%;
+  flex-direction: column;
+  padding: 20px;
+  border-radius: 5px 0px 0px 5px;
+  background-color: #313131;
 }
 
 .left form {
-	display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-	margin-bottom: 30px;
-	height: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: 30px;
+  height: 50%;
 }
 
 .left input {
-	margin-bottom: 5px;
+  margin-bottom: 5px;
 }
 
 .returnToParams {
-	display: flex;
-	justify-content: center;
+  display: flex;
+  justify-content: center;
 }
 
 .returnBtn {
-	height: 50px;
-	width: 150px;
-	border: none;
-	border-radius: 5px;
-	color: white;
-	background-color: black;
-	cursor: pointer;
-	transition: 0.2s ease-in all;
+  height: 50px;
+  width: 150px;
+  border: none;
+  border-radius: 5px;
+  color: white;
+  background-color: black;
+  cursor: pointer;
+  transition: 0.2s ease-in all;
 }
 
 .returnBtn:hover {
-	opacity: 0.8;
-	scale: 1.03;
+  opacity: 0.8;
+  scale: 1.03;
 }
 
 .uploadFile {
-	margin-bottom: 10px;
-	cursor: pointer;
-	border-radius: 5px;
-	width: 100%;
-	height: 50px;
-	background-color: #161616;
-	font-size: 15px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	text-align: center;
-	padding: 5px;
-	word-break: break-all;
+  margin-bottom: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  width: 100%;
+  height: 50px;
+  background-color: #161616;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 5px;
+  word-break: break-all;
 }
 
 input[type="file"] {
-	display: none;
+  display: none;
 }
 
-.uploadBtn {
-	padding: 10px 30px;
-	border-radius: 20px;
-	border: none;
-	background-color: #161616;
-	color: white;
-	cursor: pointer;
+.left form button {
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: none;
+  background-color: #161616;
+  color: white;
+  cursor: pointer;
 }
+
+/*
+.uploadBtn {
+  padding: 10px 30px;
+  border-radius: 20px;
+  border: none;
+  background-color: #161616;
+  color: white;
+  cursor: pointer;
+}
+*/
 
 .uploadFile:hover {
-	opacity: 0.85;
+  opacity: 0.85;
 }
 
 .uploadBtn:hover {
-	opacity: 0.85;
+  opacity: 0.85;
 }
 
 .right {
-	width: 100%;
-	padding: 20px;
-	background-color: #525252;
-	overflow: scroll;
-	overflow-x: hidden;
+  width: 100%;
+  padding: 20px;
+  background-color: #525252;
+  overflow: scroll;
+  overflow-x: hidden;
 }
 
 .right::-webkit-scrollbar {
-    width: 5px;
+  width: 5px;
 }
 
 .right::-webkit-scrollbar-track {
-    background-color: black;
+  background-color: black;
 }
 
 .right::-webkit-scrollbar-thumb {
-    background: darkgray;
-    border-radius: 2px;
+  background: darkgray;
+  border-radius: 2px;
 }
 
 .selectedFiles {
-	margin-bottom: 30px;
-	text-align: center;
+  margin-bottom: 30px;
+  text-align: center;
 }
 
 .selectedFiles h4 {
-	margin-bottom: 7px;
+  margin-bottom: 7px;
 }
 
 @media screen and (max-width: 769px) {
-	.fileInput {
-		flex-direction: column;
-		margin-bottom: 20px;
-	}
+  .fileInput {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 
-	.left {
-		width: 100%;
-		height: 30vh;
-	}
+  .left {
+    width: 100%;
+    height: 30vh;
+  }
 
-	.left form {
-		height: 100%;
-		padding: 10px;
-	}
+  .left form {
+    height: 100%;
+    padding: 10px;
+  }
 
-	.selectedFiles {
-		margin-bottom: 10px;
-	}
+  .selectedFiles {
+    margin-bottom: 10px;
+  }
 }
 
 @media screen and (max-width: 426px) {
-	.fileInput {
-		flex-direction: column;
-		margin-bottom: 20px;
-	}
+  .fileInput {
+    flex-direction: column;
+    margin-bottom: 20px;
+  }
 
-	.left {
-		width: 100%;
-		height: 30vh;
-	}
+  .left {
+    width: 100%;
+    height: 30vh;
+  }
 
-	.left form {
-		height: 100%;
-		padding: 10px;
-	}
+  .left form {
+    height: 100%;
+    padding: 10px;
+  }
 
-	.selectedFiles {
-		margin-bottom: 10px;
-	}
+  .selectedFiles {
+    margin-bottom: 10px;
+  }
 }
