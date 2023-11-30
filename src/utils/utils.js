@@ -181,7 +181,6 @@ export function buildLinks(sharedParams, urlToFile) {
 
 		const correctSede = sharedParams.sede;
 		const correctLinkFinal = buildCorrectFinalLink(sharedParams.linkFinal, sharedParams.sede.toLowerCase());
-		//console.log(correctLinkFinal);
 
 		const correctFinalLink =
 			correctLinkFinal + 
