@@ -126,6 +126,7 @@ export function hasSede(type) {
 
 export function buildLinks(sharedParams, urlToFile) {
 	if (sharedParams.type.includes("WBNRS")) {
+
 		const correctFinalLink =
 			sharedParams.linkFinal +
 			sharedParams.furriel +
@@ -135,18 +136,19 @@ export function buildLinks(sharedParams, urlToFile) {
 			sharedParams.matomo_cid;
 
 		const correctPixel = sharedParams.pixel;
+
 		const correctBannerLink =
 			sharedParams.bannerUrl +
 			sharedParams.furriel +
 			sharedParams.kw +
-			sharedParams.matomo;
-		sharedParams.matomo_medium + sharedParams.matomo_cid;
+			sharedParams.matomo + 
+			sharedParams.matomo_medium + sharedParams.matomo_cid;
 
 		const correctButtonLink =
 			sharedParams.bannerUrl +
 			sharedParams.furriel +
 			sharedParams.kw +
-			sharedParams.matomo;
+			sharedParams.matomo +
 		sharedParams.matomo_medium + sharedParams.matomo_cid;
 
 		const correctUrlLink =
@@ -158,8 +160,9 @@ export function buildLinks(sharedParams, urlToFile) {
 			sharedParams.matomo_cid;
 
 		return [
-			correctFinalLink,
+			undefined,
 			correctPixel,
+			correctFinalLink,
 			correctBannerLink,
 			correctButtonLink,
 			correctUrlLink,
