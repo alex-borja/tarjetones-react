@@ -57,6 +57,8 @@ function FileInputView({ sharedParams, tarjetonType }) {
 		const pixel = $("img")[0].attribs.src;
 		const title = $("title")[0].children[0].data;
 
+		console.log(links);
+
 		let finalLink = links[indexes.finalLinkIndex].attribs.href;
 		let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
 		let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
@@ -80,8 +82,8 @@ function FileInputView({ sharedParams, tarjetonType }) {
 
 		let [
 			correctSede,
-			correctFinalLink,
 			correctPixel,
+			correctFinalLink,
 			correctBannerLink,
 			correctButtonLink,
 			correctUrlLink,

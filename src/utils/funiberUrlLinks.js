@@ -1,5 +1,7 @@
 export const FUNIBER_URL_LINKS = {
 	AR: "https://www.funiber.org.ar/",
+	AO: "https://www.funiber.co.ao/",
+	CV: "https://www.funiber.cv/",
 	ES: "https://www.funiber.es/",
 	IT: "https://www.funiber.it/",
 	PT: "https://www.funiber.pt/",
