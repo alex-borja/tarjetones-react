@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import TarjetonParamsView from "./views/TarjetonParamsView";
 import FileInputView from "./views/FileInputView";
 import PropTypes from "prop-types";

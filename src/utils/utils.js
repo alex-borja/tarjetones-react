@@ -169,7 +169,7 @@ export function buildLinks(sharedParams, urlToFile) {
 		];
 	} else {
 		let urlFromSede = FUNIBER_URL_LINKS[sharedParams.sede];
-		urlToFile = (sharedParams.hasSede && sharedParams.appliedUrl) ? urlFromSede : urlToFile;
+		urlToFile = sharedParams.hasSede && sharedParams.appliedUrl ? urlFromSede : urlToFile;
 
 		let furriel;
 		if(sharedParams.hasSede) {

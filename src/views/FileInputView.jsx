@@ -1,4 +1,4 @@
-import cheerio, { html } from "cheerio";
+import cheerio from "cheerio";
 import { useState } from "react";
 import PropTypes from "prop-types";
 import "../styles/views/FileInputView.css";
@@ -19,7 +19,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
 	const [error, setError] = useState([]);
 	const [result, setResult] = useState([]);
 
-	let urlToFile =
+	let footerUrlLink =
 		sharedParams.appliedUrl
 			? FUNIBER_URL_LINKS[sharedParams.sede]
 			: TARJETON_TYPE[tarjetonType].urlLink;
@@ -57,8 +57,6 @@ function FileInputView({ sharedParams, tarjetonType }) {
 		const pixel = $("img")[0].attribs.src;
 		const title = $("title")[0].children[0].data;
 
-		console.log(links);
-
 		let finalLink = links[indexes.finalLinkIndex].attribs.href;
 		let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
 		let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
@@ -78,16 +76,16 @@ function FileInputView({ sharedParams, tarjetonType }) {
 	) => {
 		sede = sede.slice(0, 2);
 
-		urlToFile = repairUrl(urlToFile);
+		//footerUrlLink = repairUrl(urlLink);
 
 		let [
 			correctSede,
-			correctPixel,
 			correctFinalLink,
+			correctPixel,
 			correctBannerLink,
 			correctButtonLink,
 			correctUrlLink,
-		] = buildLinks(sharedParams, urlToFile);
+		] = buildLinks(sharedParams, urlLink);
 
 		if (hasSede(tarjetonType)) {
 			checkSingleParam(
