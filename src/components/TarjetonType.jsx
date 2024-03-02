@@ -3,43 +3,42 @@ import { TARJETON_TYPE } from "../utils/tarjetonType";
 import "../styles/components/TarjetonTypes.css";
 
 function TarjetonType({
-  tarjetonType,
-  setTarjetonType,
-  setSharedParams,
-  setShowParmas,
+   tarjetonType,
+   setTarjetonType,
+   setSharedParams,
+   setShowParmas,
 }) {
-  let handleSelect = (e) => {
-    setTarjetonType(e.target.value);
-    setSharedParams(() => ({ ...TARJETON_TYPE[e.target.value].params }));
+   let handleSelect = (e) => {
+      setTarjetonType(e.target.value);
+      setSharedParams(() => ({ ...TARJETON_TYPE[e.target.value].params }));
 
-    setShowParmas(true);
-  };
+      setShowParmas(true);
+   };
 
-  return (
-    <form className="tarjetonType">
-      <label>Elije el tipo de Tarjeton:</label>
-      <select
-        className="selectTargeton"
-        onChange={(e) => handleSelect(e)}
-        value={tarjetonType}
-      >
-        <option value="none">Selecciona un tarjeton</option>
-        <option value="GGU">Generico de Grado Uneatlantico</option>
-        <option value="GAF">Generico de Area Funiber</option>
-        <option value="TEF">Tarjeton Evento Funiber</option>
-        <option value="WBNRS_ENV_1">Tarjeton Webinar Env 1</option>
-        <option value="WBNRS_ENV_2">Tarjeton Webinar Env 2</option>
-      </select>
-    </form>
-  );
+   return (
+      <form className="tarjetonType">
+         <label>Elije el tipo de Tarjeton:</label>
+         <select
+            className="selectTargeton"
+            onChange={(e) => handleSelect(e)}
+            value={tarjetonType}
+         >
+            <option value="none">Selecciona un tarjeton</option>
+            <option value="GENERIC">Tarjeton Tipo Generico</option>
+            <option value="EVENT">Tarjetón Tipo Evento</option>
+            <option value="AREA">Tarjetón Tipo Área</option>
+            <option value="PROGRAM">Tarjetón Tipo Programa</option>
+         </select>
+      </form>
+   );
 }
 
 TarjetonType.propTypes = {
-  tarjetonType: PropTypes.string,
-  setTarjetonType: PropTypes.func,
-  setSharedParams: PropTypes.func,
-  setShowParmas: PropTypes.func,
-  setPTests: PropTypes.func,
+   tarjetonType: PropTypes.string,
+   setTarjetonType: PropTypes.func,
+   setSharedParams: PropTypes.func,
+   setShowParmas: PropTypes.func,
+   setPTests: PropTypes.func,
 };
 
 export default TarjetonType;

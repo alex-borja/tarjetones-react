@@ -76,7 +76,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
 	) => {
 		sede = sede.slice(0, 2);
 
-		//footerUrlLink = repairUrl(urlLink);
+		footerUrlLink = repairUrl(footerUrlLink);
 
 		let [
 			correctSede,
@@ -173,6 +173,9 @@ function FileInputView({ sharedParams, tarjetonType }) {
 	};
 
 	let checkSingleParam = (correctValue, providedValue, res, err) => {
+		correctValue = correctValue.replaceAll("%20", " ");
+		providedValue = providedValue.replaceAll("%20", " ")
+
 		if (correctValue === providedValue) {
 			setResult((curr) => [...curr, res]);
 		} else {

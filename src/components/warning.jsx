@@ -1,22 +1,22 @@
 import PropTypes from "prop-types";
 import "../styles/components/Warning.css"
 
-function Warning({ validParams, setValidParams }) {
+function Warning({ warnings, setWarnings}) {
 	let closeBtn = () => {
-		setValidParams(!validParams)
+		setWarnings(!warnings)
 	}
 
 	return (
 		<div className="validParams">
-			<p>{validParams}</p>
+			<p>{warnings}</p>
 			<button className="closeBtn" onClick={closeBtn}>X</button>
 		</div>
 	)
 }
 
 Warning.propTypes = {
-	validParams: PropTypes.string,
-	setValidParams: PropTypes.func,
+	warnings: PropTypes.string,
+	setWarnings: PropTypes.func,
 }
 
 export default Warning;
