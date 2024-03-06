@@ -7,7 +7,6 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { checkValidParams } from "../utils/utils";
-import TarjetonType from "./TarjetonType";
 
 function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
   let handleClick = (param) => {

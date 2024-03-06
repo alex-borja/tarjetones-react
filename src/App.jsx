@@ -14,6 +14,7 @@ function App() {
 	return (
 		<div className="container">
 			<NavBar
+
 				showResults={showResults}
 				setShowResults={setShowResults}
 				sharedParams={sharedParams}

@@ -1,14 +1,14 @@
 export const TARJETON_TYPE = {
    GENERIC: {
+      type: "GEN",
       params: {
-         type: "GEN",
-         linkFinal: "",
-         pixel: "",
-         furriel: "",
          kw: "",
-         matomo: "",
-         bannerUrl: "",
          sede: "",
+         pixel: "",
+         matomo: "",
+         furriel: "",
+         heroUrl: "",
+         linkFinal: "",
       },
       paramsIndexes: {
          finalLinkIndex: 0,
@@ -18,15 +18,15 @@ export const TARJETON_TYPE = {
       }
    },
    EVENT: {
+      type: "EVENT",
       params: {
-         type: "EVENT",
-         linkFinal: "",
-         pixel: "",
-         furriel: "",
          kw: "",
-         matomo: "",
-         bannerUrl: "",
          sede: "",
+         pixel: "",
+         matomo: "",
+         furriel: "",
+         heroUrl: "",
+         linkFinal: "",
       },
       paramsIndexes: {
          finalLinkIndex: 0,
@@ -36,14 +36,14 @@ export const TARJETON_TYPE = {
       }
    },
    AREA: {
+      type: "AREA",
       params: {
-         type: "AREA",
-         linkFinal: "",
-         pixel: "",
          kw: "",
-         matomo: "",
-         bannerUrl: "",
          sede: "",
+         pixel: "",
+         matomo: "",
+         heroUrl: "",
+         linkFinal: "",
       },
       paramsIndexes: {
          finalLinkIndex: 0,
@@ -53,13 +53,13 @@ export const TARJETON_TYPE = {
       }
    },
    PROGRAM: {
+      type: "PROGRAM",
       params: {
-         type: "PROGRAM",
-         linkFinal: "",
-         pixel: "",
          kw: "",
+         pixel: "",
          matomo: "",
-         bannerUrl: "",
+         heroUrl: "",
+         linkFinal: "",
       },
       paramsIndexes: {
          finalLinkIndex: 0,

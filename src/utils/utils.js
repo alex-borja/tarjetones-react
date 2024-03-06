@@ -214,3 +214,16 @@ export function buildLinks(sharedParams, urlToFile) {
       ];
    }
 }
+
+export function checkValidParams(sharedParams, tt) {
+   for (const property in sharedParams) {
+      if (sharedParams[property] === "") {
+         return false;
+      }
+   }
+
+   if (!SEDE_MAP_UNEATLANTICO[sharedParams.sede] && tt !== "TEF") {
+      return false;
+   }
+   return true;
+}
