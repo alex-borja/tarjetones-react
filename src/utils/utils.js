@@ -1,5 +1,4 @@
 import { SEDE_MAP_FUNIBER, SEDE_MAP_UNEATLANTICO } from "./db";
-import { FUNIBER_URL_LINKS } from "./funiberUrlLinks";
 
 export const INPUT_FIELDS = [
    {
@@ -40,8 +39,8 @@ export const INPUT_FIELDS = [
    },
    {
       label: "Url del botón y del banner:",
-      name: "bannerUrl",
-      id: "bannerUrl",
+      name: "heroUrl",
+      id: "heroUrl",
       placeholder: "Introduce la url del banner y del botón",
    },
    {
@@ -124,95 +123,54 @@ export function hasSede(type) {
    return false;
 }
 
-export function buildLinks(sharedParams, urlToFile) {
-   if (sharedParams.type.includes("WBNRS")) {
-
-      const correctFinalLink =
-         sharedParams.linkFinal +
-         sharedParams.furriel +
-         sharedParams.kw +
-         sharedParams.matomo +
-         sharedParams.matomo_medium +
-         sharedParams.matomo_cid;
-
-      const correctPixel = sharedParams.pixel;
-
-      const correctBannerLink =
-         sharedParams.bannerUrl +
-         sharedParams.furriel +
-         sharedParams.kw +
-         sharedParams.matomo +
-         sharedParams.matomo_medium + sharedParams.matomo_cid;
-
-      const correctButtonLink =
-         sharedParams.bannerUrl +
-         sharedParams.furriel +
-         sharedParams.kw +
-         sharedParams.matomo +
-         sharedParams.matomo_medium + sharedParams.matomo_cid;
-
-      const correctUrlLink =
-         urlToFile +
-         sharedParams.furriel +
-         sharedParams.kw +
-         sharedParams.matomo +
-         sharedParams.matomo_medium +
-         sharedParams.matomo_cid;
-
-      return [
-         undefined,
-         correctPixel,
-         correctFinalLink,
-         correctBannerLink,
-         correctButtonLink,
-         correctUrlLink,
-      ];
-   } else {
-      let urlFromSede = FUNIBER_URL_LINKS[sharedParams.sede];
-      urlToFile = sharedParams.hasSede && sharedParams.appliedUrl ? urlFromSede : urlToFile;
-
-      let furriel;
-      if (sharedParams.hasSede) {
-         if (sharedParams.type === "GAF") {
-            furriel = SEDE_MAP_FUNIBER[sharedParams.sede];
-         } else {
-            furriel = SEDE_MAP_UNEATLANTICO[sharedParams.sede];
-         }
-      } else {
-         furriel = sharedParams.furriel;
-      }
-
-      const correctSede = sharedParams.sede;
-      const correctLinkFinal = buildCorrectFinalLink(sharedParams.linkFinal, sharedParams.sede.toLowerCase());
-
-      const correctFinalLink =
-         correctLinkFinal +
-         furriel +
-         sharedParams.kw +
-         sharedParams.matomo;
-      const correctPixel = sharedParams.pixel;
-      const correctBannerLink =
-         sharedParams.bannerUrl +
-         furriel +
-         sharedParams.kw +
-         sharedParams.matomo;
-      const correctButtonLink =
-         sharedParams.bannerUrl +
-         furriel +
-         sharedParams.kw +
-         sharedParams.matomo;
-      const correctUrlLink =
-         urlToFile + furriel + sharedParams.kw + sharedParams.matomo;
-
-      return [
-         correctSede,
-         correctFinalLink,
-         correctPixel,
-         correctBannerLink,
-         correctButtonLink,
-         correctUrlLink,
-      ];
+export function getFurriel(tarjetonType, sharedParams) {
+   switch (tarjetonType) {
+      case "AREA":
+         return SEDE_MAP_FUNIBER[sharedParams.sede];
+      case "PROGRAM":
+         return SEDE_MAP_UNEATLANTICO[sharedParams.sede];
+      default:
+         return sharedParams.furriel;
    }
+};
+
+export function buildLinks(sharedParams, footerUrl, tarjetonType) {
+   let furriel = getFurriel(tarjetonType, sharedParams);
+
+   const correctSede = sharedParams.sede;
+   const finalLink = buildCorrectFinalLink(sharedParams.linkFinal, sharedParams.sede.toLowerCase());
+
+   const correctFinalLink =
+      finalLink +
+      furriel +
+      sharedParams.kw +
+      sharedParams.matomo;
+
+   const correctPixel = sharedParams.pixel;
+
+   const correctBannerLink =
+      sharedParams.heroUrl +
+      furriel +
+      sharedParams.kw +
+      sharedParams.matomo;
+
+   const correctButtonLink =
+      sharedParams.heroUrl +
+      furriel +
+      sharedParams.kw +
+      sharedParams.matomo;
+
+   const correctFooterLink =
+      footerUrl + furriel + sharedParams.kw + sharedParams.matomo;
+
+   return [
+      correctSede,
+      correctFinalLink,
+      correctPixel,
+      correctBannerLink,
+      correctButtonLink,
+      correctFooterLink,
+   ];
 }
 
 export function checkValidParams(sharedParams, tt) {

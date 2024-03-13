@@ -1,6 +1,6 @@
 export const TARJETON_TYPE = {
    GENERIC: {
-      type: "GEN",
+      type: "GENERIC",
       params: {
          kw: "",
          sede: "",

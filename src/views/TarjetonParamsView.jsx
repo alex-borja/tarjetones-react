@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
-import { SEDE_MAP_FUNIBER, SEDE_MAP_UNEATLANTICO } from "../utils/db";
+import { SEDE_MAP_FUNIBER } from "../utils/db";
 
 
 function TarjetonParamsView({
@@ -75,7 +75,7 @@ function TarjetonParamsView({
 
    };
 
-   let renderWarnings = () => {
+   let displayWarnings = () => {
       return warnings.length ? (
          <Warning
             warnings={warnings}
@@ -105,7 +105,7 @@ function TarjetonParamsView({
                </div>
             </div>
          </form>
-         {renderWarnings()}
+         {displayWarnings()}
       </div>
    );
 }

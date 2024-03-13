@@ -11,7 +11,6 @@ function TarjetonType({
    let handleSelect = (e) => {
       setTarjetonType(e.target.value);
       setSharedParams(() => ({ ...TARJETON_TYPE[e.target.value].params }));
-
       setShowParmas(true);
    };
 
