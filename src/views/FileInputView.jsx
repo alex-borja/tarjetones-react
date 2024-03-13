@@ -11,7 +11,7 @@ import {
 } from "../utils/utils";
 import { TARJETON_TYPE } from "../utils/tarjetonType";
 import { FUNIBER_URL_LINKS } from "../utils/funiberUrlLinks";
-import { repairUrl } from "../utils/helpers/helpers";
+import { repairUrl } from "../helpers/helpers";
 
 function FileInputView({ sharedParams, tarjetonType }) {
   const [htmlFile, setHtmlFile] = useState("");
@@ -174,7 +174,6 @@ function FileInputView({ sharedParams, tarjetonType }) {
   };
 
   let checkSingleParam = (correctValue, providedValue, res, err) => {
-    // this for urls that have the chrome url formatting
     correctValue = correctValue.replaceAll("%20", " ");
     providedValue = providedValue.replaceAll("%20", " ");
 

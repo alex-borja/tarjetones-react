@@ -6,7 +6,7 @@ import {
   faClipboard,
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import { checkValidParams } from "../utils/helpers/helpers";
+import { checkValidParams } from "../helpers/helpers";
 
 function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
   let handleClick = (param) => {
