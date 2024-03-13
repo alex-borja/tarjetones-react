@@ -8,8 +8,15 @@ import TarjetonType from "./components/TarjetonType";
 function App() {
   const [showResults, setShowResults] = useState(false);
   const [showParams, setShowParmas] = useState(false);
-  const [tarjetonType, setTarjetonType] = useState("");
-  const [sharedParams, setSharedParams] = useState({});
+  const [tarjetonType, setTarjetonType] = useState(
+    localStorage.getItem("tarjetonType")
+  );
+  const [sharedParams, setSharedParams] = useState(
+    JSON.parse(localStorage.getItem("sharedParams"))
+  );
+
+  localStorage.setItem("tarjetonType", tarjetonType);
+  localStorage.setItem("sharedParams", JSON.stringify(sharedParams));
 
   return (
     <div className="container">

@@ -60,6 +60,8 @@ function TarjetonParamsView({
     let tarjetonParams = INPUT_FIELDS.filter(
       (param) => param.name in sharedParams
     );
+    let pms = localStorage.getItem("sharedParams");
+    pms = JSON.parse(pms);
 
     return tarjetonParams.map((field) => (
       <ParamInput
@@ -69,7 +71,8 @@ function TarjetonParamsView({
         id={field.id}
         placeholder={field.placeholder}
         onChange={handleInput}
-        value={sharedParams[field.name]}
+        //value={sharedParams[field.name]}
+        value={pms[field.name]}
       ></ParamInput>
     ));
   };
