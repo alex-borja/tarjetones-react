@@ -6,29 +6,22 @@ import {
   faClipboard,
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
-import { checkValidParams } from "../utils/utils";
+import { checkValidParams } from "../utils/helpers/helpers";
 
 function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
   let handleClick = (param) => {
     switch (param) {
-      case "type":
-        if (tarjetonType) {
-          setShowParmas(false);
-        }
+      case "TarjetonType":
+        if (tarjetonType) setShowParmas(false);
         break;
-      case "params":
-        if (tarjetonType) {
-          setShowParmas(true);
-        }
+      case "TarjetonParams":
+        if (tarjetonType) setShowParmas(true);
         setShowResults(false);
         break;
-      case "results":
-        if (tarjetonType) {
-          setShowParmas(true);
-        }
-        if (checkValidParams(sharedParams, sharedParams.type)) {
+      case "TarjetonResults":
+        if (tarjetonType) setShowParmas(true);
+        if (checkValidParams(sharedParams, sharedParams.type))
           setShowResults(true);
-        }
         break;
       default:
         break;
@@ -39,15 +32,15 @@ function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
     <div className="navbar">
       <nav>
         <ul className="navList">
-          <li onClick={() => handleClick("type")}>
+          <li onClick={() => handleClick("TarjetonType")}>
             <FontAwesomeIcon icon={faClipboard} style={{ color: "#fcfcfc" }} />
             <p>Tipo de Tarjetón</p>
           </li>
-          <li onClick={() => handleClick("params")}>
+          <li onClick={() => handleClick("TarjetonParams")}>
             <FontAwesomeIcon icon={faPencil} style={{ color: "#f5f5f5" }} />
             <p>Párametros</p>
           </li>
-          <li onClick={() => handleClick("results")}>
+          <li onClick={() => handleClick("TarjetonResults")}>
             <FontAwesomeIcon
               icon={faSquarePollVertical}
               style={{ color: "#fcfcfc" }}

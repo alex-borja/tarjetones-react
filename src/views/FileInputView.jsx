@@ -4,238 +4,235 @@ import PropTypes from "prop-types";
 import "../styles/views/FileInputView.css";
 import ResultCard from "../components/resultCard";
 import {
-   PARAMS_INFO,
-   buildLinks,
-   getSedeFromFile,
-   hasSede,
+  PARAMS_INFO,
+  buildLinks,
+  getSedeFromFile,
+  buildCorrectText,
 } from "../utils/utils";
 import { TARJETON_TYPE } from "../utils/tarjetonType";
 import { FUNIBER_URL_LINKS } from "../utils/funiberUrlLinks";
+import { repairUrl } from "../utils/helpers/helpers";
 
 function FileInputView({ sharedParams, tarjetonType }) {
-   const [htmlFile, setHtmlFile] = useState("");
-   const [fileName, setFileName] = useState("");
-   const [showResult, setShowResult] = useState(false);
-   const [error, setError] = useState([]);
-   const [result, setResult] = useState([]);
+  const [htmlFile, setHtmlFile] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [showResult, setShowResult] = useState(false);
+  const [error, setError] = useState([]);
+  const [result, setResult] = useState([]);
 
-   let footerUrlLink = tarjetonType === "GENERIC" || tarjetonType === "AREA" || tarjetonType === "EVENT" ?
-      FUNIBER_URL_LINKS[sharedParams.sede] : "https://www.funiber.es/";
+  let footerUrlLink =
+    tarjetonType === "PROGRAM"
+      ? "https://www.funiber.es/"
+      : FUNIBER_URL_LINKS[sharedParams.sede];
 
-   const indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
+  const indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
 
-   let handleFile = (e) => {
-      let file = e.target.files[0];
+  let handleSubmit = (e) => {
+    e.preventDefault();
 
-      setError([]);
-      setResult([]);
-      setShowResult(false);
-      setFileName(file.name);
+    if (error.length || result.length) {
+      console.log("ya tienes un archivo abierto!!");
+      return;
+    }
 
-      if (file) {
-         const reader = new FileReader();
-         reader.onload = (e) => {
-            setHtmlFile(e.target.result);
-         };
-         reader.readAsText(file);
-      }
-   };
+    const $ = cheerio.load(htmlFile);
 
-   let handleSubmit = (e) => {
-      e.preventDefault();
+    const links = $("a");
+    const pixel = $("img")[0].attribs.src;
+    const sede = $("title")[0].children[0].data.slice(0, 2);
+    const footerText = $("#footerUrl")[0].children[0].data;
 
-      if (error.length || result.length) {
-         console.log("ya tienes un archivo abierto!!");
-         return;
-      }
+    let finalLink = links[indexes.finalLinkIndex].attribs.href;
+    let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
+    let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
+    let footerLink = links[indexes.urlLinkIndex].attribs.href;
 
-      const $ = cheerio.load(htmlFile);
+    checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
+    checkText(sede, footerText);
 
-      const links = $("a");
-      const pixel = $("img")[0].attribs.src;
-      const sede = $("title")[0].children[0].data.slice(0, 2);
+    setShowResult(true);
+  };
 
-      let finalLink = links[indexes.finalLinkIndex].attribs.href;
-      let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
-      let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
-      let footerLink = links[indexes.urlLinkIndex].attribs.href;
+  let handleFile = (e) => {
+    let file = e.target.files[0];
 
-      checkParams(sede, pixel, finalLink, bannerLink, buttonLink, footerLink);
-      setShowResult(true);
-   };
+    setError([]);
+    setResult([]);
+    setShowResult(false);
+    setFileName(file.name);
 
-   let checkParams = (
-      sede,
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setHtmlFile(e.target.result);
+      };
+      reader.readAsText(file);
+    }
+  };
+
+  let checkParams = (pixel, finalLink, bannerLink, buttonLink, footerLink) => {
+    footerUrlLink = repairUrl(footerUrlLink);
+
+    let [
+      correctFinalLink,
+      correctPixel,
+      correctBannerLink,
+      correctButtonLink,
+      correctFooterLink,
+    ] = buildLinks(sharedParams, footerUrlLink, tarjetonType);
+
+    checkFinalLink(correctFinalLink, finalLink);
+
+    checkSingleParam(
+      correctPixel,
       pixel,
-      finalLink,
+      PARAMS_INFO.pixel.result,
+      PARAMS_INFO.pixel.error
+    );
+
+    checkSingleParam(
+      correctBannerLink,
       bannerLink,
+      PARAMS_INFO.banner.result,
+      PARAMS_INFO.banner.error
+    );
+
+    checkSingleParam(
+      correctButtonLink,
       buttonLink,
-      footerLink
-   ) => {
-      footerUrlLink = repairUrl(footerUrlLink);
+      PARAMS_INFO.button.result,
+      PARAMS_INFO.button.error
+    );
 
-      let [
-         correctSede,
-         correctFinalLink,
-         correctPixel,
-         correctBannerLink,
-         correctButtonLink,
-         correctFooterLink,
-      ] = buildLinks(sharedParams, footerUrlLink, tarjetonType);
+    checkSiteUrl(correctFooterLink, footerLink);
+  };
 
-      if (hasSede(tarjetonType)) {
-         checkSingleParam(
-            correctSede,
-            sede,
-            PARAMS_INFO.sede.result,
-            PARAMS_INFO.sede.error
-         );
-      }
+  let checkText = (sede, footerText) => {
+    footerUrlLink = repairUrl(footerUrlLink);
 
-      checkFinalLink(correctFinalLink, finalLink);
+    let [correctSede, correctFooterText] = buildCorrectText(
+      sharedParams,
+      footerUrlLink
+    );
 
-      checkSingleParam(
-         correctPixel,
-         pixel,
-         PARAMS_INFO.pixel.result,
-         PARAMS_INFO.pixel.error
+    checkSingleParam(
+      correctSede,
+      sede,
+      PARAMS_INFO.sede.result,
+      PARAMS_INFO.sede.error
+    );
+
+    checkSingleParam(
+      correctFooterText,
+      footerText,
+      PARAMS_INFO.footerText.result,
+      PARAMS_INFO.footerText.error
+    );
+  };
+
+  let checkSiteUrl = (correctUrlLink, urlLink) => {
+    let indexOfQuestionMark = urlLink.indexOf("?");
+    let leftSide = urlLink.substring(0, indexOfQuestionMark);
+    let rightSide = urlLink.substring(indexOfQuestionMark, urlLink.length);
+
+    let link = repairUrl(leftSide);
+    link += rightSide;
+
+    checkSingleParam(
+      correctUrlLink,
+      link,
+      PARAMS_INFO.url.result,
+      PARAMS_INFO.url.error
+    );
+  };
+
+  let checkFinalLink = (correctFinalLink, finalLink) => {
+    if (!sharedParams.hasSede) {
+      return checkSingleParam(
+        correctFinalLink,
+        finalLink,
+        PARAMS_INFO.linkFinal.result,
+        PARAMS_INFO.linkFinal.error
       );
+    }
 
-      checkSingleParam(
-         correctBannerLink,
-         bannerLink,
-         PARAMS_INFO.banner.result,
-         PARAMS_INFO.banner.error
-      );
+    let fileSede = getSedeFromFile(finalLink);
+    let validSede = fileSede === sharedParams.sede.toLowerCase();
 
-      checkSingleParam(
-         correctButtonLink,
-         buttonLink,
-         PARAMS_INFO.button.result,
-         PARAMS_INFO.button.error
-      );
-      checkSiteUrl(correctFooterLink, footerLink);
-   };
-
-   let repairUrl = (url) => {
-      let finalChar = url.length - 1;
-      if (url[finalChar] === "/") {
-         return url;
-      } else {
-         return url + "/";
-      }
-   }
-
-   let checkSiteUrl = (correctUrlLink, urlLink) => {
-      let indexOfQuestionMark = urlLink.indexOf("?");
-      let leftSide = urlLink.substring(0, indexOfQuestionMark);
-      let rightSide = urlLink.substring(indexOfQuestionMark, urlLink.length);
-
-      let link = repairUrl(leftSide);
-      link += rightSide;
-
-      checkSingleParam(
-         correctUrlLink,
-         link,
-         PARAMS_INFO.url.result,
-         PARAMS_INFO.url.error
-      );
-   }
-
-   let checkFinalLink = (correctFinalLink, finalLink) => {
-      if (!sharedParams.hasSede) {
-         return checkSingleParam(
-            correctFinalLink,
-            finalLink,
-            PARAMS_INFO.linkFinal.result,
-            PARAMS_INFO.linkFinal.error
-         );
-      }
-
-      let fileSede = getSedeFromFile(finalLink);
-      let validSede = fileSede === sharedParams.sede.toLowerCase();
-
-      if (!validSede) {
-         setError((curr) => [
-            ...curr,
-            {
-               title: PARAMS_INFO.linkFinal.error,
-               correctValue: correctFinalLink,
-               valueProvided: finalLink,
-            },
-         ]);
-      } else {
-         setResult((curr) => [...curr, PARAMS_INFO.linkFinal.result]);
-      }
-   };
-
-   let checkSingleParam = (correctValue, providedValue, res, err) => {
-      correctValue = correctValue.replaceAll("%20", " ");
-      providedValue = providedValue.replaceAll("%20", " ")
-
-      if (correctValue === providedValue) {
-         setResult((curr) => [...curr, res]);
-      } else {
-         handleError(err, correctValue, providedValue);
-      }
-   };
-
-   let handleError = (title, correctValue, valueProvided) => {
+    if (!validSede) {
       setError((curr) => [
-         ...curr,
-         {
-            title,
-            correctValue,
-            valueProvided,
-         },
+        ...curr,
+        {
+          title: PARAMS_INFO.linkFinal.error,
+          correctValue: correctFinalLink,
+          valueProvided: finalLink,
+        },
       ]);
-   };
+    } else {
+      setResult((curr) => [...curr, PARAMS_INFO.linkFinal.result]);
+    }
+  };
 
-   let renderResults = () => {
-      return showResult ? (
-         <ResultCard results={result} errors={error}></ResultCard>
-      ) : (
-         <h3>Suba un archivo para analizar</h3>
-      );
-   };
+  let checkSingleParam = (correctValue, providedValue, res, err) => {
+    // this for urls that have the chrome url formatting
+    correctValue = correctValue.replaceAll("%20", " ");
+    providedValue = providedValue.replaceAll("%20", " ");
 
-   let deleteAction = () => {
-      setError([]);
-      setResult([]);
-      setShowResult(false);
-      setHtmlFile("");
-      setFileName("");
-   };
+    if (correctValue === providedValue) {
+      setResult((curr) => [...curr, res]);
+    } else {
+      handleError(err, correctValue, providedValue);
+    }
+  };
 
-   return (
-      <div className="fileInput">
-         <div className="leftContent">
-            <div className="left">
-               <form onSubmit={(e) => handleSubmit(e)}>
-                  <label className="uploadFile" htmlFor="file">
-                     Ingrese un archivo compilado
-                  </label>
-                  <input type="file" accept=".html" id="file" onChange={handleFile} />
-                  <div className="selectedFiles">
-                     <h4>Archivo seleccionado:</h4>
-                     <p>{fileName}</p>
-                  </div>
-                  <button type="submit" className="uploadBtn">
-                     Subir
-                  </button>
-               </form>
+  let handleError = (title, correctValue, valueProvided) => {
+    setError((curr) => [
+      ...curr,
+      {
+        title,
+        correctValue,
+        valueProvided,
+      },
+    ]);
+  };
+
+  let renderResults = () => {
+    return showResult ? (
+      <ResultCard results={result} errors={error}></ResultCard>
+    ) : (
+      <h3>Suba un archivo para analizar</h3>
+    );
+  };
+
+  return (
+    <div className="fileInput">
+      <div className="leftContent">
+        <div className="left">
+          <form onSubmit={(e) => handleSubmit(e)}>
+            <label className="uploadFile" htmlFor="file">
+              Ingrese un archivo compilado
+            </label>
+            <input type="file" accept=".html" id="file" onChange={handleFile} />
+            <div className="selectedFiles">
+              <h4>Archivo seleccionado:</h4>
+              <p>{fileName}</p>
             </div>
-            <div className="right">{renderResults()}</div>
-         </div>
+            <button type="submit" className="uploadBtn">
+              Subir
+            </button>
+          </form>
+        </div>
+        <div className="right">{renderResults()}</div>
       </div>
-   );
+    </div>
+  );
 }
 
 FileInputView.propTypes = {
-   sharedParams: PropTypes.object,
-   showParams: PropTypes.bool,
-   setShowParams: PropTypes.func,
-   tarjetonType: PropTypes.string,
+  sharedParams: PropTypes.object,
+  showParams: PropTypes.bool,
+  setShowParams: PropTypes.func,
+  tarjetonType: PropTypes.string,
 };
 
 export default FileInputView;
