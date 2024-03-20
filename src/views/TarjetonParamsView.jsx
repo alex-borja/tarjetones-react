@@ -71,7 +71,6 @@ function TarjetonParamsView({
         id={field.id}
         placeholder={field.placeholder}
         onChange={handleInput}
-        //value={sharedParams[field.name]}
         value={pms[field.name]}
       ></ParamInput>
     ));

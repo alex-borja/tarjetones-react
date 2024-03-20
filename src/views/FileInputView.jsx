@@ -1,5 +1,5 @@
-import cheerio from "cheerio";
-import { useState } from "react";
+import cheerio, { html } from "cheerio";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import "../styles/views/FileInputView.css";
 import ResultCard from "../components/resultCard";
@@ -19,38 +19,47 @@ function FileInputView({ sharedParams, tarjetonType }) {
   const [showResult, setShowResult] = useState(false);
   const [error, setError] = useState([]);
   const [result, setResult] = useState([]);
+  const [text, setText] = useState("");
 
+  let $;
   let footerUrlLink =
     tarjetonType === "PROGRAM"
-      ? "https://www.funiber.es/"
+      ? "https://www.uneatlantico.es/"
       : FUNIBER_URL_LINKS[sharedParams.sede];
 
   const indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
 
+  useEffect(() => {
+    if (!$ && htmlFile) {
+      $ = cheerio.load(htmlFile);
+    }
+  }, [htmlFile, $]);
+
   let handleSubmit = (e) => {
     e.preventDefault();
-
     if (error.length || result.length) {
       console.log("ya tienes un archivo abierto!!");
       return;
     }
+    if ($) {
+      const links = $("a");
+      const pixel = $("img")[0].attribs.src;
+      const sede = $("title")[0].children[0].data.slice(0, 2);
 
-    const $ = cheerio.load(htmlFile);
+      //const footerText = $("#footerUrl")[0].children[0].data;
+      const footerText =
+        links[indexes.urlLinkIndex].children[0].children[0].data;
 
-    const links = $("a");
-    const pixel = $("img")[0].attribs.src;
-    const sede = $("title")[0].children[0].data.slice(0, 2);
-    const footerText = $("#footerUrl")[0].children[0].data;
+      let finalLink = links[indexes.finalLinkIndex].attribs.href;
+      let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
+      let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
+      let footerLink = links[indexes.urlLinkIndex].attribs.href;
 
-    let finalLink = links[indexes.finalLinkIndex].attribs.href;
-    let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
-    let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
-    let footerLink = links[indexes.urlLinkIndex].attribs.href;
-
-    checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
-    checkText(sede, footerText);
-
-    setShowResult(true);
+      setText($.text());
+      checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
+      checkText(sede, footerText);
+      setShowResult(true);
+    }
   };
 
   let handleFile = (e) => {
@@ -115,12 +124,14 @@ function FileInputView({ sharedParams, tarjetonType }) {
       footerUrlLink
     );
 
-    checkSingleParam(
-      correctSede,
-      sede,
-      PARAMS_INFO.sede.result,
-      PARAMS_INFO.sede.error
-    );
+    if (tarjetonType !== "PROGRAM") {
+      checkSingleParam(
+        correctSede,
+        sede,
+        PARAMS_INFO.sede.result,
+        PARAMS_INFO.sede.error
+      );
+    }
 
     checkSingleParam(
       correctFooterText,
