@@ -1,5 +1,5 @@
 import "../App.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import PropTypes from "prop-types";
 import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
@@ -86,6 +86,7 @@ function TarjetonParamsView({
 
   return (
     <div className="tarjetonParams">
+      {displayWarnings()}
       <form className="paramsForm" onSubmit={(e) => submitParams(e)}>
         <div className="inputFields">{renderInputFields()}</div>
         <div className="btns">
@@ -103,7 +104,6 @@ function TarjetonParamsView({
           </div>
         </div>
       </form>
-      {displayWarnings()}
     </div>
   );
 }

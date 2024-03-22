@@ -12,6 +12,7 @@ import {
 import { TARJETON_TYPE } from "../utils/tarjetonType";
 import { FUNIBER_URL_LINKS } from "../utils/funiberUrlLinks";
 import { repairUrl } from "../helpers/helpers";
+import Warning from "../components/warning";
 
 function FileInputView({ sharedParams, tarjetonType }) {
   const [htmlFile, setHtmlFile] = useState("");
@@ -20,6 +21,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
   const [error, setError] = useState([]);
   const [result, setResult] = useState([]);
   const [text, setText] = useState("");
+  let [warnings, setWarnings] = useState("");
 
   let $;
   let footerUrlLink =
@@ -37,33 +39,42 @@ function FileInputView({ sharedParams, tarjetonType }) {
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    if (error.length || result.length) {
-      console.log("ya tienes un archivo abierto!!");
-      return;
-    }
-    if ($) {
-      const links = $("a");
-      const pixel = $("img")[0].attribs.src;
-      const sede = $("title")[0].children[0].data.slice(0, 2);
+    try {
+      if (htmlFile) {
+        console.log("ya tienes un archivo abierto!!");
+        return;
+      }
 
-      //const footerText = $("#footerUrl")[0].children[0].data;
-      const footerText =
-        links[indexes.urlLinkIndex].children[0].children[0].data;
+      if ($) {
+        const links = $("a");
+        const pixel = $("img")[0].attribs.src;
+        const sede = $("title")[0].children[0].data.slice(0, 2);
 
-      let finalLink = links[indexes.finalLinkIndex].attribs.href;
-      let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
-      let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
-      let footerLink = links[indexes.urlLinkIndex].attribs.href;
+        let footerText =
+          tarjetonType === "PROGRAM"
+            ? links[indexes.urlLinkIndex].children[0].children[0].data
+            : $("#footerUrl")[0].children[0].data;
 
-      setText($.text());
-      checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
-      checkText(sede, footerText);
-      setShowResult(true);
+        let finalLink = links[indexes.finalLinkIndex].attribs.href;
+        let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
+        let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
+        let footerLink = links[indexes.urlLinkIndex].attribs.href;
+
+        setText($.text());
+        checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
+        checkText(sede, footerText);
+        setShowResult(true);
+      }
+    } catch (e) {
+      setWarnings("Tarjeton Invalido");
     }
   };
 
   let handleFile = (e) => {
     let file = e.target.files[0];
+    if (file.type !== "text/html") {
+      return;
+    }
 
     setError([]);
     setResult([]);
@@ -71,6 +82,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
     setFileName(file.name);
 
     if (file) {
+      console.log("file");
       const reader = new FileReader();
       reader.onload = (e) => {
         setHtmlFile(e.target.result);
@@ -214,8 +226,17 @@ function FileInputView({ sharedParams, tarjetonType }) {
     );
   };
 
+  let displayWarnings = () => {
+    return warnings.length ? (
+      <Warning warnings={warnings} setWarnings={setWarnings}></Warning>
+    ) : (
+      <></>
+    );
+  };
+
   return (
     <div className="fileInput">
+      {displayWarnings()}
       <div className="leftContent">
         <div className="left">
           <form onSubmit={(e) => handleSubmit(e)}>
