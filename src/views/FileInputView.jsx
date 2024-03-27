@@ -8,6 +8,8 @@ import {
   buildLinks,
   getSedeFromFile,
   buildCorrectText,
+  getFooterText,
+  getFooterLink,
 } from "../utils/utils";
 import { TARJETON_TYPE } from "../utils/tarjetonType";
 import { FUNIBER_URL_LINKS } from "../utils/funiberUrlLinks";
@@ -20,7 +22,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
   const [showResult, setShowResult] = useState(false);
   const [error, setError] = useState([]);
   const [result, setResult] = useState([]);
-  const [text, setText] = useState("");
+  const [_text, setText] = useState("");
   let [warnings, setWarnings] = useState("");
 
   let $;
@@ -40,49 +42,48 @@ function FileInputView({ sharedParams, tarjetonType }) {
   let handleSubmit = (e) => {
     e.preventDefault();
     try {
-      if (htmlFile) {
-        console.log("ya tienes un archivo abierto!!");
-        return;
-      }
+      if (!htmlFile) return setWarnings("Ingresa un tarjeton para validar!");
+      if (!$) return setWarnings("Ya tienes un archivo!");
 
-      if ($) {
-        const links = $("a");
-        const pixel = $("img")[0].attribs.src;
-        const sede = $("title")[0].children[0].data.slice(0, 2);
+      const links = $("a");
+      const pixel = $("img")[0].attribs.src;
+      const sede = $("title")[0].children[0].data.slice(0, 2);
+      const footerText = getFooterText(links, indexes.urlLinkIndex);
 
-        let footerText =
-          tarjetonType === "PROGRAM"
-            ? links[indexes.urlLinkIndex].children[0].children[0].data
-            : $("#footerUrl")[0].children[0].data;
+      let finalLink = links[indexes.finalLinkIndex].attribs.href;
+      let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
+      let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
+      let footerLink = getFooterLink(links, indexes.urlLinkIndex);
 
-        let finalLink = links[indexes.finalLinkIndex].attribs.href;
-        let bannerLink = links[indexes.bannerLinkIndex].attribs.href;
-        let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
-        let footerLink = links[indexes.urlLinkIndex].attribs.href;
+      console.log("Link: " + finalLink + "\n");
+      console.log("Link: " + bannerLink + "\n");
+      console.log("Link: " + buttonLink + "\n");
+      console.log("Link:" + footerLink + "\n");
 
-        setText($.text());
-        checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
-        checkText(sede, footerText);
-        setShowResult(true);
-      }
+      setText($.text());
+      checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
+      checkText(sede, footerText);
+      setShowResult(true);
     } catch (e) {
-      setWarnings("Tarjeton Invalido");
+      setWarnings("Ha occurido un error");
+      console.error(e);
     }
   };
 
   let handleFile = (e) => {
     let file = e.target.files[0];
+    setFileName(file.name);
+
     if (file.type !== "text/html") {
+      setWarnings("El archivo no es HTML!");
       return;
     }
 
     setError([]);
     setResult([]);
     setShowResult(false);
-    setFileName(file.name);
 
     if (file) {
-      console.log("file");
       const reader = new FileReader();
       reader.onload = (e) => {
         setHtmlFile(e.target.result);
@@ -227,11 +228,9 @@ function FileInputView({ sharedParams, tarjetonType }) {
   };
 
   let displayWarnings = () => {
-    return warnings.length ? (
-      <Warning warnings={warnings} setWarnings={setWarnings}></Warning>
-    ) : (
-      <></>
-    );
+    if (warnings.length) {
+      return <Warning warnings={warnings} setWarnings={setWarnings}></Warning>;
+    }
   };
 
   return (

@@ -66,7 +66,7 @@ export const TARJETON_TYPE = {
       finalLinkIndex: 0,
       bannerLinkIndex: 1,
       buttonLinkIndex: 2,
-      urlLinkIndex: 6,
+      urlLinkIndex: 10,
     },
   },
 };

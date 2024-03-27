@@ -171,3 +171,33 @@ export function getFurriel(tarjetonType, sharedParams) {
       return sharedParams.furriel;
   }
 }
+
+export function getFooterText(links, idx) {
+  let text;
+  while (!text) {
+    let link = links[idx].children;
+    link.forEach((element) => {
+      if (element.name === "span") {
+        text = element.children[0].data;
+        return;
+      } else {
+        idx--;
+      }
+    });
+  }
+  return text;
+}
+
+export function getFooterLink(links, idx) {
+  let link;
+  while (!link) {
+    let element = links[idx];
+    if (element.children.length === 2) {
+      link = element.attribs.href;
+      break;
+    } else {
+      idx--;
+    }
+  }
+  return link;
+}

@@ -22,8 +22,6 @@ function TarjetonType({
         onChange={(e) => handleSelect(e)}
         value={tarjetonType}
       >
-        <option value="GENERIC">Tarjeton Tipo Generico</option>
-        <option value="EVENT">Tarjetón Tipo Evento</option>
         <option value="AREA">Tarjetón Tipo Área</option>
         <option value="PROGRAM">Tarjetón Tipo Programa</option>
       </select>
