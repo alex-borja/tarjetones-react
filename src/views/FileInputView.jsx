@@ -1,5 +1,5 @@
-import cheerio, { html } from "cheerio";
-import { useEffect, useState } from "react";
+import cheerio from "cheerio";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import "../styles/views/FileInputView.css";
 import ResultCard from "../components/resultCard";

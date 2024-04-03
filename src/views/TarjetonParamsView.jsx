@@ -1,5 +1,5 @@
 import "../App.css";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";

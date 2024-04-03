@@ -7,7 +7,7 @@ export function repairUrl(url) {
   }
 }
 
-export function checkValidParams(sharedParams, tt) {
+export function checkValidParams(sharedParams) {
   for (const property in sharedParams) {
     if (sharedParams[property] === "") {
       return false;
