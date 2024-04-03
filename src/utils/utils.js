@@ -192,12 +192,12 @@ export function getFooterLink(links, idx) {
   let link;
   while (!link) {
     let element = links[idx];
-    if (element.children.length === 2) {
-      link = element.attribs.href;
-      break;
-    } else {
-      idx--;
+    for (let e of element.children) {
+      if (e.name === "span") {
+        link = element.attribs.href;
+        return link;
+      }
     }
+    idx--;
   }
-  return link;
 }

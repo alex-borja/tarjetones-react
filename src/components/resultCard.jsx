@@ -24,7 +24,7 @@ function ResultCard({ errors }) {
       <div className="errors">
         <h4 className="numErrors">
           El archivo contiene: {errors.length}{" "}
-          {errors.length === 1 ? "error" : "errores"} (basado en tus parametros)
+          {errors.length === 1 ? "error" : "errores"} (basado en tus parámetros)
         </h4>
         {displayResults(errors)}
       </div>

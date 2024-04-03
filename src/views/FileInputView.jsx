@@ -22,10 +22,8 @@ function FileInputView({ sharedParams, tarjetonType }) {
   const [showResult, setShowResult] = useState(false);
   const [error, setError] = useState([]);
   const [result, setResult] = useState([]);
-  const [_text, setText] = useState("");
   let [warnings, setWarnings] = useState("");
 
-  let $;
   let footerUrlLink =
     tarjetonType === "PROGRAM"
       ? "https://www.uneatlantico.es/"
@@ -33,17 +31,11 @@ function FileInputView({ sharedParams, tarjetonType }) {
 
   const indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
 
-  useEffect(() => {
-    if (!$ && htmlFile) {
-      $ = cheerio.load(htmlFile);
-    }
-  }, [htmlFile, $]);
-
   let handleSubmit = (e) => {
     e.preventDefault();
     try {
       if (!htmlFile) return setWarnings("Ingresa un tarjeton para validar!");
-      if (!$) return setWarnings("Ya tienes un archivo!");
+      let $ = cheerio.load(htmlFile);
 
       const links = $("a");
       const pixel = $("img")[0].attribs.src;
@@ -55,17 +47,11 @@ function FileInputView({ sharedParams, tarjetonType }) {
       let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
       let footerLink = getFooterLink(links, indexes.urlLinkIndex);
 
-      console.log("Link: " + finalLink + "\n");
-      console.log("Link: " + bannerLink + "\n");
-      console.log("Link: " + buttonLink + "\n");
-      console.log("Link:" + footerLink + "\n");
-
-      setText($.text());
       checkParams(pixel, finalLink, bannerLink, buttonLink, footerLink);
       checkText(sede, footerText);
       setShowResult(true);
     } catch (e) {
-      setWarnings("Ha occurido un error");
+      setWarnings("Ha occurido un error!");
       console.error(e);
     }
   };

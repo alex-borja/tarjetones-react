@@ -38,7 +38,7 @@ function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
           </li>
           <li onClick={() => handleClick("TarjetonParams")}>
             <FontAwesomeIcon icon={faPencil} style={{ color: "#f5f5f5" }} />
-            <p>Párametros</p>
+            <p>Parámetros</p>
           </li>
           <li onClick={() => handleClick("TarjetonResults")}>
             <FontAwesomeIcon
