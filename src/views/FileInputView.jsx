@@ -36,6 +36,8 @@ function FileInputView({ sharedParams, tarjetonType }) {
     try {
       if (!htmlFile) return setWarnings("Ingresa un tarjeton para validar!");
       let $ = cheerio.load(htmlFile);
+      setError([]);
+      setResult([]);
 
       const links = $("a");
       const pixel = $("img")[0].attribs.src;
@@ -57,6 +59,8 @@ function FileInputView({ sharedParams, tarjetonType }) {
   };
 
   let handleFile = (e) => {
+    setShowResult(false);
+
     let file = e.target.files[0];
     setFileName(file.name);
 
@@ -65,10 +69,6 @@ function FileInputView({ sharedParams, tarjetonType }) {
       return;
     }
 
-    setError([]);
-    setResult([]);
-    setShowResult(false);
-
     if (file) {
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -76,6 +76,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
       };
       reader.readAsText(file);
     }
+    e.target.value = null;
   };
 
   let checkParams = (pixel, finalLink, bannerLink, buttonLink, footerLink) => {
