@@ -58,7 +58,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
     }
   };
 
-  let handleFile = (e) => {
+  let handleFile = async (e) => {
     setShowResult(false);
 
     let file = e.target.files[0];
@@ -70,6 +70,16 @@ function FileInputView({ sharedParams, tarjetonType }) {
     }
 
     if (file) {
+      const formData = new FormData();
+      formData.append("file", e.target.files[0]);
+
+      let response = await fetch("http://localhost:3005/validate", {
+        method: "POST",
+        body: formData,
+      });
+
+      console.log(await response.text());
+
       const reader = new FileReader();
       reader.onload = (e) => {
         setHtmlFile(e.target.result);

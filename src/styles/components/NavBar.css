@@ -1,5 +1,5 @@
 .navbar {
-  width: 300px;
+  width: 270px;
   min-height: 100vh;
   color: #dfd5d5;
   background-color: #313131;
@@ -10,7 +10,7 @@
 }
 
 .navList {
-  width: 320px;
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,13 +25,13 @@
   cursor: pointer;
   width: 200px;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   align-items: center;
   transition: 0.2s ease-in all;
 }
 
 .navList li p {
-  width: 150px;
+  width: 65%;
 }
 
 .navBtn {

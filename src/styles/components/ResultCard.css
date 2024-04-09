@@ -1,4 +1,5 @@
-.displayResult {
+.displayResults {
+  width: 100% !important;
   display: flex;
   flex-direction: column;
 }
@@ -83,4 +84,13 @@
 .diff-sec::-webkit-scrollbar-thumb {
   background: darkgray;
   border-radius: 10px;
+}
+
+.correct-res {
+  color: whitesmoke;
+  background-color: #22272e;
+  font-size: 18px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
 }

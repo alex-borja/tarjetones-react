@@ -1,10 +1,29 @@
 import PropTypes from "prop-types";
 import "../styles/components/ResultCard.css";
 import { getDiff } from "../helpers/helpers";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-function ResultCard({ errors }) {
-  let displayResults = (data) => {
-    return data.map((val, idx) => {
+function ResultCard({ results, errors }) {
+  let displayResults = (results) => {
+    let results_jsx = results.map((val, idx) => {
+      return (
+        <div key={idx} className="resItem correct-res">
+          <h4 className="resTitle">{val}</h4>
+          <FontAwesomeIcon
+            icon={faCheck}
+            style={{ color: "green", fontSize: "30px" }}
+            className="icon-res"
+          ></FontAwesomeIcon>
+        </div>
+      );
+    });
+
+    return results_jsx;
+  };
+
+  const displayErrors = (errors) => {
+    let errors_jsx = errors.map((val, idx) => {
       let correctVal = `Valor correcto: ${val.correctValue}`;
       let incorrectValue = `Valor del archivo: ${val.valueProvided}`;
 
@@ -32,9 +51,11 @@ function ResultCard({ errors }) {
                         : "white",
                   }}
                 >
-                  {item.type === "added" && "+"}
-                  {item.type === "removed" && "-"}
-                  {item.value}
+                  <pre style={{ fontSize: "15px" }}>
+                    {item.type === "added" && "+"}
+                    {item.type === "removed" && "-"}
+                    {item.value}
+                  </pre>
                 </li>
               ))}
             </ul>
@@ -42,16 +63,19 @@ function ResultCard({ errors }) {
         </div>
       );
     });
+
+    return errors_jsx;
   };
 
   return (
     <div className="displayResults">
       <div className="errors">
         <h4 className="numErrors">
-          El archivo contiene: {errors.length}{" "}
+          El archivo contiene: {errors.length + " "}
           {errors.length === 1 ? "error" : "errores"} (basado en tus parámetros)
         </h4>
-        {displayResults(errors)}
+        {displayResults(results)}
+        {displayErrors(errors)}
       </div>
     </div>
   );
@@ -63,15 +87,3 @@ ResultCard.propTypes = {
 };
 
 export default ResultCard;
-
-/*
-abcd
-----
-1011
-acd  
-----
-111
-
--> acd -> 1, b -> 0
-
-*/

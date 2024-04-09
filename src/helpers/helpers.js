@@ -20,13 +20,11 @@ export function getDiff(str1, str2) {
   const m = str1.length;
   const n = str2.length;
 
-  // Create a 2D array to store the lengths of LCS
   const dp = [];
   for (let i = 0; i <= m; i++) {
     dp.push(new Array(n + 1).fill(0));
   }
 
-  // Build the LCS array
   for (let i = 1; i <= m; i++) {
     for (let j = 1; j <= n; j++) {
       if (str1[i - 1] === str2[j - 1]) {
@@ -37,7 +35,6 @@ export function getDiff(str1, str2) {
     }
   }
 
-  // Reconstruct the difference using LCS array
   let i = m,
     j = n;
   const diff = [];
