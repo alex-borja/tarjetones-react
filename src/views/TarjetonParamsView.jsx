@@ -58,7 +58,7 @@ function TarjetonParamsView({
 
   let renderInputFields = () => {
     let tarjetonParams = INPUT_FIELDS.filter(
-      (param) => param.name in sharedParams
+      (param) => param.name in sharedParams,
     );
     let pms = localStorage.getItem("sharedParams");
     pms = JSON.parse(pms);

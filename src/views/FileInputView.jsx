@@ -96,21 +96,21 @@ function FileInputView({ sharedParams, tarjetonType }) {
       correctPixel,
       pixel,
       PARAMS_INFO.pixel.result,
-      PARAMS_INFO.pixel.error
+      PARAMS_INFO.pixel.error,
     );
 
     checkSingleParam(
       correctBannerLink,
       bannerLink,
       PARAMS_INFO.banner.result,
-      PARAMS_INFO.banner.error
+      PARAMS_INFO.banner.error,
     );
 
     checkSingleParam(
       correctButtonLink,
       buttonLink,
       PARAMS_INFO.button.result,
-      PARAMS_INFO.button.error
+      PARAMS_INFO.button.error,
     );
 
     checkSiteUrl(correctFooterLink, footerLink);
@@ -121,7 +121,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
 
     let [correctSede, correctFooterText] = buildCorrectText(
       sharedParams,
-      footerUrlLink
+      footerUrlLink,
     );
 
     if (tarjetonType !== "PROGRAM") {
@@ -129,7 +129,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
         correctSede,
         sede,
         PARAMS_INFO.sede.result,
-        PARAMS_INFO.sede.error
+        PARAMS_INFO.sede.error,
       );
     }
 
@@ -137,7 +137,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
       correctFooterText,
       footerText,
       PARAMS_INFO.footerText.result,
-      PARAMS_INFO.footerText.error
+      PARAMS_INFO.footerText.error,
     );
   };
 
@@ -153,7 +153,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
       correctUrlLink,
       link,
       PARAMS_INFO.url.result,
-      PARAMS_INFO.url.error
+      PARAMS_INFO.url.error,
     );
   };
 
@@ -163,7 +163,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
         correctFinalLink,
         finalLink,
         PARAMS_INFO.linkFinal.result,
-        PARAMS_INFO.linkFinal.error
+        PARAMS_INFO.linkFinal.error,
       );
     }
 

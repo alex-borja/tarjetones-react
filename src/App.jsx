@@ -9,10 +9,10 @@ function App() {
   const [showResults, setShowResults] = useState(false);
   const [showParams, setShowParmas] = useState(false);
   const [tarjetonType, setTarjetonType] = useState(
-    localStorage.getItem("tarjetonType")
+    localStorage.getItem("tarjetonType"),
   );
   const [sharedParams, setSharedParams] = useState(
-    JSON.parse(localStorage.getItem("sharedParams"))
+    JSON.parse(localStorage.getItem("sharedParams")),
   );
 
   localStorage.setItem("tarjetonType", tarjetonType);

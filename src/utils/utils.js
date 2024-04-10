@@ -105,7 +105,7 @@ export function buildLinks(sharedParams, footerUrl, tarjetonType) {
 
   const finalLink = buildCorrectFinalLink(
     sharedParams.linkFinal,
-    sharedParams.sede.toLowerCase()
+    sharedParams.sede.toLowerCase(),
   );
 
   const correctFinalLink =
@@ -137,7 +137,7 @@ export function buildCorrectText(sharedParams, footerUrlLink) {
   let correctFooterText = footerUrlLink.slice(8);
   correctFooterText = correctFooterText.substring(
     0,
-    correctFooterText.length - 1
+    correctFooterText.length - 1,
   );
 
   return [correctSede, correctFooterText];

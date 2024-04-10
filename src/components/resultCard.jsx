@@ -47,8 +47,8 @@ function ResultCard({ results, errors }) {
                       item.type === "added"
                         ? "green"
                         : item.type === "removed"
-                        ? "red"
-                        : "white",
+                          ? "red"
+                          : "white",
                   }}
                 >
                   <pre style={{ fontSize: "15px" }}>
