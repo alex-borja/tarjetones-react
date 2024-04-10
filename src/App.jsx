@@ -3,7 +3,7 @@ import TarjetonParamsView from "./views/TarjetonParamsView";
 import FileInputView from "./views/FileInputView";
 import PropTypes from "prop-types";
 import NavBar from "./components/NavBar";
-import TarjetonType from "./components/TarjetonType";
+import TarjetonType from "./views/TarjetonType";
 
 function App() {
   const [showResults, setShowResults] = useState(false);

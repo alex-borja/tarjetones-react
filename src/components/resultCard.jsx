@@ -69,7 +69,7 @@ function ResultCard({ results, errors }) {
 
   return (
     <div className="displayResults">
-      <div className="errors">
+      <div className="results">
         <h4 className="numErrors">
           El archivo contiene: {errors.length + " "}
           {errors.length === 1 ? "error" : "errores"} (basado en tus parámetros)

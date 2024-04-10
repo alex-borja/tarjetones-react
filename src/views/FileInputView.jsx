@@ -70,16 +70,6 @@ function FileInputView({ sharedParams, tarjetonType }) {
     }
 
     if (file) {
-      const formData = new FormData();
-      formData.append("file", e.target.files[0]);
-
-      let response = await fetch("http://localhost:3005/validate", {
-        method: "POST",
-        body: formData,
-      });
-
-      console.log(await response.text());
-
       const reader = new FileReader();
       reader.onload = (e) => {
         setHtmlFile(e.target.result);
@@ -233,7 +223,7 @@ function FileInputView({ sharedParams, tarjetonType }) {
   return (
     <div className="fileInput">
       {displayWarnings()}
-      <div className="leftContent">
+      <div className="fileInputWrapper">
         <div className="left">
           <form onSubmit={(e) => handleSubmit(e)}>
             <label className="uploadFile" htmlFor="file">

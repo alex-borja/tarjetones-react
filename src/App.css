@@ -9,11 +9,12 @@
 
 .center {
   display: flex;
+  width: 80%;
   flex-direction: column;
   justify-content: flex-start;
-  width: 80%;
   min-height: 100vh;
   height: auto;
+  background-color: #161616;
 }
 
 .header {
@@ -111,7 +112,7 @@
   }
 }
 
-@media screen and (max-width: 426px) {
+@media screen and (max-width: 560px) {
   .center {
     width: 90%;
   }

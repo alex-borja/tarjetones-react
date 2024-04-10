@@ -5,26 +5,27 @@
   justify-content: center;
   align-items: center;
   flex: 1;
-  margin-top: 20px;
 }
 
-.leftContent {
+.fileInputWrapper {
   width: 95%;
-  display: flex;
-  flex-direction: row;
   margin-top: 20px;
   height: 70vh;
   border-radius: 5px;
   margin: 0 auto;
+  position: relative;
+  overflow: hidden;
 }
 
 .left {
   display: flex;
-  width: 30%;
+  width: 15em;
   flex-direction: column;
   padding: 20px;
   border-radius: 5px 0px 0px 5px;
   background-color: #313131;
+  position: absolute;
+  height: 100%;
 }
 
 .left form {
@@ -99,11 +100,13 @@ input[type="file"] {
 }
 
 .right {
-  width: 100%;
+  flex: 1;
   padding: 20px;
   background-color: #525252;
   overflow: scroll;
   overflow-x: hidden;
+  margin-left: 15em;
+  height: 100%;
 }
 
 .right::-webkit-scrollbar {
@@ -134,13 +137,13 @@ input[type="file"] {
     margin-bottom: 20px;
   }
 
-  .leftContent {
+  .fileInputWrapper {
     flex-direction: column;
   }
 
   .left {
     width: 100%;
-    height: 30vh;
+    height: 200px;
     border-radius: 5px 5px 0px 0px;
   }
 
@@ -151,6 +154,12 @@ input[type="file"] {
 
   .selectedFiles {
     margin-bottom: 10px;
+  }
+
+  .right {
+    width: 100%;
+    margin: 0px;
+    margin-top: 200px;
   }
 }
 

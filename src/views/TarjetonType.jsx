@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import { TARJETON_TYPE } from "../utils/tarjetonType";
-import "../styles/components/TarjetonTypes.css";
+import "../styles/views/TarjetonTypes.css";
 
 function TarjetonType({
   tarjetonType,
