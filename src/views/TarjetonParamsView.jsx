@@ -55,14 +55,14 @@ function TarjetonParamsView({
       matomo: "",
     });
   };
-
+     
   let renderInputFields = () => {
     let tarjetonParams = INPUT_FIELDS.filter(
       (param) => param.name in sharedParams,
     );
     let pms = localStorage.getItem("sharedParams");
     pms = JSON.parse(pms);
-
+  
     return tarjetonParams.map((field) => (
       <ParamInput
         key={field.id}
