@@ -4,6 +4,7 @@ import FileInputView from "./views/FileInputView";
 import PropTypes from "prop-types";
 import NavBar from "./components/NavBar";
 import TarjetonType from "./views/TarjetonType";
+import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 function App() {
   const [showResults, setShowResults] = useState(false);
@@ -18,6 +19,23 @@ function App() {
   localStorage.setItem("tarjetonType", tarjetonType);
   localStorage.setItem("sharedParams", JSON.stringify(sharedParams));
 
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path="/" element={<Root />}>
+        <Route index element={<TarjetonType />} />
+        <Route path="/params" element={<TarjetonParamsView />} />
+        <Route path="/fileInput" element={<FileInputView />} />
+      </Route>
+    )
+  )
+
+  return (
+    <div className="container">
+      <RouterProvider router={router} />
+    </div>
+  )
+
+  /*
   return (
     <div className="container">
       <NavBar
@@ -58,6 +76,16 @@ function App() {
       </div>
     </div>
   );
+  */
+}
+
+const Root = () => {
+  return (
+    <>
+      <NavBar />
+      <Outlet />
+    </>
+  )
 }
 
 App.propTypes = {

@@ -1,5 +1,5 @@
 import cheerio from "cheerio";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
 import "../styles/views/FileInputView.css";
 import ResultCard from "../components/resultCard";
@@ -10,40 +10,26 @@ import {
   buildCorrectText,
   getFooterText,
   getFooterLink,
-  checkValidParams,
 } from "../utils/utils";
 import { TARJETON_TYPE } from "../utils/tarjetonType";
 import { FUNIBER_URL_LINKS } from "../utils/funiberUrlLinks";
 import { repairUrl } from "../helpers/helpers";
 import Warning from "../components/warning";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
-function FileInputView() {
-  const [error, setError] = useState([]);
-  const [result, setResult] = useState([]);
-  const [warnings, setWarnings] = useState("");
+function FileInputView({ sharedParams, tarjetonType }) {
   const [htmlFile, setHtmlFile] = useState("");
   const [fileName, setFileName] = useState("");
   const [showResult, setShowResult] = useState(false);
+  const [error, setError] = useState([]);
+  const [result, setResult] = useState([]);
+  let [warnings, setWarnings] = useState("");
 
-  const params = useSelector((state) => state.tarjetonParams.params);
-  const tarjetonType = useSelector((state) => state.tarjetonParams.tarjetonType);
+  let footerUrlLink =
+    tarjetonType === "PROGRAM"
+      ? "https://www.uneatlantico.es/"
+      : FUNIBER_URL_LINKS[sharedParams.sede];
 
-  let footerUrlLink;
-  let indexes;
-
-  let navigate = useNavigate();
-  useEffect(() => {
-    if (!checkValidParams(params)) return navigate("/params");
-
-    footerUrlLink =
-      tarjetonType === "PROGRAM"
-        ? "https://www.uneatlantico.es/"
-        : FUNIBER_URL_LINKS[params.sede];
-
-    indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
-  }, [])
+  const indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
 
   let handleSubmit = (e) => {
     e.preventDefault();
@@ -102,7 +88,7 @@ function FileInputView() {
       correctBannerLink,
       correctButtonLink,
       correctFooterLink,
-    ] = buildLinks(params, footerUrlLink, tarjetonType);
+    ] = buildLinks(sharedParams, footerUrlLink, tarjetonType);
 
     checkFinalLink(correctFinalLink, finalLink);
 
@@ -134,7 +120,7 @@ function FileInputView() {
     footerUrlLink = repairUrl(footerUrlLink);
 
     let [correctSede, correctFooterText] = buildCorrectText(
-      params,
+      sharedParams,
       footerUrlLink,
     );
 
@@ -172,7 +158,7 @@ function FileInputView() {
   };
 
   let checkFinalLink = (correctFinalLink, finalLink) => {
-    if (!params.hasSede) {
+    if (!sharedParams.hasSede) {
       return checkSingleParam(
         correctFinalLink,
         finalLink,
@@ -182,7 +168,7 @@ function FileInputView() {
     }
 
     let fileSede = getSedeFromFile(finalLink);
-    let validSede = fileSede === params.sede.toLowerCase();
+    let validSede = fileSede === sharedParams.sede.toLowerCase();
 
     if (!validSede) {
       setError((curr) => [
@@ -258,5 +244,12 @@ function FileInputView() {
     </div>
   );
 }
+
+FileInputView.propTypes = {
+  sharedParams: PropTypes.object,
+  showParams: PropTypes.bool,
+  setShowParams: PropTypes.func,
+  tarjetonType: PropTypes.string,
+};
 
 export default FileInputView;

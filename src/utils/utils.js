@@ -143,6 +143,19 @@ export function buildCorrectText(sharedParams, footerUrlLink) {
   return [correctSede, correctFooterText];
 }
 
+export function checkValidParams(params) {
+  for (const property in params) {
+    if (params[property] === "") {
+      return false;
+    }
+  }
+
+  if (!FURRIEL_MAP_FUNIBER[params.sede]) {
+    return false;
+  }
+  return true;
+}
+
 export function buildCorrectFinalLink(link, sede) {
   let indexOfFileType = link.indexOf(".html");
   let arr = link.split("");

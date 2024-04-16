@@ -1,23 +1,18 @@
 import "../App.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import PropTypes from "prop-types";
 import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
 import { FURRIEL_MAP_FUNIBER } from "../utils/furriels";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { update } from "../slices/tarjetonParamsSlice";
 
-function TarjetonParamsView() {
+function TarjetonParamsView({
+  showResults,
+  setShowResults,
+  sharedParams,
+  setSharedParams,
+}) {
   let [warnings, setWarnings] = useState("");
-  const params = useSelector((state) => state.tarjetonParams.params);
-  const tarjetonType = useSelector((state) => state.tarjetonParams.tarjetonType);
-  const dispatch = useDispatch();
-  let navigate = useNavigate();
-
-  useEffect(() => {
-    if (!tarjetonType) return navigate("/")
-  }, [])
 
   let submitParams = (e) => {
     e.preventDefault();
@@ -26,24 +21,24 @@ function TarjetonParamsView() {
 
   let validateParams = () => {
     if (checkValidParams()) {
-      return navigate("/fileInput")
+      setShowResults(!showResults);
     }
   };
 
   let handleInput = (e) => {
     let { name, value } = e.target;
-    dispatch(update({ tarjetonType, params: { ...params, [name]: value.trim() } }))
+    setSharedParams((prev) => ({ ...prev, [name]: value.trim() }));
   };
 
   let checkValidParams = () => {
-    for (const property in params) {
-      if (params[property] === "") {
+    for (const property in sharedParams) {
+      if (sharedParams[property] === "") {
         setWarnings("Por favor, rellena todos los campos.");
         return false;
       }
     }
 
-    if (!FURRIEL_MAP_FUNIBER[params.sede]) {
+    if (!FURRIEL_MAP_FUNIBER[sharedParams.sede]) {
       setWarnings("La sede que indicaste no existe.");
       return false;
     }
@@ -63,9 +58,8 @@ function TarjetonParamsView() {
 
   let renderInputFields = () => {
     let tarjetonParams = INPUT_FIELDS.filter(
-      (param) => param.name in params,
+      (param) => param.name in sharedParams,
     );
-
     let pms = localStorage.getItem("sharedParams");
     pms = JSON.parse(pms);
 
@@ -77,7 +71,7 @@ function TarjetonParamsView() {
         id={field.id}
         placeholder={field.placeholder}
         onChange={handleInput}
-        value={params[field.name]}
+        value={pms[field.name]}
       ></ParamInput>
     ));
   };
@@ -113,5 +107,12 @@ function TarjetonParamsView() {
     </div>
   );
 }
+
+TarjetonParamsView.propTypes = {
+  showResults: PropTypes.bool,
+  setShowResults: PropTypes.func,
+  sharedParams: PropTypes.object,
+  setSharedParams: PropTypes.func,
+};
 
 export default TarjetonParamsView;

@@ -7,6 +7,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import PropTypes from "prop-types";
 import { checkValidParams } from "../helpers/helpers";
+import { Link, NavLink } from "react-router-dom";
 
 function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
   let handleClick = (param) => {
@@ -32,20 +33,26 @@ function NavBar({ setShowResults, sharedParams, tarjetonType, setShowParmas }) {
     <div className="navbar">
       <nav>
         <ul className="navList">
-          <li onClick={() => handleClick("TarjetonType")}>
+          <li >
             <FontAwesomeIcon icon={faClipboard} style={{ color: "#fcfcfc" }} />
-            <p>Tipo de Tarjetón</p>
+            <NavLink to="/">
+              <p>Tipo de Tarjetón</p>
+            </NavLink>
           </li>
-          <li onClick={() => handleClick("TarjetonParams")}>
+          <li >
             <FontAwesomeIcon icon={faPencil} style={{ color: "#f5f5f5" }} />
-            <p>Parámetros</p>
+            <NavLink to="/params">
+              <p>Parámetros</p>
+            </NavLink>
           </li>
-          <li onClick={() => handleClick("TarjetonResults")}>
+          <li >
             <FontAwesomeIcon
               icon={faSquarePollVertical}
               style={{ color: "#fcfcfc" }}
             />
-            <p>Ver resultados</p>
+            <NavLink to="/fileInput">
+              <p>Ver resultados</p>
+            </NavLink>
           </li>
         </ul>
       </nav>

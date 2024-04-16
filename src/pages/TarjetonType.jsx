@@ -1,18 +1,17 @@
+import PropTypes from "prop-types";
 import { TARJETON_TYPE } from "../utils/tarjetonType";
 import "../styles/views/TarjetonTypes.css";
-import { useSelector, useDispatch } from "react-redux";
-import { update } from "../slices/tarjetonParamsSlice";
-import { useNavigate } from "react-router-dom";
 
-function TarjetonType() {
-  const navigate = useNavigate();
-  const tarjetonType = useSelector((state) => state.tarjetonParams.tarjetonType);
-  const dispatch = useDispatch();
-
+function TarjetonType({
+  tarjetonType,
+  setTarjetonType,
+  setSharedParams,
+  setShowParmas,
+}) {
   let handleSelect = (e) => {
-    const params = TARJETON_TYPE[e.target.value].params
-    dispatch(update({ tarjetonType: e.target.value, params }));
-    return navigate("/params");
+    setTarjetonType(e.target.value);
+    setSharedParams(() => ({ ...TARJETON_TYPE[e.target.value].params }));
+    setShowParmas(true);
   };
 
   return (
@@ -29,5 +28,13 @@ function TarjetonType() {
     </form>
   );
 }
+
+TarjetonType.propTypes = {
+  tarjetonType: PropTypes.string,
+  setTarjetonType: PropTypes.func,
+  setSharedParams: PropTypes.func,
+  setShowParmas: PropTypes.func,
+  setPTests: PropTypes.func,
+};
 
 export default TarjetonType;
