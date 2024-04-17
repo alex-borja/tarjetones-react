@@ -1,6 +1,5 @@
 import cheerio from "cheerio";
 import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
 import "../styles/views/FileInputView.css";
 import ResultCard from "../components/resultCard";
 import {
@@ -16,10 +15,10 @@ import { TARJETON_TYPE } from "../utils/tarjetonType";
 import { FUNIBER_URL_LINKS } from "../utils/funiberUrlLinks";
 import { repairUrl } from "../helpers/helpers";
 import Warning from "../components/warning";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function FileInputView() {
+function FileInput() {
   const [error, setError] = useState([]);
   const [result, setResult] = useState([]);
   const [warnings, setWarnings] = useState("");
@@ -257,4 +256,4 @@ function FileInputView() {
   );
 }
 
-export default FileInputView;
+export default FileInput;

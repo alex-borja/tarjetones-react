@@ -1,8 +1,8 @@
 import "./App.css"
-import TarjetonParamsView from "./views/TarjetonParamsView";
-import FileInputView from "./views/FileInputView";
+import TarjetonParams from "./pages/TarjetonParams";
+import FileInput from "./pages/FileInput";
 import NavBar from "./components/NavBar";
-import TarjetonType from "./views/TarjetonType";
+import TarjetonType from "./pages/TarjetonType";
 import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
 
 function App() {
@@ -10,8 +10,8 @@ function App() {
     createRoutesFromElements(
       <Route path="/" element={<Root />}>
         <Route index element={<TarjetonType />} />
-        <Route path="/params" element={<TarjetonParamsView />} />
-        <Route path="/fileInput" element={<FileInputView />} />
+        <Route path="/params" element={<TarjetonParams />} />
+        <Route path="/fileInput" element={<FileInput />} />
       </Route>
     )
   )
