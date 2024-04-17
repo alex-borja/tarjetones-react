@@ -1,86 +1,52 @@
 .navbar {
-  width: 270px;
-  min-height: 100vh;
-  color: #dfd5d5;
-  background-color: #313131;
-}
-
-.navbar nav {
-  margin-top: 100px;
+  width: 100%;
+  height: auto;
+  margin-bottom: 30px;
 }
 
 .navList {
-  width: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  list-style-type: none;
+  background-color: #333;
+
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  list-style: none;
-  padding-bottom: 10px;
-  margin: 0 auto;
-  gap: 20px;
+  justify-content: space-evenly;
 }
 
 .navList li {
-  cursor: pointer;
-  width: 200px;
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  transition: 0.2s ease-in all;
+  height: auto;
+  float: left;
+  width: 100%;
 }
 
 .navList li a {
+  height: auto;
+  display: block;
+  color: white;
+  text-align: center;
+  padding: 14px 16px;
   text-decoration: none;
-  color: white;
 }
 
-.navList li p {
-  width: 65%;
+.navList li a:hover {
+  background-color: #464444;
 }
 
-.navBtn {
-  border: none;
-  font-size: 15px;
+.active {
+  background-color: #535353;
 }
 
-.navList li:hover {
-  color: white;
-}
 
-@media screen and (max-width: 769px) {
-  .navbar {
-    width: 200px;
-  }
-
+@media screen and (max-width: 550px) {
   .navList {
-    width: 98%;
+    flex-direction: column;
   }
+}
 
+@media screen and (max-width: 500px) {
   .navList li {
-    width: 170px;
-    display: flex;
-    justify-content: space-evenly;
-  }
-
-  .navList li p {
-    width: 130px;
-  }
-}
-
-@media screen and (max-width: 560px) {
-  .navbar {
-    width: 100%;
-    min-height: 100px;
-  }
-
-  .navbar nav {
-    width: 100%;
-    margin: 0px;
-  }
-
-  .navList {
-    margin: 0 auto;
-    padding: 10px 0px;
+    float: unset;
   }
 }

@@ -1,0 +1,98 @@
+.tarjetonParams {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  background-color: #161616;
+}
+
+.paramsForm {
+  width: 80%;
+  height: auto;
+  display: flex;
+  margin: 0 auto;
+  padding: 30px 0px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  flex-direction: column;
+  background-color: #333;
+}
+
+.inputFields {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  color: white;
+}
+
+.paramComponent {
+  width: 500px;
+  height: 80px;
+  display: flex;
+  flex-direction: column;
+}
+
+.paramComponent label {
+  font-size: 14px;
+}
+
+.paramComponent input {
+  background-color: #141414;
+  color: lightgray;
+  margin-top: 10px;
+  border-radius: 10px;
+  border: 1px solid darkgrey;
+  height: 150px;
+  text-indent: 10px;
+}
+
+.btns {
+  display: flex;
+  justify-content: center;
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+.btnContainer {
+  display: flex;
+  gap: 20px;
+}
+
+.btn {
+  width: 120px;
+  height: 40px;
+  border: none;
+  border-radius: 10px;
+  background-color: #161616;
+  color: white;
+  cursor: pointer;
+}
+
+.btn:hover {
+  opacity: 0.8;
+  scale: 1.05;
+}
+
+@media screen and (max-width: 560px) {
+    .tarjetonParams {
+      padding-top: 10px;
+    }
+  
+    .paramComponent {
+      width: 100%;
+      height: 85px;
+    }
+  
+    .paramsForm {
+      width: 90%;
+      flex-direction: column;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 20px;
+    }
+  }

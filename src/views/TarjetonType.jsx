@@ -16,17 +16,20 @@ function TarjetonType() {
   };
 
   return (
-    <form className="tarjetonType">
-      <label>Elije el tipo de Tarjeton:</label>
-      <select
-        className="selectTargeton"
-        onChange={(e) => handleSelect(e)}
-        value={tarjetonType}
-      >
-        <option value="AREA">Tarjetón Tipo Área</option>
-        <option value="PROGRAM">Tarjetón Tipo Programa</option>
-      </select>
-    </form>
+    <div className="tarjetonType">
+      <form className="type-form">
+        <label>Elije el tipo de Tarjeton:</label>
+        <select
+          className="selectTarjeton"
+          onChange={(e) => handleSelect(e)}
+          value={tarjetonType}
+        >
+          <option value="AREA">Tarjetón Tipo Área</option>
+          <option value="PROGRAM">Tarjetón Tipo Programa</option>
+        </select>
+      </form>
+
+    </div>
   );
 }
 

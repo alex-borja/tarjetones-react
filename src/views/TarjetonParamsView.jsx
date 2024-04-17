@@ -1,4 +1,4 @@
-import "../App.css";
+import "../styles/views/TarjetonParams.css";
 import { useEffect, useState } from "react";
 import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";

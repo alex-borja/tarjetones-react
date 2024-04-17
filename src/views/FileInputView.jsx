@@ -36,13 +36,6 @@ function FileInputView() {
   let navigate = useNavigate();
   useEffect(() => {
     if (!checkValidParams(params)) return navigate("/params");
-
-    footerUrlLink =
-      tarjetonType === "PROGRAM"
-        ? "https://www.uneatlantico.es/"
-        : FUNIBER_URL_LINKS[params.sede];
-
-    indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
   }, [])
 
   let handleSubmit = (e) => {
@@ -52,6 +45,11 @@ function FileInputView() {
       let $ = cheerio.load(htmlFile);
       setError([]);
       setResult([]);
+      indexes = TARJETON_TYPE[tarjetonType].paramsIndexes;
+      footerUrlLink =
+        tarjetonType === "PROGRAM"
+          ? "https://www.uneatlantico.es/"
+          : FUNIBER_URL_LINKS[params.sede];
 
       const links = $("a");
       const pixel = $("img")[0].attribs.src;

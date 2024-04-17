@@ -1,20 +1,22 @@
 .fileInput {
-  width: 100% !important;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   flex: 1;
+  display: flex;
+  color: white;
+  align-items: center;
+  flex-direction: column;
+  width: 100% !important;
+  justify-content: center;
+  height: 70vh;
 }
 
 .fileInputWrapper {
-  width: 95%;
-  margin-top: 20px;
-  height: 70vh;
-  border-radius: 5px;
-  margin: 0 auto;
-  position: relative;
+  display: flex;
+  height: 80%;
+  width: 80%;
+  flex-direction: row;
   overflow: hidden;
+  border-radius: 5px;
+  position: relative;
 }
 
 .left {
@@ -24,7 +26,6 @@
   padding: 20px;
   border-radius: 5px 0px 0px 5px;
   background-color: #313131;
-  position: absolute;
   height: 100%;
 }
 
@@ -39,27 +40,6 @@
 
 .left input {
   margin-bottom: 5px;
-}
-
-.returnToParams {
-  display: flex;
-  justify-content: center;
-}
-
-.returnBtn {
-  height: 50px;
-  width: 150px;
-  border: none;
-  border-radius: 5px;
-  color: white;
-  background-color: black;
-  cursor: pointer;
-  transition: 0.2s ease-in all;
-}
-
-.returnBtn:hover {
-  opacity: 0.8;
-  scale: 1.03;
 }
 
 .uploadFile {
@@ -82,8 +62,9 @@ input[type="file"] {
   display: none;
 }
 
-.left form button {
-  padding: 10px 30px;
+.uploadBtn {
+  height: auto;
+  padding: 10px 35px;
   border-radius: 20px;
   border: none;
   background-color: #161616;
@@ -105,8 +86,7 @@ input[type="file"] {
   background-color: #525252;
   overflow: scroll;
   overflow-x: hidden;
-  margin-left: 15em;
-  height: 100%;
+  width: 100%;
 }
 
 .right::-webkit-scrollbar {
@@ -123,28 +103,30 @@ input[type="file"] {
 }
 
 .selectedFiles {
-  margin-bottom: 30px;
   text-align: center;
 }
 
 .selectedFiles h4 {
-  margin-bottom: 7px;
+  margin-bottom: 5px;
 }
 
 @media screen and (max-width: 769px) {
   .fileInput {
     flex-direction: column;
-    margin-bottom: 20px;
+    justify-content: unset;
   }
 
   .fileInputWrapper {
     flex-direction: column;
+    width: 90%;
+    height: 97%;
   }
 
   .left {
     width: 100%;
-    height: 200px;
+    height: auto;
     border-radius: 5px 5px 0px 0px;
+    padding-bottom: 0px;
   }
 
   .left form {
@@ -157,21 +139,18 @@ input[type="file"] {
   }
 
   .right {
-    width: 100%;
     margin: 0px;
-    margin-top: 200px;
+    text-align: center;
   }
 }
 
 @media screen and (max-width: 426px) {
   .fileInput {
-    flex-direction: column;
     margin-bottom: 20px;
   }
 
   .left {
     width: 100%;
-    height: 30vh;
   }
 
   .left form {
