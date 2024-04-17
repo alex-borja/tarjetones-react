@@ -1,4 +1,9 @@
 .tarjetonType {
+  height: auto;
+  width: 100%;
+}
+
+.type-form {
   width: 30%;
   display: flex;
   flex-direction: column;
@@ -7,16 +12,18 @@
   gap: 20px;
   margin: 0 auto;
   height: auto;
+  text-align: center;
 }
 
-.tarjetonType label {
+.type-form label {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: white;
 }
 
-.selectTargeton {
-  min-width: 250px;
+.selectTarjeton {
+  max-width: 100%;
   height: 40px;
   border-radius: 5px;
   font-family: "Poppins", sans-serif;
@@ -27,13 +34,13 @@
 }
 
 @media screen and (max-width: 769px) {
-  .tarjetonType {
-    width: 50%;
+  .type-form {
+    width: 80%;
   }
 }
 
 @media screen and (max-width: 426px) {
-  .tarjetonType {
+  .type-form {
     width: 80%;
   }
 }
