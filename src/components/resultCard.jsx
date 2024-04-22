@@ -4,7 +4,7 @@ import { getDiff } from "../helpers/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
 
-function ResultCard({ results, errors }) {
+function ResultCard({ reports }) {
   let displayResults = (results) => {
     let results_jsx = results.map((val, idx) => {
       return (
@@ -67,23 +67,36 @@ function ResultCard({ results, errors }) {
     return errors_jsx;
   };
 
+  const handleClick = (e) => {
+
+  }
+
   return (
-    <div className="displayResults">
-      <div className="results">
-        <h4 className="numErrors">
-          El archivo contiene: {errors.length + " "}
-          {errors.length === 1 ? "error" : "errores"} (basado en tus parámetros)
-        </h4>
-        {displayResults(results)}
-        {displayErrors(errors)}
-      </div>
-    </div>
+    <>
+      {
+        reports.map((report, idx) => {
+          return (
+            <div key={idx} className="displayResults" onClick={(e) => handleClick(e)}>
+              <div className="results">
+                <h4 className="numErrors">
+                  El archivo contiene: {report.errors.length + " "}
+                  {report.errors.length === 1 ? "error" : "errores"} (basado en tus parámetros)
+                </h4>
+                <div className="resultAccordion">
+                  {displayResults(report.validations)}
+                  {displayErrors(report.errors)}
+                </div>
+              </div>
+            </div>
+          )
+        })
+      }
+    </>
   );
 }
 
 ResultCard.propTypes = {
-  errors: PropTypes.array.isRequired,
-  results: PropTypes.array.isRequired,
+  reports: PropTypes.array.isRequired,
 };
 
 export default ResultCard;

@@ -11,13 +11,15 @@ import { update } from "../slices/tarjetonParamsSlice";
 function TarjetonParams() {
   let [warnings, setWarnings] = useState("");
   const params = useSelector((state) => state.tarjetonParams.params);
-  const tarjetonType = useSelector((state) => state.tarjetonParams.tarjetonType);
+  const tarjetonType = useSelector(
+    (state) => state.tarjetonParams.tarjetonType,
+  );
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (!tarjetonType) return navigate("/")
-  }, [])
+    if (!tarjetonType) return navigate("/");
+  }, []);
 
   let submitParams = (e) => {
     e.preventDefault();
@@ -26,13 +28,15 @@ function TarjetonParams() {
 
   let validateParams = () => {
     if (checkValidParams()) {
-      return navigate("/fileInput")
+      return navigate("/fileInput");
     }
   };
 
   let handleInput = (e) => {
     let { name, value } = e.target;
-    dispatch(update({ tarjetonType, params: { ...params, [name]: value.trim() } }))
+    dispatch(
+      update({ tarjetonType, params: { ...params, [name]: value.trim() } }),
+    );
   };
 
   let checkValidParams = () => {
@@ -62,9 +66,7 @@ function TarjetonParams() {
   };
 
   let renderInputFields = () => {
-    let tarjetonParams = INPUT_FIELDS.filter(
-      (param) => param.name in params,
-    );
+    let tarjetonParams = INPUT_FIELDS.filter((param) => param.name in params);
 
     let pms = localStorage.getItem("sharedParams");
     pms = JSON.parse(pms);
