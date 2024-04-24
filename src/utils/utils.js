@@ -100,6 +100,7 @@ export const PARAMS_INFO = {
   },
 };
 
+// angel
 const FUNIBER_AREA_URLS = {
   ES: {
     ARQUITECTURA_DISEÑO: "https://www.funiber.es/master-arquitectura-y-diseno",
