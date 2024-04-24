@@ -7,6 +7,14 @@ export function repairUrl(url) {
   }
 }
 
+export const getSedeFromFileName = (file) => {
+  let sede = file
+    .slice(0, file.length - 5)
+    .slice(-2)
+    .toUpperCase();
+  return sede;
+};
+
 export function checkValidParams(sharedParams) {
   for (const property in sharedParams) {
     if (sharedParams[property] === "") {

@@ -2,8 +2,8 @@ import { FURRIEL_MAP_FUNIBER, FURRIEL_MAP_UNEATLANTICO } from "./furriels";
 
 export const INPUT_FIELDS = [
   {
-    label: "Sede:",
-    name: "sede",
+    label: "Sedes:",
+    name: "sedes",
     id: "sede",
     placeholder: "Introduzca la sede",
   },
@@ -100,7 +100,7 @@ export const PARAMS_INFO = {
   },
 };
 
-const FUNIBER_AREA_URLS = {
+const _FUNIBER_AREA_URLS = {
   ES: {
     ARQUITECTURA_DISEÑO: "https://www.funiber.es/master-arquitectura-y-diseno",
     DEPORTE: "https://www.funiber.es/master-deporte",
@@ -206,8 +206,8 @@ export function buildLinks(sharedParams, footerUrl, tarjetonType) {
   ];
 }
 
-export function buildCorrectText(sharedParams, footerUrlLink) {
-  const correctSede = sharedParams.sede;
+export function buildCorrectText(params, footerUrlLink) {
+  const correctSede = params.sede;
 
   let correctFooterText = footerUrlLink.slice(8);
   correctFooterText = correctFooterText.substring(
@@ -225,8 +225,11 @@ export function checkValidParams(params) {
     }
   }
 
-  if (!FURRIEL_MAP_FUNIBER[params.sede]) {
-    return false;
+  let sedes = params.sedes.split(",");
+  for (let sede of sedes) {
+    if (!FURRIEL_MAP_FUNIBER[sede.trim()]) {
+      return false;
+    }
   }
   return true;
 }

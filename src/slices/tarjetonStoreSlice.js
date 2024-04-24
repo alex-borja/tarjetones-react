@@ -12,8 +12,17 @@ export const tarjetonStoreSlice = createSlice({
         tarjeton: action.payload.tarjeton,
       });
     },
+    deleteFileFromStore: (state, action) => {
+      state.store = state.store.filter(
+        (file) => file.name !== action.payload.file,
+      );
+    },
+    deleteAll: (state) => {
+      state.store = [];
+    },
   },
 });
 
-export const { add } = tarjetonStoreSlice.actions;
+export const { add, deleteFileFromStore, deleteAll } =
+  tarjetonStoreSlice.actions;
 export default tarjetonStoreSlice.reducer;

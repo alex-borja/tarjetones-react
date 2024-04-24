@@ -2,15 +2,20 @@ import { useEffect, useState } from "react";
 import "../styles/views/FileInputView.css";
 import ResultCard from "../components/resultCard";
 import { checkValidParams } from "../utils/utils";
-import Warning from "../components/warning";
 import { useNavigate } from "react-router-dom";
-import { add } from "../slices/tarjetonStoreSlice";
+import {
+  add,
+  deleteAll,
+  deleteFileFromStore,
+} from "../slices/tarjetonStoreSlice";
 import { useSelector, useDispatch } from "react-redux";
 import Validator from "../utils/validation";
+import { getSedeFromFileName } from "../helpers/helpers";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function FileInput() {
   const [reports, setReports] = useState([]);
-  const [warnings, setWarnings] = useState("");
   const [fileNames, setFileNames] = useState([]);
   const [showResult, setShowResult] = useState(false);
 
@@ -21,15 +26,31 @@ function FileInput() {
     (state) => state.tarjetonParams.tarjetonType,
   );
 
+  useEffect(() => {
+    if (!fileNames.length) {
+      dispatch(deleteAll());
+    }
+  }, [fileNames]);
+
   let navigate = useNavigate();
   useEffect(() => {
-    if (!checkValidParams(params)) return navigate("/params");
+    if (!checkValidParams(params)) {
+      return navigate("/params");
+    }
   }, []);
 
   let handleSubmit = (e) => {
     e.preventDefault();
-    if (!tarjetonStore.length)
-      return setWarnings("Ingresa un tarjeton para validar!");
+    if (!tarjetonStore.length) return warn("Ingresa un tarjetón para validar!");
+
+    for (let tarjeton of tarjetonStore) {
+      let sede = getSedeFromFileName(tarjeton.name);
+      if (!params.sedes.includes(sede)) {
+        return warn(
+          "Tarjeton " + sede + " no existe en la lista de tus parametros",
+        );
+      }
+    }
 
     let validator = new Validator(tarjetonStore, params, tarjetonType);
     setReports(validator.getReports());
@@ -45,7 +66,7 @@ function FileInput() {
   let addFiles = (files) => {
     for (let file of files) {
       if (file.type !== "text/html") {
-        setWarnings(`${file.name}: El archivo no es HTML!`);
+        warn(`${file.name} no es HTML!`);
         continue;
       }
 
@@ -66,15 +87,30 @@ function FileInput() {
     );
   };
 
-  let displayWarnings = () => {
-    if (warnings.length) {
-      return <Warning warnings={warnings} setWarnings={setWarnings}></Warning>;
-    }
+  let deleteFile = (e, file) => {
+    e.preventDefault;
+
+    let files = fileNames.filter((f) => f !== file);
+    setFileNames(files);
+    setReports([]);
+    dispatch(deleteFileFromStore({ file }));
+  };
+
+  const warn = (warn) => {
+    toast.warn(warn, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (
     <div className="fileInput">
-      {displayWarnings()}
       <div className="fileInputWrapper">
         <div className="left">
           <form onSubmit={(e) => handleSubmit(e)}>
@@ -85,14 +121,20 @@ function FileInput() {
               type="file"
               accept=".html"
               id="file"
-              onChange={handleFile}
+              onChange={(e) => handleFile(e)}
               multiple
             />
             <div className="selectedFiles">
-              <h4>Archivo seleccionado:</h4>
+              <h4>Archivos seleccionados:</h4>
               {fileNames.map((name, idx) => (
-                <div key={idx}>
+                <div key={idx} className="file">
                   <p>{name}</p>
+                  <button
+                    onClick={(e) => deleteFile(e, name)}
+                    className="deleteFile"
+                  >
+                    DEL
+                  </button>
                   <br />
                 </div>
               ))}
@@ -104,6 +146,7 @@ function FileInput() {
         </div>
         <div className="right">{renderResults()}</div>
       </div>
+      <ToastContainer position="top-center" pauseOnHover={false} />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import cheerio from "cheerio";
 import { TARJETON_TYPE } from "./tarjetonType";
 import { FUNIBER_URL_LINKS } from "./funiberUrlLinks";
-import { repairUrl } from "../helpers/helpers";
+import { getSedeFromFileName, repairUrl } from "../helpers/helpers";
 import {
   getFooterText,
   getFooterLink,
@@ -12,6 +12,7 @@ import {
 } from "./utils";
 
 class Report {
+  dafaultError;
   constructor(fileName, validations, errors) {
     this.fileName = fileName;
     this.validations = validations;
@@ -24,6 +25,10 @@ class Report {
 
   addValidation(data) {
     this.validations.push(data);
+  }
+
+  setDefaultError(err) {
+    this.dafaultError = err;
   }
 }
 
@@ -39,6 +44,9 @@ export default class Validator {
 
   getReports() {
     for (let file of this.files) {
+      let sede = getSedeFromFileName(file.name);
+      this.params = { ...this.params, sede: sede };
+
       this.#validate(file);
     }
     return this.reports;
@@ -53,7 +61,7 @@ export default class Validator {
 
       const links = $("a");
       const pixel = $("img")[0].attribs.src;
-      const sede = $("title")[0].children[0].data.slice(0, 2);
+      const title = $("title")[0].children[0].data;
       const footerText = getFooterText(links, indexes.urlLinkIndex);
 
       let finalLink = links[indexes.finalLinkIndex].attribs.href;
@@ -61,7 +69,6 @@ export default class Validator {
       let buttonLink = links[indexes.buttonLinkIndex].attribs.href;
       let footerLink = getFooterLink(links, indexes.urlLinkIndex);
 
-      this.#checkText(sede, footerText, footerUrlLink);
       this.#checkParams(
         pixel,
         finalLink,
@@ -70,13 +77,13 @@ export default class Validator {
         footerLink,
         footerUrlLink,
       );
+      this.#checkText(title, footerText, footerUrlLink);
 
       this.reports.push(this.currentReport);
     } catch (err) {
-      // debugging
       console.error(err);
 
-      this.currentReport.addError("Hubo un error con el archivo");
+      this.currentReport.setDefaultError("Hubo un error con el archivo");
       this.reports.push(this.currentReport);
     }
   }
@@ -87,8 +94,12 @@ export default class Validator {
       : FUNIBER_URL_LINKS[this.params.sede];
   }
 
-  #checkText(sede, footerText, footerUrlLink) {
+  #checkText(title, footerText, footerUrlLink) {
+    /// if ULR ends with / return, else add the / at the end of URL
     footerUrlLink = repairUrl(footerUrlLink);
+    title =
+      this.tarjetonType === "PROGRAM" ? title.slice(-2) : title.slice(0, 2);
+
     let [correctSede, correctFooterText] = buildCorrectText(
       this.params,
       footerUrlLink,
@@ -101,18 +112,12 @@ export default class Validator {
         PARAMS_INFO.sede.result,
         PARAMS_INFO.sede.error,
       );
-
-      this.#checkSingleParam(
-        correctFooterText,
-        footerText,
-        PARAMS_INFO.footerText.result,
-        PARAMS_INFO.footerText.error,
-      );
+      return;
     }
 
     this.#checkSingleParam(
       correctSede,
-      sede,
+      title,
       PARAMS_INFO.sede.result,
       PARAMS_INFO.sede.error,
     );
@@ -158,6 +163,7 @@ export default class Validator {
     ] = buildLinks(this.params, footerUrlLink, this.tarjetonType);
 
     this.#checkFinalLink(correctFinalLink, finalLink);
+
     this.#checkSingleParam(
       correctPixel,
       pixel,
@@ -183,17 +189,18 @@ export default class Validator {
   }
 
   #checkFinalLink(correctFinalLink, finalLink) {
-    let fileSede = getSedeFromFile(finalLink);
-    let validSede = fileSede === this.params.sede.toLowerCase();
+    let sede = getSedeFromFile(finalLink);
+    let validSede = sede === this.params.sede.toLowerCase();
+    let match = finalLink === correctFinalLink;
 
-    if (!validSede) {
+    if (validSede && match) {
+      this.currentReport.addValidation(PARAMS_INFO.linkFinal.result);
+    } else {
       this.currentReport.addError({
         title: PARAMS_INFO.linkFinal.error,
         correctValue: correctFinalLink,
         valueProvided: finalLink,
       });
-    } else {
-      this.currentReport.addValidation(PARAMS_INFO.linkFinal.result);
     }
   }
 
