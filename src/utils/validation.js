@@ -105,16 +105,6 @@ export default class Validator {
       footerUrlLink,
     );
 
-    if (this.tarjetonType !== "PROGRAM") {
-      this.#checkSingleParam(
-        correctSede,
-        this.sede,
-        PARAMS_INFO.sede.result,
-        PARAMS_INFO.sede.error,
-      );
-      return;
-    }
-
     this.#checkSingleParam(
       correctSede,
       title,

@@ -8,6 +8,12 @@ export const INPUT_FIELDS = [
     placeholder: "Introduzca la sede",
   },
   {
+    label: "Area:",
+    name: "area",
+    id: "area",
+    placeholder: "Introduzca el área",
+  },
+  {
     label: "Pixel:",
     name: "pixel",
     id: "pixel",
@@ -100,7 +106,7 @@ export const PARAMS_INFO = {
   },
 };
 
-const _FUNIBER_AREA_URLS = {
+const FUNIBER_AREA_URLS = {
   ES: {
     ARQUITECTURA_DISEÑO: "https://www.funiber.es/master-arquitectura-y-diseno",
     DEPORTE: "https://www.funiber.es/master-deporte",
@@ -188,11 +194,11 @@ export function buildLinks(sharedParams, footerUrl, tarjetonType) {
 
   const correctPixel = sharedParams.pixel;
 
-  const correctBannerLink =
-    sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
-
-  const correctButtonLink =
-    sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
+  const [correctBannerLink, correctButtonLink] = buildButtonAndBannerUrl(
+    sharedParams,
+    tarjetonType,
+    furriel,
+  );
 
   const correctFooterLink =
     footerUrl + furriel + sharedParams.kw + sharedParams.matomo;
@@ -204,6 +210,34 @@ export function buildLinks(sharedParams, footerUrl, tarjetonType) {
     correctButtonLink,
     correctFooterLink,
   ];
+}
+
+function buildButtonAndBannerUrl(sharedParams, tarjetonType, furriel) {
+  let correctBannerLink;
+  let correctButtonLink;
+
+  if (tarjetonType === "PROGRAM") {
+    correctBannerLink =
+      sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
+
+    correctButtonLink =
+      sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
+  }
+
+  if (tarjetonType === "AREA") {
+    correctBannerLink =
+      FUNIBER_AREA_URLS[sharedParams.sede][sharedParams.area] +
+      furriel +
+      sharedParams.kw +
+      sharedParams.matomo;
+    correctButtonLink =
+      FUNIBER_AREA_URLS[sharedParams.sede][sharedParams.area] +
+      furriel +
+      sharedParams.kw +
+      sharedParams.matomo;
+  }
+
+  return [correctBannerLink, correctButtonLink];
 }
 
 export function buildCorrectText(params, footerUrlLink) {

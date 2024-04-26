@@ -6,7 +6,7 @@ export const TARJETON_TYPE = {
       sedes: "",
       pixel: "",
       matomo: "",
-      heroUrl: "",
+      area: "",
       linkFinal: "",
     },
     paramsIndexes: {

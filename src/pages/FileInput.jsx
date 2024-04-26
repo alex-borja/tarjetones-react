@@ -34,7 +34,7 @@ function FileInput() {
 
   let navigate = useNavigate();
   useEffect(() => {
-    if (!checkValidParams(params)) {
+    if (!tarjetonType || !checkValidParams(params)) {
       return navigate("/params");
     }
   }, []);
