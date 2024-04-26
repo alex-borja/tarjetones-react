@@ -22,7 +22,7 @@ export function checkValidParams(sharedParams) {
     }
   }
   return true;
-}
+};
 
 export function getDiff(str1, str2) {
   const m = str1.length;
@@ -61,4 +61,4 @@ export function getDiff(str1, str2) {
   }
 
   return diff;
-}
+};

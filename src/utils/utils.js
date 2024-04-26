@@ -225,16 +225,9 @@ function buildButtonAndBannerUrl(sharedParams, tarjetonType, furriel) {
   }
 
   if (tarjetonType === "AREA") {
-    correctBannerLink =
-      FUNIBER_AREA_URLS[sharedParams.sede][sharedParams.area] +
-      furriel +
-      sharedParams.kw +
-      sharedParams.matomo;
-    correctButtonLink =
-      FUNIBER_AREA_URLS[sharedParams.sede][sharedParams.area] +
-      furriel +
-      sharedParams.kw +
-      sharedParams.matomo;
+    let area = FUNIBER_AREA_URLS[sharedParams.sede][sharedParams.area];
+    correctBannerLink = area + furriel + sharedParams.kw + sharedParams.matomo;
+    correctButtonLink = area + furriel + sharedParams.kw + sharedParams.matomo;
   }
 
   return [correctBannerLink, correctButtonLink];
