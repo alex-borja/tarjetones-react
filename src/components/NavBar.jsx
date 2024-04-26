@@ -17,13 +17,13 @@ function NavBar() {
             <p>Tipo de Tarjetón</p>
           </NavLink>
         </li>
-        <li >
+        <li>
           <NavLink to="/params">
             <FontAwesomeIcon icon={faPencil} style={{ color: "#f5f5f5" }} />
             <p>Parámetros</p>
           </NavLink>
         </li>
-        <li >
+        <li>
           <NavLink to="/fileInput">
             <FontAwesomeIcon
               icon={faSquarePollVertical}
