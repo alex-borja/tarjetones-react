@@ -6,11 +6,13 @@ import { useNavigate } from "react-router-dom";
 
 function TarjetonType() {
   const navigate = useNavigate();
-  const tarjetonType = useSelector((state) => state.tarjetonParams.tarjetonType);
+  const tarjetonType = useSelector(
+    (state) => state.tarjetonParams.tarjetonType,
+  );
   const dispatch = useDispatch();
 
   let handleSelect = (e) => {
-    const params = TARJETON_TYPE[e.target.value].params
+    const params = TARJETON_TYPE[e.target.value].params;
     dispatch(update({ tarjetonType: e.target.value, params }));
     return navigate("/params");
   };
@@ -24,11 +26,11 @@ function TarjetonType() {
           onChange={(e) => handleSelect(e)}
           value={tarjetonType}
         >
+          <option>Elije un tarjeton</option>
           <option value="AREA">Tarjetón Tipo Área</option>
           <option value="PROGRAM">Tarjetón Tipo Programa</option>
         </select>
       </form>
-
     </div>
   );
 }

@@ -1,9 +1,16 @@
-import "./App.css"
+import "./App.css";
 import TarjetonParams from "./pages/TarjetonParams";
 import FileInput from "./pages/FileInput";
 import NavBar from "./components/NavBar";
 import TarjetonType from "./pages/TarjetonType";
-import { Outlet, Route, RouterProvider, createBrowserRouter, createRoutesFromElements } from "react-router-dom";
+import {
+  Outlet,
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
+} from "react-router-dom";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   const router = createBrowserRouter(
@@ -12,15 +19,16 @@ function App() {
         <Route index element={<TarjetonType />} />
         <Route path="/params" element={<TarjetonParams />} />
         <Route path="/fileInput" element={<FileInput />} />
-      </Route>
-    )
-  )
+        <Route path="*" element={<ErrorPage />} />
+      </Route>,
+    ),
+  );
 
   return (
     <div className="container">
       <RouterProvider router={router} />
     </div>
-  )
+  );
 }
 
 const Root = () => {
@@ -29,7 +37,7 @@ const Root = () => {
       <NavBar />
       <Outlet />
     </>
-  )
-}
+  );
+};
 
 export default App;

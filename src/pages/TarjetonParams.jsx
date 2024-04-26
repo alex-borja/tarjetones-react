@@ -1,23 +1,27 @@
 import "../styles/views/TarjetonParams.css";
 import { useEffect, useState } from "react";
-import Warning from "../components/warning";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
 import { FURRIEL_MAP_FUNIBER } from "../utils/furriels";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { update } from "../slices/tarjetonParamsSlice";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function TarjetonParams() {
-  let [warnings, setWarnings] = useState("");
   const params = useSelector((state) => state.tarjetonParams.params);
-  const tarjetonType = useSelector((state) => state.tarjetonParams.tarjetonType);
+  const paramsStore = useSelector((state) => state.tarjetonParams);
+  const tarjetonType = useSelector(
+    (state) => state.tarjetonParams.tarjetonType,
+  );
+
   const dispatch = useDispatch();
   let navigate = useNavigate();
 
   useEffect(() => {
-    if (!tarjetonType) return navigate("/")
-  }, [])
+    if (!tarjetonType) return navigate("/");
+  }, []);
 
   let submitParams = (e) => {
     e.preventDefault();
@@ -26,48 +30,48 @@ function TarjetonParams() {
 
   let validateParams = () => {
     if (checkValidParams()) {
-      return navigate("/fileInput")
+      return navigate("/fileInput");
     }
   };
 
   let handleInput = (e) => {
     let { name, value } = e.target;
-    dispatch(update({ tarjetonType, params: { ...params, [name]: value.trim() } }))
+    dispatch(
+      update({ tarjetonType, params: { ...params, [name]: value.trim() } }),
+    );
   };
 
   let checkValidParams = () => {
     for (const property in params) {
       if (params[property] === "") {
-        setWarnings("Por favor, rellena todos los campos.");
+        warn("Por favor, rellena todos los campos.");
         return false;
       }
     }
 
-    if (!FURRIEL_MAP_FUNIBER[params.sede]) {
-      setWarnings("La sede que indicaste no existe.");
-      return false;
+    let sedes = params.sedes.split(",");
+    for (let sede of sedes) {
+      if (!FURRIEL_MAP_FUNIBER[sede.trim()]) {
+        warn("La sede que indicaste no existe: " + sede.trim());
+        return false;
+      }
     }
     return true;
   };
 
   let clearInputs = () => {
-    setSharedParams({
-      sede: "",
-      pixel: "",
-      linkFinal: "",
-      bannerUrl: "",
-      kw: "",
-      matomo: "",
-    });
+    let clearInputs = {};
+    for (let param in params) {
+      clearInputs[param] = "";
+    }
+
+    dispatch(
+      update({ tarjetonType: paramsStore.tarjetonType, params: clearInputs }),
+    );
   };
 
   let renderInputFields = () => {
-    let tarjetonParams = INPUT_FIELDS.filter(
-      (param) => param.name in params,
-    );
-
-    let pms = localStorage.getItem("sharedParams");
-    pms = JSON.parse(pms);
+    let tarjetonParams = INPUT_FIELDS.filter((param) => param.name in params);
 
     return tarjetonParams.map((field) => (
       <ParamInput
@@ -82,17 +86,21 @@ function TarjetonParams() {
     ));
   };
 
-  let displayWarnings = () => {
-    return warnings.length ? (
-      <Warning warnings={warnings} setWarnings={setWarnings}></Warning>
-    ) : (
-      <></>
-    );
+  const warn = (warn) => {
+    toast.warn(warn, {
+      position: "top-center",
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+      theme: "dark",
+    });
   };
 
   return (
     <div className="tarjetonParams">
-      {displayWarnings()}
       <form className="paramsForm" onSubmit={(e) => submitParams(e)}>
         <div className="inputFields">{renderInputFields()}</div>
         <div className="btns">
@@ -110,6 +118,7 @@ function TarjetonParams() {
           </div>
         </div>
       </form>
+      <ToastContainer />
     </div>
   );
 }

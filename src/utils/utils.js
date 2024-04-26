@@ -2,10 +2,16 @@ import { FURRIEL_MAP_FUNIBER, FURRIEL_MAP_UNEATLANTICO } from "./furriels";
 
 export const INPUT_FIELDS = [
   {
-    label: "Sede:",
-    name: "sede",
+    label: "Sedes:",
+    name: "sedes",
     id: "sede",
     placeholder: "Introduzca la sede",
+  },
+  {
+    label: "Area:",
+    name: "area",
+    id: "area",
+    placeholder: "Introduzca el área",
   },
   {
     label: "Pixel:",
@@ -106,35 +112,41 @@ const FUNIBER_AREA_URLS = {
     ARQUITECTURA_DISEÑO: "https://www.funiber.es/master-arquitectura-y-diseno",
     DEPORTE: "https://www.funiber.es/master-deporte",
     DERECHO: "https://www.funiber.es/master-derecho-politicas",
-    PROFESORADO: "https://www.funiber.es/master-educacion-formacion-profesorado",
+    PROFESORADO:
+      "https://www.funiber.es/master-educacion-formacion-profesorado",
     EMPRESAS: "https://www.funiber.es/master-empresas",
     COMUNICACION: "https://www.funiber.es/master-humanidades-y-comunicacion",
     IDIOMAS: "https://www.funiber.es/idiomas",
-    INGENIERIAS: "https://www.funiber.es/master-ingenieria-prevencion-y-calidad",
+    INGENIERIAS:
+      "https://www.funiber.es/master-ingenieria-prevencion-y-calidad",
     MEDIO_AMBIENTE: "https://www.funiber.es/master-medio-ambiente",
     PROYECTOS: "https://www.funiber.es/master-proyectos",
     PSICOLOGIA: "https://www.funiber.es/master-psicologia-rrhh",
     SALUD_NUTRICION: "https://www.funiber.es/master-salud-y-nutricion",
-    TIC : "https://www.funiber.es/master-tecnologias-tic",
+    TIC: "https://www.funiber.es/master-tecnologias-tic",
     TURISMO: "https://www.funiber.es/master-turismo",
     DOCTORADOS: "https://www.funiber.es/doctorados",
   },
   AO: {
-    ARQUITECTURA_DISEÑO: "https://www.funiber.co.ao/mestrados-arquitetura-desenho",
+    ARQUITECTURA_DISEÑO:
+      "https://www.funiber.co.ao/mestrados-arquitetura-desenho",
     DEPORTE: "https://www.funiber.co.ao/mestrados-esporte",
     DERECHO: "https://www.funiber.co.ao/mestrados-direito-politicas",
-    PROFESORADO: "https://www.funiber.co.ao/mestrados-educacao-formacao-professores",
+    PROFESORADO:
+      "https://www.funiber.co.ao/mestrados-educacao-formacao-professores",
     EMPRESAS: "https://www.funiber.co.ao/mestrados-empresas",
-    COMUNICACION: "https://www.funiber.co.ao/mestrados-humanidades-e-comunicacao",
+    COMUNICACION:
+      "https://www.funiber.co.ao/mestrados-humanidades-e-comunicacao",
     IDIOMAS: "https://www.funiber.co.ao/idiomas",
-    INGENIERIAS: "https://www.funiber.co.ao/mestrados-engenharia-prevencao-e-qualidade",
+    INGENIERIAS:
+      "https://www.funiber.co.ao/mestrados-engenharia-prevencao-e-qualidade",
     MEDIO_AMBIENTE: "https://www.funiber.co.ao/mestrados-meio-ambiente",
     PROYECTOS: "https://www.funiber.co.ao/mestrados-projetos",
     PSICOLOGIA: "https://www.funiber.co.ao/mestrados-psicologia-rh",
     SALUD_NUTRICION: "https://www.funiber.co.ao/mestrados-saude-e-nutricao",
-    TIC : "https://www.funiber.co.ao/mestrados-tecnologias-tic",
+    TIC: "https://www.funiber.co.ao/mestrados-tecnologias-tic",
     TURISMO: "https://www.funiber.co.ao/mestrados-turismo",
-    DOCTORADOS: "https://www.funiber.co.ao/doutorados", 
+    DOCTORADOS: "https://www.funiber.co.ao/doutorados",
   },
   CM: {
     ARQUITECTURA_DISEÑO: "https://www.funiber.cm/masters-architecture-et-design",
@@ -695,11 +707,11 @@ export function buildLinks(sharedParams, footerUrl, tarjetonType) {
 
   const correctPixel = sharedParams.pixel;
 
-  const correctBannerLink =
-    sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
-
-  const correctButtonLink =
-    sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
+  const [correctBannerLink, correctButtonLink] = buildButtonAndBannerUrl(
+    sharedParams,
+    tarjetonType,
+    furriel,
+  );
 
   const correctFooterLink =
     footerUrl + furriel + sharedParams.kw + sharedParams.matomo;
@@ -713,8 +725,29 @@ export function buildLinks(sharedParams, footerUrl, tarjetonType) {
   ];
 }
 
-export function buildCorrectText(sharedParams, footerUrlLink) {
-  const correctSede = sharedParams.sede;
+function buildButtonAndBannerUrl(sharedParams, tarjetonType, furriel) {
+  let correctBannerLink;
+  let correctButtonLink;
+
+  if (tarjetonType === "PROGRAM") {
+    correctBannerLink =
+      sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
+
+    correctButtonLink =
+      sharedParams.heroUrl + furriel + sharedParams.kw + sharedParams.matomo;
+  }
+
+  if (tarjetonType === "AREA") {
+    let area = FUNIBER_AREA_URLS[sharedParams.sede][sharedParams.area];
+    correctBannerLink = area + furriel + sharedParams.kw + sharedParams.matomo;
+    correctButtonLink = area + furriel + sharedParams.kw + sharedParams.matomo;
+  }
+
+  return [correctBannerLink, correctButtonLink];
+}
+
+export function buildCorrectText(params, footerUrlLink) {
+  const correctSede = params.sede;
 
   let correctFooterText = footerUrlLink.slice(8);
   correctFooterText = correctFooterText.substring(
@@ -732,8 +765,11 @@ export function checkValidParams(params) {
     }
   }
 
-  if (!FURRIEL_MAP_FUNIBER[params.sede]) {
-    return false;
+  let sedes = params.sedes.split(",");
+  for (let sede of sedes) {
+    if (!FURRIEL_MAP_FUNIBER[sede.trim()]) {
+      return false;
+    }
   }
   return true;
 }

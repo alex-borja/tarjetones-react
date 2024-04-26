@@ -3,24 +3,20 @@ import "../styles/components/ResultCard.css";
 import { getDiff } from "../helpers/helpers";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck } from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
-function ResultCard({ results, errors }) {
-  let displayResults = (results) => {
-    let results_jsx = results.map((val, idx) => {
-      return (
-        <div key={idx} className="resItem correct-res">
-          <h4 className="resTitle">{val}</h4>
-          <FontAwesomeIcon
-            icon={faCheck}
-            style={{ color: "green", fontSize: "30px" }}
-            className="icon-res"
-          ></FontAwesomeIcon>
-        </div>
-      );
-    });
+function ResultCard({ reports }) {
+  return (
+    <>
+      {reports.map((report, idx) => (
+        <ReportItem report={report} key={idx} />
+      ))}
+    </>
+  );
+}
 
-    return results_jsx;
-  };
+const ReportItem = ({ report }) => {
+  const [isActive, setIsActive] = useState();
 
   const displayErrors = (errors) => {
     let errors_jsx = errors.map((val, idx) => {
@@ -67,23 +63,61 @@ function ResultCard({ results, errors }) {
     return errors_jsx;
   };
 
+  let displayResults = (results) => {
+    let results_jsx = results.map((val, idx) => {
+      return (
+        <div key={idx} className="resItem correct-res">
+          <h4 className="resTitle">{val}</h4>
+          <FontAwesomeIcon
+            icon={faCheck}
+            style={{ color: "green", fontSize: "30px" }}
+            className="icon-res"
+          ></FontAwesomeIcon>
+        </div>
+      );
+    });
+
+    return results_jsx;
+  };
+
   return (
-    <div className="displayResults">
+    <div className="accordion">
       <div className="results">
-        <h4 className="numErrors">
-          El archivo contiene: {errors.length + " "}
-          {errors.length === 1 ? "error" : "errores"} (basado en tus parámetros)
-        </h4>
-        {displayResults(results)}
-        {displayErrors(errors)}
+        {report.dafaultError ? (
+          <h4 className="accordionBtn">
+            Hubo un error con el archivo:
+            <span style={{ color: "rgb(235, 79, 52)" }}>
+              {" " + report.fileName}
+            </span>
+          </h4>
+        ) : (
+          <>
+            <h4 className="accordionBtn" onClick={() => setIsActive(!isActive)}>
+              El archivo{" "}
+              <span style={{ color: "#8bb2ea" }}>{report.fileName}</span>{" "}
+              contiene: {report.errors.length + " "}
+              {report.errors.length === 1 ? "error" : "errores"} (basado en tus
+              parámetros)
+            </h4>
+            <div
+              className={
+                isActive
+                  ? "resultAccordion active-accordeon"
+                  : "resultAccordion"
+              }
+            >
+              {displayResults(report.validations)}
+              {displayErrors(report.errors)}
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
-}
+};
 
 ResultCard.propTypes = {
-  errors: PropTypes.array.isRequired,
-  results: PropTypes.array.isRequired,
+  reports: PropTypes.array.isRequired,
 };
 
 export default ResultCard;
