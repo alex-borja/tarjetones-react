@@ -175,7 +175,6 @@ export default class Validator {
         correctValue,
         valueProvided: valueToCheck,
       });
-      console.log(this.currentReport);
     }
   }
 

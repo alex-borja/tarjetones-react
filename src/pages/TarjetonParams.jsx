@@ -1,5 +1,5 @@
 import "../styles/views/TarjetonParams.css";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { INPUT_FIELDS } from "../utils/utils";
 import ParamInput from "../components/paramInput";
 import { FURRIEL_MAP_FUNIBER } from "../utils/furriels";
@@ -21,7 +21,7 @@ function TarjetonParams() {
 
   useEffect(() => {
     if (!tarjetonType) return navigate("/");
-  }, []);
+  }, [navigate, tarjetonType]);
 
   let submitParams = (e) => {
     e.preventDefault();
@@ -37,7 +37,7 @@ function TarjetonParams() {
   let handleInput = (e) => {
     let { name, value } = e.target;
     if (value === "Selecciona un grado") {
-      return
+      return;
     }
 
     dispatch(

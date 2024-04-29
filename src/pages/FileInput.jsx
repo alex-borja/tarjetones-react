@@ -32,14 +32,14 @@ function FileInput() {
     if (!fileNames.length) {
       dispatch(deleteAll());
     }
-  }, [fileNames]);
+  }, [fileNames, dispatch]);
 
   let navigate = useNavigate();
   useEffect(() => {
     if (!tarjetonType || !checkValidParams(params)) {
       return navigate("/params");
     }
-  }, []);
+  }, [navigate, params, tarjetonType]);
 
   let handleSubmit = (e) => {
     e.preventDefault();
@@ -138,7 +138,7 @@ function FileInput() {
                       onClick={(e) => deleteFile(e, name)}
                       className="deleteFile"
                     >
-                      <FontAwesomeIcon icon={faTrash} ></FontAwesomeIcon>
+                      <FontAwesomeIcon icon={faTrash}></FontAwesomeIcon>
                     </button>
                     <br />
                   </li>
