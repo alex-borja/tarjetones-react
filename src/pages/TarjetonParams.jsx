@@ -36,6 +36,10 @@ function TarjetonParams() {
 
   let handleInput = (e) => {
     let { name, value } = e.target;
+    if (value === "Selecciona un grado") {
+      return
+    }
+
     dispatch(
       update({ tarjetonType, params: { ...params, [name]: value.trim() } }),
     );

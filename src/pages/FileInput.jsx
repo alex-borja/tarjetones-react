@@ -13,6 +13,8 @@ import Validator from "../utils/validation";
 import { getSedeFromFileName } from "../helpers/helpers";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function FileInput() {
   const [reports, setReports] = useState([]);
@@ -126,18 +128,22 @@ function FileInput() {
             />
             <div className="selectedFiles">
               <h4>Archivos seleccionados:</h4>
-              {fileNames.map((name, idx) => (
-                <div key={idx} className="file">
-                  <p>{name}</p>
-                  <button
-                    onClick={(e) => deleteFile(e, name)}
-                    className="deleteFile"
-                  >
-                    DEL
-                  </button>
-                  <br />
-                </div>
-              ))}
+              <ul>
+                {fileNames.map((name, idx) => (
+                  <li key={idx} className="file">
+                    <div className="fileName">
+                      <p>{name}</p>
+                    </div>
+                    <button
+                      onClick={(e) => deleteFile(e, name)}
+                      className="deleteFile"
+                    >
+                      <FontAwesomeIcon icon={faTrash} ></FontAwesomeIcon>
+                    </button>
+                    <br />
+                  </li>
+                ))}
+              </ul>
             </div>
             <button type="submit" className="uploadBtn">
               Subir

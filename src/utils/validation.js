@@ -120,21 +120,6 @@ export default class Validator {
     );
   }
 
-  #checkSingleParam(correctValue, valueToCheck, validation, error) {
-    correctValue = correctValue.replaceAll("%20", " ");
-    valueToCheck = valueToCheck.replaceAll("%20", " ");
-
-    if (correctValue === valueToCheck) {
-      this.currentReport.addValidation(validation);
-    } else {
-      this.currentReport.addError({
-        title: error,
-        correctValue,
-        valueProvided: valueToCheck,
-      });
-    }
-  }
-
   #checkParams(
     pixel,
     finalLink,
@@ -176,6 +161,22 @@ export default class Validator {
     );
 
     this.#checkSiteUrl(correctFooterLink, footerLink);
+  }
+
+  #checkSingleParam(correctValue, valueToCheck, validation, error) {
+    correctValue = correctValue.replaceAll("%20", " ");
+    valueToCheck = valueToCheck.replaceAll("%20", " ");
+
+    if (correctValue === valueToCheck) {
+      this.currentReport.addValidation(validation);
+    } else {
+      this.currentReport.addError({
+        title: error,
+        correctValue,
+        valueProvided: valueToCheck,
+      });
+      console.log(this.currentReport);
+    }
   }
 
   #checkFinalLink(correctFinalLink, finalLink) {

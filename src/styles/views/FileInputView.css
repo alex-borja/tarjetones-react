@@ -107,6 +107,21 @@ input[type="file"] {
   max-height: 100%;
   padding: 10px;
   margin-bottom: 20px;
+  overflow: scroll;
+  overflow-x: hidden;
+}
+
+.selectedFiles::-webkit-scrollbar {
+  width: 2px;
+}
+
+.selectedFiles::-webkit-scrollbar-track {
+  background-color: black;
+}
+
+.selectedFiles::-webkit-scrollbar-thumb {
+  background: darkgray;
+  border-radius: 2px;
 }
 
 .selectedFiles h4 {
@@ -116,24 +131,31 @@ input[type="file"] {
 .file {
   text-align: left;
   display: flex;
+  justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
 }
 
-.file p {
+.fileName {
+  width: 80%;
   font-size: 13px;
-  color: rgb(139, 178, 234);
+  color: #bcb722;
 }
 
 .deleteFile {
   height: 30px;
-  padding: 1px 5px;
-  border-radius: 10px;
+  width: 40px;
+  padding: 1px 0px;
+  border-radius: 4px;
   border: none;
   cursor: pointer;
   background-color: rgb(235, 79, 52);
   color: white;
   text-align: center;
+}
+
+.deleteFile:hover {
+  opacity: 0.85;
 }
 
 @media screen and (max-width: 769px) {
